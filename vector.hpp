@@ -6,12 +6,13 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/20 18:10:09 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/20 19:44:32 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
+# include <stdexcept>
 
 namespace ft
 {	
@@ -43,6 +44,9 @@ namespace ft
 		const_iterator	end() const;
 		std::size_t		capacity() const;
 		std::size_t		size() const;
+		T				&front() const;
+		bool			empty() const;
+		T				&at(std::size_t pos);
 	};
 
 	//CONSTRUCT
@@ -77,7 +81,7 @@ namespace ft
 		it_first = array;
 		it_end = array + rhs.capacity();
 		it_last = array + rhs.size();
-		for (size_t i = 0; i < size(); i++)
+		for (std::size_t i = 0; i < size(); i++)
 			array[i] = rhs[i];
 		return (*this);
 	}
@@ -107,6 +111,24 @@ namespace ft
 	template<typename T>
 	std::size_t	vector<T>::size() const{
 		return (_size);
+	}
+
+	template<typename T>
+	T	&vector<T>::front() const{
+		return (array[0]);
+	}
+	
+	template<typename T>
+	bool	vector<T>::empty() const{
+		return (_size == 0 ? true : false);
+	}
+
+	template<typename T>
+	T	&vector<T>::at(std::size_t pos){
+		if (pos >= _size)
+			throw std::out_of_range("out of range");
+		else
+			return (array[pos]);
 	}
 }
 #endif
