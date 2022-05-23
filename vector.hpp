@@ -6,13 +6,14 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/23 17:35:43 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:27:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <stdexcept>
+# include <limits>
 
 namespace ft
 {	
@@ -69,6 +70,7 @@ namespace ft
 		typedef iterator<vector<T> > iterator;
 		typedef iterator const const_iterator;
 		typedef	T value_type;
+		typedef	std::ptrdiff_t difference_type;
 		
 	private:
 		T			*array;
@@ -94,6 +96,7 @@ namespace ft
 		T				&at(std::size_t pos);
 		T				*data();
 		T const			*data() const;
+		std::size_t		max_size() const;
 	};
 
 	//CONSTRUCT
@@ -183,6 +186,11 @@ namespace ft
 	template<typename T>
 	T const	*vector<T>::data() const{
 		return (array);
+	}
+	
+	template<typename T>
+	std::size_t	vector<T>::max_size() const{
+		return (std::numeric_limits<difference_type>::max());
 	}
 }
 #endif

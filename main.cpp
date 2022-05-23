@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/23 17:39:33 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:28:25 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int	main(){
         std::cout << "The first character is '" << letters.front() << "'." << std::endl;
     }
 
-	std::cout << "****vector.at()*****" << std::endl;
-	{
+	std::cout << "****vector.at()*****" << std::endl;{
 		ft::vector<int> data(6);
 		for (size_t i = 1; i < 7; i++)
 			data[i - 1] = i;
@@ -82,11 +81,16 @@ int	main(){
 		std::cout << std::endl;
 	}
 
-	std::cout <<  "****vector.data()*****" << std::endl;
-	{
+	std::cout <<  "****vector.data()*****" << std::endl;{
 		ft::vector<int> container(4);
 		for (size_t i = 0; i < 4; i++)
 			container[i] = i + 1;
 		pointer_func(container.data(), container.size());
+	}
+
+	std::cout <<  "****vector.max_size()*****" << std::endl;{
+		ft::vector<char> q;
+		std::cout.imbue(std::locale("en_US.UTF-8"));    
+		std::cout << "Maximum size of a vector is " << q.max_size() << std::endl;
 	}
 }
