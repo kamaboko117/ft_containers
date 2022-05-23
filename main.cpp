@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/23 20:28:25 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:36:42 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,6 @@ int	main(){
 		std::cout.imbue(std::locale("en_US.UTF-8"));    
 		std::cout << "Maximum size of a vector is " << q.max_size() << std::endl;
 	}
+
+	
 }

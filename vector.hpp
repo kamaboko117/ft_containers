@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/23 20:27:37 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:44:03 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_HPP
 # include <stdexcept>
 # include <limits>
+# include <memory>
 
 namespace ft
 {	
@@ -67,10 +68,17 @@ namespace ft
 	class vector
 	{	
 	public:
-		typedef iterator<vector<T> > iterator;
-		typedef iterator const const_iterator;
-		typedef	T value_type;
-		typedef	std::ptrdiff_t difference_type;
+		typedef	T									value_type;
+		typedef	std::allocator<T>					allocator_type;
+		typedef	std::size_t							size_type;
+		typedef	std::ptrdiff_t						difference_type;
+		typedef	value_type&							reference;
+//		typedef	reference const						const_reference;
+		typedef	typename allocator_type::pointer	pointer;
+		typedef	pointer const						const_pointer;
+		typedef iterator<vector<T> >				iterator;
+		typedef iterator const						const_iterator;	
+	
 		
 	private:
 		T			*array;
