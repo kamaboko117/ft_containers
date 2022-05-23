@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/20 19:44:32 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:35:43 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,62 @@
 
 namespace ft
 {	
+	template<typename vector>
+	class iterator
+	{
+	public:
+		typedef	typename vector::value_type T;
+	private:
+		T	*ptr;
+	public:
+		iterator(T *ptr)
+			: ptr(ptr){}
+
+		iterator	&operator++(){
+			ptr++;
+			return (*this);
+		}
+		iterator	operator++(int){
+			iterator it = *this;
+			++(*this);
+			return (it);
+		}
+		iterator	&operator--(){
+			ptr--;
+			return (*this);
+		}
+		iterator	operator--(int){
+			iterator it = *this;
+			--(*this);
+			return (it);
+		}
+		T			&operator[](std::size_t i){
+			return *(ptr[i]);
+		}
+		T			*operator->(){
+			return (ptr);
+		}
+		T			&operator*(){
+			return (*ptr);
+		}
+		bool		operator==(const iterator &rhs) const{
+			return (ptr == rhs.ptr);
+		}
+		bool		operator!=(const iterator &rhs) const{
+			return (ptr != rhs.ptr);
+		}
+	};
+
 	template<typename T>
 	class vector
 	{	
 	public:
-		typedef T * iterator;
-		typedef const T * const_iterator;
+		typedef iterator<vector<T> > iterator;
+		typedef iterator const const_iterator;
+		typedef	T value_type;
 		
 	private:
 		T			*array;
-		iterator	it_first;
-		iterator	it_end;
-		iterator	it_last;
 		std::size_t	_capacity;
 		std::size_t	_size;
 	public:
@@ -45,24 +89,22 @@ namespace ft
 		std::size_t		capacity() const;
 		std::size_t		size() const;
 		T				&front() const;
+		T				&back() const;
 		bool			empty() const;
 		T				&at(std::size_t pos);
+		T				*data();
+		T const			*data() const;
 	};
 
 	//CONSTRUCT
+	
 	template<typename T>
 	vector<T>::vector() : 	array(new T[10]),
-							it_first(array),
-							it_end(array),
-							it_last(array + 10),
 							_capacity(10),
 							_size(0){}
 
 	template<typename T>
 	vector<T>::vector(const std::size_t count) :	array(new T[count]),
-													it_first(array),
-													it_end(array + count),
-													it_last(array + count),
 													_capacity(count),
 													_size(count){}
 
@@ -78,9 +120,6 @@ namespace ft
 			return (*this);
 		this->~vector();
 		new(this) vector(rhs.capacity());
-		it_first = array;
-		it_end = array + rhs.capacity();
-		it_last = array + rhs.size();
 		for (std::size_t i = 0; i < size(); i++)
 			array[i] = rhs[i];
 		return (*this);
@@ -94,12 +133,12 @@ namespace ft
 	//ITERATORS
 	template<typename T>
 	typename vector<T>::iterator	vector<T>::begin(){
-		return (it_first);
+		return (iterator(array));
 	}
 
 	template<typename T>
 	typename vector<T>::iterator	vector<T>::end(){
-		return (it_end);
+		return (iterator(array + _size));
 	}
 
 	//ETC
@@ -119,6 +158,11 @@ namespace ft
 	}
 	
 	template<typename T>
+	T	&vector<T>::back() const{
+		return (array[_size]);
+	}
+	
+	template<typename T>
 	bool	vector<T>::empty() const{
 		return (_size == 0 ? true : false);
 	}
@@ -129,6 +173,16 @@ namespace ft
 			throw std::out_of_range("out of range");
 		else
 			return (array[pos]);
+	}
+
+	template<typename T>
+	T	*vector<T>::data(){
+		return (array);
+	}
+
+	template<typename T>
+	T const	*vector<T>::data() const{
+		return (array);
 	}
 }
 #endif
