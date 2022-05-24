@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/24 16:13:07 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:20:18 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ namespace ft
 		std::size_t		max_size() const;
 		void			reserve(std::size_t new_cap);
 		void			push_back(const T &value);
+		void			clear();
 	};
 
 	//CONSTRUCT
-	
 	template<typename T>
 	vector<T>::vector() : 	array(new T[0]),
 							_capacity(0),
@@ -227,6 +227,13 @@ namespace ft
 			reserve(_capacity * 2);
 		array[_size] = value;
 		_size++;
+	}
+
+	template<typename T>
+	void	vector<T>::clear(){
+		delete[] array;
+		_size = 0;
+		array = new T[_capacity];
 	}
 }
 #endif

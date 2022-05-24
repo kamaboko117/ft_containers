@@ -6,14 +6,17 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/24 16:13:54 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:34:14 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define VECTOR ft::vector
 
 #include <vector>
 #include "vector.hpp"
 #include <iostream>
 #include <cstdlib>
+#include <algorithm>
 //vector	empty(0);
 //check iterator invalidation
 
@@ -29,23 +32,23 @@ int	main(){
 	srand(time(0));
 	int	i = 0;
 	
-	std::vector<int>	vec;
-	ft::vector<int>		ft_vec;
-	std::vector<int>	vec2(4);
-	ft::vector<int>		ft_vec2(4);
+	VECTOR<int>	vec;
+	VECTOR<int>		ft_vec;
+	VECTOR<int>	vec2(4);
+	VECTOR<int>		ft_vec2(4);
 
-	for (std::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
+	for (VECTOR<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
 		vec2[i++] = std::rand();
 		std::cout << *it << std::endl;
 	}
 	i = 0;
 	std::cout << std::endl;
-	for (ft::vector<int>::iterator it = ft_vec2.begin(); it != ft_vec2.end(); it++){
+	for (VECTOR<int>::iterator it = ft_vec2.begin(); it != ft_vec2.end(); it++){
 		ft_vec2[i++] = std::rand();
 		std::cout << *it << std::endl;
 	}
 	std::cout << std::endl;
-	ft::vector<char> letters(4);
+	VECTOR<char> letters(4);
 	std::cout << "The first character is '" << letters.front() << "'." << std::endl;
 	letters[0] = 'o';
 	letters[1] = 'm';
@@ -56,7 +59,7 @@ int	main(){
     }
 
 	std::cout << std::endl << "****vector.at()*****" << std::endl;{
-		ft::vector<int> data(6);
+		VECTOR<int> data(6);
 		for (size_t i = 1; i < 7; i++)
 			data[i - 1] = i;
 	
@@ -77,20 +80,20 @@ int	main(){
 	
 		// Print final values
 		std::cout << "data:";
-		for (ft::vector<int>::iterator it = data.begin(); it != data.end(); it++)
+		for (VECTOR<int>::iterator it = data.begin(); it != data.end(); it++)
 			std::cout << " " << *it;
 		std::cout << std::endl;
 	}
 
 	std::cout << std::endl <<  "****vector.data()*****" << std::endl;{
-		ft::vector<int> container(4);
+		VECTOR<int> container(4);
 		for (size_t i = 0; i < 4; i++)
 			container[i] = i + 1;
 		pointer_func(container.data(), container.size());
 	}
 
 	std::cout << std::endl <<  "****vector.max_size()*****" << std::endl;{
-		ft::vector<char> q;
+		VECTOR<char> q;
 		std::cout.imbue(std::locale("en_US.UTF-8"));    
 		std::cout << "Maximum size of a vector is " << q.max_size() << std::endl;
 	}
@@ -100,7 +103,7 @@ int	main(){
  
 		std::cout << "using reserve: \n";
 		{
-			ft::vector<int> v1;
+			VECTOR<int> v1;
 			v1.reserve( max_elements ); // reserves at least max_elements * sizeof(int) bytes
 	
 			for(int n = 0; n < max_elements + 1; ++n){
@@ -113,7 +116,7 @@ int	main(){
 	
 		std::cout << "not using reserve: \n";
 		{
-			ft::vector<int> v1;
+			VECTOR<int> v1;
 	
 			for(int n = 0; n < max_elements; ++n) {
 				if(v1.size() == v1.capacity()) {
@@ -122,5 +125,26 @@ int	main(){
 				v1.push_back(n);
 			}
 		}
+	}
+
+	std::cout << std::endl << "****vector.clear()*****" << std::endl;{
+	VECTOR<int> container(3);
+	container[0] = 1;
+	container[1] = 2;
+	container[2] = 3;
+ 
+    std::cout << "Before clear:";
+	for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++)
+		std::cout << " " << *it;
+	
+    std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
+ 
+    std::cout << "Clear\n";
+    container.clear();
+ 
+    std::cout << "After clear:";
+    for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++)
+		std::cout << " " << *it;
+    std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
 	}
 }
