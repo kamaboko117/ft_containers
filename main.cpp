@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/24 16:34:14 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:18:26 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
+#include <iterator>
 //vector	empty(0);
 //check iterator invalidation
 
@@ -27,6 +28,14 @@ void pointer_func(const int* p, std::size_t size)
         std::cout << p[i] << ' ';
     std::cout << std::endl;
 }
+
+void print(int id, VECTOR<int>& container){
+			std::cout << id << ". ";
+			for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++) {
+				std::cout << *it << ' ';
+			}
+			std::cout << '\n';
+		}
 
 int	main(){
 	srand(time(0));
@@ -146,5 +155,32 @@ int	main(){
     for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++)
 		std::cout << " " << *it;
     std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
+	}
+
+	std::cout << std::endl << "****vector.clear()*****" << std::endl;{
+		VECTOR<int> c1(3, 100);
+		print(1, c1);
+	
+		VECTOR<int>::iterator it = c1.begin();
+		it = c1.insert(it, 200);
+		print(2, c1);
+	
+		c1.insert(it, 2, 300);
+		print(3, c1);
+	
+		// `it` no longer valid, get a new one:
+		it = c1.begin();
+	
+		VECTOR<int> c2(2, 400);
+		c1.insert(it + 2, c2.begin(), c2.end());
+		print(4, c1);
+	
+		int arr[] = { 501,502,503 };
+		c1.insert(c1.begin(), arr, arr + 3);
+		print(5, c1);
+	
+		int arr2[] = { 601,602,603 };
+		c1.insert(c1.end(), arr2, arr2 + 3);
+		print(6, c1);
 	}
 }

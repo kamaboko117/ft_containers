@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/24 16:20:18 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:18:14 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,10 @@ namespace ft
 		void			reserve(std::size_t new_cap);
 		void			push_back(const T &value);
 		void			clear();
+		iterator		insert(iterator pos, const T &value);
+		iterator		insert(iterator pos, std::size_t count, const T &value);
+		template<class InputIt>
+		iterator		insert(iterator pos, InputIt first, InputIt last);
 	};
 
 	//CONSTRUCT
@@ -234,6 +238,12 @@ namespace ft
 		delete[] array;
 		_size = 0;
 		array = new T[_capacity];
+	}
+
+	template<typename T>
+	typename vector<T>::iterator	vector<T>::insert(iterator pos, const T &value){
+		*(pos - 1) = value;
+		return (*(pos - 1));
 	}
 }
 #endif
