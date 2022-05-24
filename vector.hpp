@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/23 20:44:03 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:13:07 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,15 @@ namespace ft
 		T				*data();
 		T const			*data() const;
 		std::size_t		max_size() const;
+		void			reserve(std::size_t new_cap);
+		void			push_back(const T &value);
 	};
 
 	//CONSTRUCT
 	
 	template<typename T>
-	vector<T>::vector() : 	array(new T[10]),
-							_capacity(10),
+	vector<T>::vector() : 	array(new T[0]),
+							_capacity(0),
 							_size(0){}
 
 	template<typename T>
@@ -199,6 +201,32 @@ namespace ft
 	template<typename T>
 	std::size_t	vector<T>::max_size() const{
 		return (std::numeric_limits<difference_type>::max());
+	}
+
+	template<typename T>
+	void	vector<T>::reserve(std::size_t new_cap){
+		T	*tmp;
+		
+		if (new_cap > max_size())
+			throw std::length_error("");	
+		else if (new_cap > _capacity){
+			tmp = new T[new_cap];
+			for (size_t i = 0; i < _size; i++)
+				tmp[i] = array[i];
+			delete[] array;
+			array = tmp;
+			_capacity = new_cap;
+		}
+	}
+
+	template<typename T>
+	void	vector<T>::push_back(const T &value){
+		if (_capacity == 0)
+			reserve(1);
+		else if (_size >= _capacity)
+			reserve(_capacity * 2);
+		array[_size] = value;
+		_size++;
 	}
 }
 #endif
