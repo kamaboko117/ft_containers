@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/24 18:18:14 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:22:28 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace ft
 	public:
 		iterator(T *ptr)
 			: ptr(ptr){}
-
+		~iterator(){}
 		iterator	&operator++(){
 			ptr++;
 			return (*this);
@@ -62,6 +62,12 @@ namespace ft
 		bool		operator!=(const iterator &rhs) const{
 			return (ptr != rhs.ptr);
 		}
+		iterator	operator+(std::size_t i) const{
+			return (iterator(ptr + i));
+		}
+		iterator	operator-(std::size_t i) const{
+			return (iterator(ptr - i));
+		}
 	};
 
 	template<typename T>
@@ -86,7 +92,9 @@ namespace ft
 		std::size_t	_size;
 	public:
 		vector();
-		explicit vector(const std::size_t count);
+		explicit vector(const std::size_t count, const T &value = T());
+		//template<class InputIt>
+		//vector(InputIt first, InputIt last);
 		~vector();
 
 		vector	&operator=(vector const &rhs);
@@ -116,14 +124,20 @@ namespace ft
 
 	//CONSTRUCT
 	template<typename T>
-	vector<T>::vector() : 	array(new T[0]),
-							_capacity(0),
-							_size(0){}
+	vector<T>::vector()
+		: 	array(new T[0]),
+			_capacity(0),
+			_size(0){}
 
 	template<typename T>
-	vector<T>::vector(const std::size_t count) :	array(new T[count]),
-													_capacity(count),
-													_size(count){}
+	vector<T>::vector(const std::size_t count, const T &value)
+		: array(new T[count]),
+		_capacity(count),
+		_size(count)
+	{
+		for (size_t i = 0; i < count; i++)
+			array[i] = value;
+	}
 
 	template<typename T>
 	vector<T>::~vector(){
@@ -242,8 +256,18 @@ namespace ft
 
 	template<typename T>
 	typename vector<T>::iterator	vector<T>::insert(iterator pos, const T &value){
-		*(pos - 1) = value;
-		return (*(pos - 1));
+		*(pos) = value;
+		
+		
+		return (pos);
+	}
+
+	template<typename T>
+	typename vector<T>::iterator	vector<T>::insert(iterator pos, std::size_t count,
+			const T &value){
+		for (size_t i = 0; i < count; i++)
+			*(pos + i) = value;
+		return (pos);
 	}
 }
 #endif

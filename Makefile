@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/05/20 14:40:56 by asaboure         ###   ########.fr        #
+#    Updated: 2022/05/25 18:32:40 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ ${NAME}: ${SRCS} ${HPP}
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 all:	${NAME}
+		${CC} ${CFLAGS} -DVECTOR=std::vector -o containers ${SRCS}
 
 bonus:
 
