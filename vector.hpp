@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/25 18:22:28 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/25 20:33:21 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <limits>
 # include <memory>
 
+#include <iostream>
 namespace ft
 {	
 	template<typename vector>
@@ -118,8 +119,8 @@ namespace ft
 		void			clear();
 		iterator		insert(iterator pos, const T &value);
 		iterator		insert(iterator pos, std::size_t count, const T &value);
-		template<class InputIt>
-		iterator		insert(iterator pos, InputIt first, InputIt last);
+		// template<class InputIt>
+		// iterator		insert(iterator pos, InputIt first, InputIt last);
 	};
 
 	//CONSTRUCT
@@ -222,17 +223,11 @@ namespace ft
 	}
 
 	template<typename T>
-	void	vector<T>::reserve(std::size_t new_cap){
-		T	*tmp;
-		
+	void	vector<T>::reserve(std::size_t new_cap){	
 		if (new_cap > max_size())
-			throw std::length_error("");	
+			throw std::length_error("");
 		else if (new_cap > _capacity){
-			tmp = new T[new_cap];
-			for (size_t i = 0; i < _size; i++)
-				tmp[i] = array[i];
-			delete[] array;
-			array = tmp;
+			new(array) T[new_cap];
 			_capacity = new_cap;
 		}
 	}
@@ -256,15 +251,37 @@ namespace ft
 
 	template<typename T>
 	typename vector<T>::iterator	vector<T>::insert(iterator pos, const T &value){
+		if (_capacity == 0)
+			reserve(1);
+		if (_size + 1 >= _capacity)
+			reserve(_capacity * 2);
+		iterator it = end();
+		_size++;
+		for (std::size_t i = _size; it != pos; i--){
+			array[i] = array[i - 1];
+			it--;
+		}
 		*(pos) = value;
-		
-		
 		return (pos);
 	}
 
 	template<typename T>
 	typename vector<T>::iterator	vector<T>::insert(iterator pos, std::size_t count,
 			const T &value){
+		if (_capacity == 0)
+			reserve(1);
+		while (_size + count >= _capacity)
+			reserve(_capacity * 2);
+		// std::size_t range = 0;
+		// for (iterator it = pos; it != end(); it++)
+		// 	range++;
+		// std::cout << range << std::endl;
+		iterator it = end();
+		_size += count;
+		for (std::size_t i = _size; it != pos; i--){
+			array[i] = *--it;
+		 std::cout << *it << std::endl;
+		}
 		for (size_t i = 0; i < count; i++)
 			*(pos + i) = value;
 		return (pos);

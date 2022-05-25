@@ -6,11 +6,13 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/05/25 18:32:40 by asaboure         ###   ########.fr        #
+#    Updated: 2022/05/25 20:26:37 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	ft_containers
+
+STD		= 	containers
 
 SRCS	=	main.cpp
 
@@ -27,11 +29,15 @@ RM		= rm -f
 ${NAME}: ${SRCS} ${HPP}
 	${CC} ${CFLAGS} -o ${NAME} ${SRCS}
 
+${STD}: ${SRCS}
+		${CC} ${CFLAGS} -DVECTOR=std::vector -o ${STD} ${SRCS}
+		
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-all:	${NAME}
-		${CC} ${CFLAGS} -DVECTOR=std::vector -o containers ${SRCS}
+all:	${NAME} ${STD}
+
+
 
 bonus:
 
@@ -39,7 +45,7 @@ clean:
 	 ${RM} ${OBJS}
 
 fclean:	clean
-	${RM} ${NAME}
+	${RM} ${NAME} ${STD}
 
 re:		fclean all
 
