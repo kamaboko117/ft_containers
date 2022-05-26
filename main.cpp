@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/25 19:40:40 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:15:10 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,8 @@ int	main(){
 		c1.insert(it, 2, 300);
 		print(3, c1);
 	
-		// // `it` no longer valid, get a new one:
-		// it = c1.begin();
+		// `it` no longer valid, get a new one:
+		it = c1.begin();
 	
 		// VECTOR<int> c2(2, 400);
 		// c1.insert(it + 2, c2.begin(), c2.end());

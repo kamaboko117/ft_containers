@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/25 20:33:21 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:14:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,19 +272,41 @@ namespace ft
 			reserve(1);
 		while (_size + count >= _capacity)
 			reserve(_capacity * 2);
-		// std::size_t range = 0;
-		// for (iterator it = pos; it != end(); it++)
-		// 	range++;
-		// std::cout << range << std::endl;
 		iterator it = end();
 		_size += count;
-		for (std::size_t i = _size; it != pos; i--){
-			array[i] = *--it;
-		 std::cout << *it << std::endl;
+		for (std::size_t i = _size - 1; it != pos; i--){
+			it--;
+			array[i] = *it;
 		}
 		for (size_t i = 0; i < count; i++)
 			*(pos + i) = value;
 		return (pos);
 	}
+
+	// template<typename T>
+	// template<class InputIt>
+	// typename vector<T>::iterator	vector<T>::insert(iterator pos, InputIt first,
+	// 		InputIt last){
+	// 	if (_capacity == 0)
+	// 		reserve(1);
+	// 	std::size_t	count = 0;
+	// 	for (InputIt it = first; it != last; it++)
+	// 		count++;
+	// 	while (_size + count >= _capacity)
+	// 		reserve(_capacity * 2);
+	// 	iterator it = end();
+	// 	_size += count;
+	// 	for (std::size_t i = _size - 1; it != pos; i--){
+	// 		it--;
+	// 		array[i] = *it;
+	// 	}
+	// 	T value = *first;
+	// 	for (size_t i = 0; i < count; i++){
+	// 		*(pos + i) = *value;
+	// 		first++;
+	// 		value = *first;
+	// 	}
+	// 	return (pos);
+	// }
 }
 #endif
