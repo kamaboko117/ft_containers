@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/26 18:15:10 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:48:14 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,27 @@ int	main(){
 		// int arr2[] = { 601,602,603 };
 		// c1.insert(c1.end(), arr2, arr2 + 3);
 		// print(6, c1);
+	}
+	
+	std::cout << std::endl << "****vector.assign()*****" << std::endl;{
+		VECTOR<int> first;
+		VECTOR<int> second;
+		VECTOR<int> third;
+
+		first.assign (7,100);             // 7 ints with a value of 100
+
+		VECTOR<int>::iterator it;
+		it=first.begin()+1;
+
+		second.assign (it,first.end()-1); // the 5 central values of first
+
+		int myints[] = {1776,7,4};
+		third.assign (myints,myints+3);   // assigning from array.
+
+		std::cout << "Size of first: " << int (first.size()) << '\n';
+		std::cout << "Size of second: " << int (second.size()) << '\n';
+		std::cout << "Size of third: " << int (third.size()) << '\n';
+		return 0;
 	}
 	std::cout << "DONE" << std::endl;
 }

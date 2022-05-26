@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/05/25 20:26:37 by asaboure         ###   ########.fr        #
+#    Updated: 2022/05/26 18:46:31 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 RM		= rm -f
 
+all:	${NAME} ${STD}
+
 ${NAME}: ${SRCS} ${HPP}
 	${CC} ${CFLAGS} -o ${NAME} ${SRCS}
 
@@ -34,10 +36,6 @@ ${STD}: ${SRCS}
 		
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-
-all:	${NAME} ${STD}
-
-
 
 bonus:
 
