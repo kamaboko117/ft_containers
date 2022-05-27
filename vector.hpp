@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/26 19:37:53 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:04:40 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <limits>
 # include <memory>
 # include "iterator.hpp"
+# include "type_traits.hpp"
+# include "utils.hpp"
 
 #include <iostream>
 namespace ft
@@ -124,8 +126,10 @@ namespace ft
 		iterator		insert(iterator pos, std::size_t count, const T &value);
 		// template<class InputIt>
 		// iterator		insert(iterator pos, InputIt first, InputIt last);
-		template<class InputIt>
-		void			assign(InputIt first, InputIt last);
+		void			assign(std::size_t count, const T &value);
+		// template<class InputIt>
+		// void			assign(InputIt first, InputIt last, 
+		// 	typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = u_nullptr);
 	};
 
 	//CONSTRUCT
@@ -315,20 +319,32 @@ namespace ft
 	// }
 
 	template<typename T>
-	template<class InputIt>
-	void	vector<T>::assign(InputIt first, InputIt last){
+	void	vector<T>::assign(std::size_t count, const T &value){
 		delete[] array;
-		std::size_t range = 0;
-		for (InputIt it = first; it != last; it++)
-			range++;
-		new(array) T[range];
-		_size = range;
-		_capacity = range;
-		for (size_t i = 0; i < range; i++)
-		{
-			array[i] = *first;
-			first++;
-		}
+		new(array) T[count];
+		_size = count;
+		_capacity = count;
+		for (size_t i = 0; i < count; i++)
+			array[i] = value;
 	}
+	
+	// template<typename T>
+	// template<class InputIt>
+	// void	vector<T>::assign(InputIt first, InputIt last,
+	// 		typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type*){
+	// 	delete[] array;
+	// 	std::size_t range = 0;
+	// 	for (InputIt it = first; it != last; it++)
+	// 		range++;
+	// 	new(array) T[range];
+	// 	_size = range;
+	// 	_capacity = range;
+	// 	for (size_t i = 0; i < range; i++)
+	// 	{
+	// 		array[i] = *first;
+	// 		first++;
+	// 	}
+	// }
+
 }
 #endif
