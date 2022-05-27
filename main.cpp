@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/27 18:05:03 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:33:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,15 +193,15 @@ int	main(){
 		VECTOR<int>::iterator it;
 		it=first.begin()+1;
 
-		// second.assign (it,first.end()-1); // the 5 central values of first
+		second.assign (it,first.end()-1); // the 5 central values of first
 
-		// int myints[] = {1776,7,4};
-		// third.assign (myints,myints+3);   // assigning from array.
+		int myints[] = {1776,7,4};
+		third.assign (myints,myints+3);   // assigning from array.
 
-		// std::cout << "Size of first: " << int (first.size()) << '\n';
-		// std::cout << "Size of second: " << int (second.size()) << '\n';
-		// std::cout << "Size of third: " << int (third.size()) << '\n';
-		// return 0;
+		std::cout << "Size of first: " << int (first.size()) << '\n';
+		std::cout << "Size of second: " << int (second.size()) << '\n';
+		std::cout << "Size of third: " << int (third.size()) << '\n';
+		return 0;
 	}
 	std::cout << "DONE" << std::endl;
 }
