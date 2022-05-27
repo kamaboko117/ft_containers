@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:29:41 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/26 19:37:31 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:56:03 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ namespace ft
 	class iterator_traits
 	{
 	public:
-		typedef	Iter::difference_type	difference_type;
-		typedef	Iter::value_type		value_type;
-		typedef Iter::pointer			pointer;
-		typedef	Iter::reference			reference;
-		typedef	Iter::iterator_category	iterator_category;
+		typedef	typename Iter::difference_type		difference_type;
+		typedef	typename Iter::value_type			value_type;
+		typedef typename Iter::pointer				pointer;
+		typedef	typename Iter::reference			reference;
+		typedef	typename Iter::iterator_category	iterator_category;
 
 	private:
 		
