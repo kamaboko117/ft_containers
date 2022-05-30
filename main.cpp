@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/27 19:14:55 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:49:21 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,22 @@ void pointer_func(const int* p, std::size_t size)
 }
 
 void print(int id, VECTOR<int>& container){
-			std::cout << id << ". ";
-			for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++) {
-				std::cout << *it << ' ';
-			}
-			std::cout << '\n';
-		}
+	std::cout << id << ". ";
+	for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++) {
+		std::cout << *it << ' ';
+	}
+	std::cout << '\n';
+}
+
+template<typename T>
+void printpb(T &xs)
+{
+    std::cout << "[ ";
+    for(typename T::iterator it = xs.begin(); it != xs.end(); it++) {
+        std::cout << *it << ' ';
+    }
+    std::cout << "]\n";
+}
 
 int	main(){
 	srand(time(0));
@@ -201,7 +211,41 @@ int	main(){
 		std::cout << "Size of first: " << int (first.size()) << '\n';
 		std::cout << "Size of second: " << int (second.size()) << '\n';
 		std::cout << "Size of third: " << int (third.size()) << '\n';
-		return 0;
 	}
+	
+	std::cout << std::endl << "****vector.pop_back()*****" << std::endl;{
+		VECTOR<int> numbers;
+ 
+		printpb(numbers); 
+	
+		numbers.push_back(5);
+		numbers.push_back(3);
+		numbers.push_back(4);
+	
+		printpb(numbers); 
+	
+		numbers.pop_back();
+	
+		printpb(numbers);
+	}
+
+	std::cout << std::endl << "****vector.erase()*****" << std::endl;{
+		VECTOR<int> myvector;
+
+		// set some values (from 1 to 10)
+		for (int i=1; i<=10; i++) myvector.push_back(i);
+
+		// erase the 6th element
+		myvector.erase (myvector.begin()+5);
+
+		// erase the first 3 elements:
+		myvector.erase (myvector.begin(),myvector.begin()+3);
+
+		std::cout << "myvector contains:";
+		for (unsigned i=0; i<myvector.size(); ++i)
+			std::cout << ' ' << myvector[i];
+		std::cout << '\n';
+	}
+	
 	std::cout << "DONE" << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/27 19:13:49 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:50:02 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,10 @@ namespace ft
 		template<class InputIt>
 		void			assign(InputIt first, InputIt last, 
 			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
+		void			pop_back();
+		void			resize(std::size_t n, T value = T());
+		iterator		erase(iterator pos);
+		iterator		erase(iterator first, iterator last);
 	};
 
 	//CONSTRUCT
@@ -347,5 +351,32 @@ namespace ft
 		}
 	}
 
+	template<typename T>
+	void	vector<T>::pop_back(){
+		_size--;
+	}
+
+	template<typename T>
+	typename vector<T>::iterator	vector<T>::erase(iterator pos){
+		for (iterator it = pos; it != end() - 1; it++)
+			*it = *(it + 1);
+		_size--;
+		return (pos);
+	}
+
+	template<typename T>
+	typename vector<T>::iterator	vector<T>::erase(iterator first, iterator last){
+		std::size_t range = 0;
+		for (iterator it = first; last != end() - 1; it++){
+			*it = *(last++);
+			range++;
+		}
+		_size -= range;
+		return (first);
+	}
+	// template<typename T>
+	// void	vector<T>::resize(std::size_t n, T value){
+		
+	// }
 }
 #endif
