@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/30 18:33:41 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:28:50 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ int	main(){
 		{
 			VECTOR<int> v1;
 			v1.reserve( max_elements ); // reserves at least max_elements * sizeof(int) bytes
-	
 			for(int n = 0; n < max_elements + 1; ++n){
 				if(v1.size() == v1.capacity()) {
 					std::cout << "size() == capacity() == " << v1.size() << '\n';
 				}
+				std::cout << "plouf" << std::endl;
 				v1.push_back(n);
 			}
 		}

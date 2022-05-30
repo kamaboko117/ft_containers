@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/30 18:36:48 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:37:15 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,18 +159,17 @@ namespace ft
 
 	template<typename T, class Alloc>
 	vector<T, Alloc>::~vector(){
-		delete[] array;
+		clear();
+		_alloc.deallocate(array, _capacity);
 	}
 
 	//OPERATORS
 	template<typename T, class Alloc>
 	vector<T, Alloc>	&vector<T, Alloc>::operator=(vector const &rhs){
-		if (this == &rhs)
+		if (rhs == *this)
 			return (*this);
-		this->~vector();
-		new(this) vector(rhs.capacity());
-		for (std::size_t i = 0; i < size(); i++)
-			array[i] = rhs[i];
+		this->clear();
+		this->insert(this->end(), rhs.begin(), rhs.end());
 		return (*this);
 	}
 	
@@ -244,8 +243,15 @@ namespace ft
 		if (new_cap > max_size())
 			throw std::length_error("");
 		else if (new_cap > _capacity){
-			new(array) T[new_cap];
+			T 			*tmp;
+			std::size_t	old_cap = _capacity;
+			
+			tmp = _alloc.allocate(new_cap);
 			_capacity = new_cap;
+			for (size_t i = 0; i < _size; i++)
+				tmp[i] = array[i];
+			_alloc.deallocate(array, old_cap);
+			array = tmp;
 		}
 	}
 
@@ -261,9 +267,9 @@ namespace ft
 
 	template<typename T, class Alloc>
 	void	vector<T, Alloc>::clear(){
-		delete[] array;
+		_alloc.deallocate(array, _capacity);
+		array = _alloc.allocate(_capacity);
 		_size = 0;
-		array = new T[_capacity];
 	}
 
 	template<typename T, class Alloc>
@@ -275,9 +281,11 @@ namespace ft
 		iterator it = end();
 		_size++;
 		for (std::size_t i = _size; it != pos; i--){
+			std::cout << "plouf" << std::endl;
 			array[i] = array[i - 1];
 			it--;
 		}
+		std::cout << "plouf" << std::endl;
 		*(pos) = value;
 		return (pos);
 	}
@@ -328,8 +336,8 @@ namespace ft
 
 	template<typename T, class Alloc>
 	void	vector<T, Alloc>::assign(std::size_t count, const T &value){
-		delete[] array;
-		new(array) T[count];
+		_alloc.deallocate(array, _capacity);
+		array = _alloc.allocate(count);
 		_size = count;
 		_capacity = count;
 		for (size_t i = 0; i < count; i++)
@@ -340,11 +348,11 @@ namespace ft
 	template<class InputIt>
 	void	vector<T, Alloc>::assign(InputIt first, InputIt last,
 			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type){
-		delete[] array;
+		_alloc.deallocate(array, _capacity);
 		std::size_t range = 0;
 		for (InputIt it = first; it != last; it++)
 			range++;
-		new(array) T[range];
+		array = _alloc.allocate(range);
 		_size = range;
 		_capacity = range;
 		for (size_t i = 0; i < range; i++)
