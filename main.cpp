@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/30 15:49:21 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:33:41 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ int	main(){
 		std::cout << "not using reserve: \n";
 		{
 			VECTOR<int> v1;
-	
 			for(int n = 0; n < max_elements; ++n) {
 				if(v1.size() == v1.capacity()) {
 					std::cout << "size() == capacity() == " << v1.size() << '\n';
@@ -243,7 +242,7 @@ int	main(){
 
 		std::cout << "myvector contains:";
 		for (unsigned i=0; i<myvector.size(); ++i)
-			std::cout << ' ' << myvector[i];
+			std::cout << ", " << myvector[i];
 		std::cout << '\n';
 	}
 	
