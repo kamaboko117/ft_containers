@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 16:12:46 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:03:48 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 #include <iostream>
 namespace ft
 {	
-	template<typename vector>
+	template<typename T>
 	class iterator
 	{
 	public:
-		typedef	typename vector::value_type T;
+		typedef T value_type;
 	private:
 		T	*ptr;
 	public:
@@ -36,7 +36,7 @@ namespace ft
 		~iterator(){}
 		
 		iterator	&operator++(){
-			ptr++;
+			this->ptr++;
 			return (*this);
 		}
 		iterator	operator++(int){
@@ -59,7 +59,7 @@ namespace ft
 		T			*operator->(){
 			return (ptr);
 		}
-		T			&operator*(){
+		T			&operator*() const{
 			return (*ptr);
 		}
 		bool		operator==(const iterator &rhs) const{
@@ -86,8 +86,8 @@ namespace ft
 		typedef	const value_type&					const_reference;
 		typedef	typename allocator_type::pointer	pointer;
 		typedef	pointer const						const_pointer;
-		typedef iterator<vector<T> >				iterator;
-		typedef iterator const						const_iterator;
+		typedef iterator<T>							iterator;
+		typedef ft::iterator<T const>				const_iterator;
 		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef reverse_iterator<iterator>			reverse_iterator;
 		typedef	std::size_t							size_type;
@@ -101,8 +101,9 @@ namespace ft
 	public:
 		explicit vector(const allocator_type &alloc = allocator_type());
 		explicit vector(const std::size_t count, const T &value = T(), const allocator_type &alloc = allocator_type());
-		// template<class InputIt>
-		// vector(InputIt first, InputIt last, const allocator_type &alloc = allocator_type());
+		template<class InputIt>
+		vector(InputIt first, InputIt last, const allocator_type &alloc = allocator_type(),
+			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
 		vector(const vector &rhs);
 		~vector();
 
@@ -173,6 +174,21 @@ namespace ft
 	}
 
 	template<typename T, class Alloc>
+	template<class InputIt>
+	vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type &alloc,
+		typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type)
+		: _alloc(alloc)
+	{
+		_size = 0;
+		for (InputIt it = first; it != last; it++)
+			_size++;
+		_capacity = _size;
+		array = _alloc.allocate(_capacity);
+		for (size_t i = 0; i < _size; i++)
+			array[i] = first++;
+	}
+	
+	template<typename T, class Alloc>
 	vector<T, Alloc>::vector(const vector<T, Alloc> &src)
 		: _alloc(src._alloc),
 		_capacity(src._capacity),
@@ -211,7 +227,7 @@ namespace ft
 
 	template<typename T, class Alloc>
 	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::begin() const{
-		return (iterator(array));
+		return (const_iterator(array));
 	}
 
 	template<typename T, class Alloc>
@@ -221,7 +237,7 @@ namespace ft
 
 	template<typename T, class Alloc>
 	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::end() const{
-		return (iterator(array + _size));
+		return (const_iterator(array + _size));
 	}
 
 	//ETC
@@ -422,9 +438,6 @@ namespace ft
 		_size -= range;
 		return (first);
 	}
-	// template<typename T, class Alloc>
-	// void	vector<T, Alloc>::resize(std::size_t n, T value){
-		
-	// }
+	
 }
 #endif
