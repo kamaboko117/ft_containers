@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 18:17:10 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:22:51 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ void	printSize(VECTOR<T> const &vct, bool print_content = true)
 	std::cout << "###############################################" << std::endl;
 }
 
+void	checkErase(VECTOR<std::string> const &vct,
+					VECTOR<std::string>::iterator const &it)
+{
+	static int i = 0;
+	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
+	printSize(vct);
+}
+
 void pointer_func(const int* p, std::size_t size)
 {
     std::cout << "data = ";
@@ -73,40 +81,35 @@ void printpb(T &xs)
 
 int	main(){
 	srand(time(0));
+std::cout << "plouf" << std::endl;
+	VECTOR<std::string> vct(10);
 	
-	VECTOR<int> vct(5);
-	VECTOR<int>::iterator it = vct.begin(), ite = vct.end();
-
-	std::cout << "len: " << (ite - it) << std::endl;
-	for (; it != ite; ++it)
-		*it = (ite - it);
-
-	it = vct.begin();
-	VECTOR<int> vct_range(it, --(--ite));
-	for (int i = 0; it != ite; ++it)
-		*it = ++i * 5;
-
-	it = vct.begin();
-	VECTOR<int> vct_copy(vct);
-	for (int i = 0; it != ite; ++it)
-		*it = ++i * 7;
-	vct_copy.push_back(42);
-	vct_copy.push_back(21);
-
-	std::cout << "\t-- PART ONE --" << std::endl;
+std::cout << "plouf" << std::endl;
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = std::string((vct.size() - i), i + 65);
+std::cout << "plouf" << std::endl;
 	printSize(vct);
-	printSize(vct_range);
-	printSize(vct_copy);
+std::cout << "plouf" << std::endl;
+	checkErase(vct, vct.erase(vct.begin() + 2));
 
-	vct = vct_copy;
-	vct_copy = vct_range;
-	vct_range.clear();
+	checkErase(vct, vct.erase(vct.begin()));
+	checkErase(vct, vct.erase(vct.end() - 1));
 
-	std::cout << "\t-- PART TWO --" << std::endl;
+	checkErase(vct, vct.erase(vct.begin(), vct.begin() + 3));
+	checkErase(vct, vct.erase(vct.end() - 3, vct.end() - 1));
+
+	vct.push_back("Hello");
+	vct.push_back("Hi there");
 	printSize(vct);
-	printSize(vct_range);
-	printSize(vct_copy);
-	return (0);
+	checkErase(vct, vct.erase(vct.end() - 3, vct.end()));
+
+	vct.push_back("ONE");
+	vct.push_back("TWO");
+	vct.push_back("THREE");
+	vct.push_back("FOUR");
+	printSize(vct);
+	checkErase(vct, vct.erase(vct.begin(), vct.end()));
+
 
 	// std::cout << std::endl << "****random tests*****" << std::endl;{
 	// 	int	i = 0;

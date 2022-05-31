@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 19:19:15 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:29:04 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ namespace ft
 		array(_alloc.allocate(count))
 	{
 		for (size_t i = 0; i < count; i++)
-			array[i] = value;
+			_alloc.construct(&(array[i]), value);
 	}
 
 	template<typename T, class Alloc>
