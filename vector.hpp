@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/30 20:37:15 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:15:31 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,64 +274,66 @@ namespace ft
 
 	template<typename T, class Alloc>
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator pos, const T &value){
+		std::size_t index = 0;
+
+		for (iterator it = begin(); it != pos; it++)
+			index++;
 		if (_capacity == 0)
 			reserve(1);
 		if (_size + 1 >= _capacity)
 			reserve(_capacity * 2);
-		iterator it = end();
 		_size++;
-		for (std::size_t i = _size; it != pos; i--){
-			std::cout << "plouf" << std::endl;
+		for (std::size_t i = _size; i > index; i--){
 			array[i] = array[i - 1];
-			it--;
 		}
-		std::cout << "plouf" << std::endl;
-		*(pos) = value;
-		return (pos);
+		array[index] = value;
+		return (iterator(array + index));
 	}
 
 	template<typename T, class Alloc>
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator pos, std::size_t count,
 			const T &value){
+		std::size_t	index = 0;
+		
+		for (iterator it = begin(); it != pos; it++)
+			index++;
 		if (_capacity == 0)
 			reserve(1);
 		while (_size + count >= _capacity)
 			reserve(_capacity * 2);
-		iterator it = end();
 		_size += count;
-		for (std::size_t i = _size - 1; it != pos; i--){
-			it--;
-			array[i] = *it;
-		}
+		for (std::size_t i = _size; i >= index + count; i--)
+			array[i] = array[i - count];
 		for (size_t i = 0; i < count; i++)
-			*(pos + i) = value;
-		return (pos);
+			array[index + i] = value;
+		return (iterator(array + index));
 	}
 
 	template<typename T, class Alloc>
 	template<class InputIt>
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator pos, InputIt first, InputIt last,
 		typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type){
-		if (_capacity == 0)
-			reserve(1);
+		std::size_t	index = 0;
 		std::size_t	count = 0;
+		
+		for (iterator it = begin(); it != pos; it++)
+			index++;
 		for (InputIt it = first; it != last; it++)
 			count++;
+		if (_capacity == 0)
+			reserve(1);
 		while (_size + count >= _capacity)
 			reserve(_capacity * 2);
-		iterator it = end();
 		_size += count;
-		for (std::size_t i = _size - 1; it != pos; i--){
-			it--;
-			array[i] = *it;
-		}
+		for (std::size_t i = _size; i >= index + count; i--)
+			array[i] = array[i - count];
 		T value = *first;
 		for (size_t i = 0; i < count; i++){
-			*(pos + i) = value;
+			array[index + i] = value;
 			first++;
 			value = *first;
 		}
-		return (pos);
+		return (iterator(array + index));
 	}
 
 	template<typename T, class Alloc>

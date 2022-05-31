@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/30 20:28:50 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:18:47 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int	main(){
 		VECTOR<int>::iterator it = c1.begin();
 		it = c1.insert(it, 200);
 		print(2, c1);
-	
+
 		c1.insert(it, 2, 300);
 		print(3, c1);
 	
