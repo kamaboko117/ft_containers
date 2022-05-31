@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 14:18:47 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:13:17 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	main(){
 	int	i = 0;
 	
 	VECTOR<int>		vec;
-	VECTOR<int>		vec2(4);
+	VECTOR<int>		src(4);
+	VECTOR<int>		vec2(src);
 
 	for (VECTOR<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
 		vec2[i++] = std::rand();
@@ -103,12 +104,12 @@ int	main(){
 		std::cout << std::endl;
 	}
 
-	std::cout << std::endl <<  "****vector.data()*****" << std::endl;{
-		VECTOR<int> container(4);
-		for (size_t i = 0; i < 4; i++)
-			container[i] = i + 1;
-		pointer_func(container.data(), container.size());
-	}
+	// std::cout << std::endl <<  "****vector.data()*****" << std::endl;{
+	// 	VECTOR<int> container(4);
+	// 	for (size_t i = 0; i < 4; i++)
+	// 		container[i] = i + 1;
+	// 	pointer_func(container.data(), container.size());
+	// }
 
 	std::cout << std::endl <<  "****vector.max_size()*****" << std::endl;{
 		VECTOR<char> q;
@@ -127,7 +128,6 @@ int	main(){
 				if(v1.size() == v1.capacity()) {
 					std::cout << "size() == capacity() == " << v1.size() << '\n';
 				}
-				std::cout << "plouf" << std::endl;
 				v1.push_back(n);
 			}
 		}

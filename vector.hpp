@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 15:02:57 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:12:46 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,67 +95,91 @@ namespace ft
 		
 	private:
 		allocator_type	_alloc;
-		T				*array;
 		std::size_t		_capacity;
 		std::size_t		_size;
+		T				*array;
 	public:
 		explicit vector(const allocator_type &alloc = allocator_type());
 		explicit vector(const std::size_t count, const T &value = T(), const allocator_type &alloc = allocator_type());
-		//template<class InputIt>
-		//vector(InputIt first, InputIt last);
+		// template<class InputIt>
+		// vector(InputIt first, InputIt last, const allocator_type &alloc = allocator_type());
+		vector(const vector &rhs);
 		~vector();
 
 		vector	&operator=(vector const &rhs);
 		T		&operator[](std::size_t);
+		const T	&operator[](std::size_t) const;
 		
-		iterator		begin();
-		const_iterator	begin() const;
-		iterator		end();
-		const_iterator	end() const;
-		std::size_t		capacity() const;
-		std::size_t		size() const;
-		T				&front() const;
-		T				&back() const;
-		bool			empty() const;
-		T				&at(std::size_t pos);
-		T				*data();
-		T const			*data() const;
-		std::size_t		max_size() const;
-		void			reserve(std::size_t new_cap);
-		void			push_back(const T &value);
-		void			clear();
-		iterator		insert(iterator pos, const T &value);
-		iterator		insert(iterator pos, std::size_t count, const T &value);
+		iterator				begin();
+		const_iterator			begin() const;
+		iterator				end();
+		const_iterator			end() const;
+		reverse_iterator		rbegin();
+		const_reverse_iterator	rbegin() const;
+		reverse_iterator		rend();
+		reverse_iterator		rend() const;
+		
+		std::size_t				size() const;
+		std::size_t				max_size() const;
+		void					resize(std::size_t n, T value = T());
+		std::size_t				capacity() const;
+		bool					empty() const;
+		void					reserve(std::size_t new_cap);
+		
+		T						&at(std::size_t pos);
+		T const					&at(std::size_t post) const;
+		T						&front();
+		T const					&front() const;
+		T						&back();
+		T const					&back() const;
+		// T						*data();
+		// T const					*data() const;
+		
+		void					assign(std::size_t count, const T &value);
 		template<class InputIt>
-		iterator		insert(iterator pos, InputIt first, InputIt last,
+		void					assign(InputIt first, InputIt last, 
 			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
-		void			assign(std::size_t count, const T &value);
+		void					push_back(const T &value);
+		void					pop_back();
+		iterator				insert(iterator pos, const T &value);
+		iterator				insert(iterator pos, std::size_t count, const T &value);
 		template<class InputIt>
-		void			assign(InputIt first, InputIt last, 
+		iterator				insert(iterator pos, InputIt first, InputIt last,
 			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
-		void			pop_back();
-		void			resize(std::size_t n, T value = T());
-		iterator		erase(iterator pos);
-		iterator		erase(iterator first, iterator last);
+		iterator				erase(iterator pos);
+		iterator				erase(iterator first, iterator last);
+		void					swap(vector &);
+		void					clear();
+
 	};
 
 	//CONSTRUCT
 	template<typename T, class Alloc>
 	vector<T, Alloc>::vector(const allocator_type &alloc)
 		: _alloc(alloc),
-		array(_alloc.allocate(0)),
 		_capacity(0),
-		_size(0){}
+		_size(0),
+		array(_alloc.allocate(0)){}
 
 	template<typename T, class Alloc>
 	vector<T, Alloc>::vector(const std::size_t count, const T &value, const allocator_type &alloc)
 		: _alloc(alloc), 
-		array(_alloc.allocate(count)),
 		_capacity(count),
-		_size(count)
+		_size(count),
+		array(_alloc.allocate(count))
 	{
 		for (size_t i = 0; i < count; i++)
 			array[i] = value;
+	}
+
+	template<typename T, class Alloc>
+	vector<T, Alloc>::vector(const vector<T, Alloc> &src)
+		: _alloc(src._alloc),
+		_capacity(src._capacity),
+		_size(src._size),
+		array(_alloc.allocate(_size))
+	{
+		insert(begin(), src.begin(), src.end());			
 	}
 
 	template<typename T, class Alloc>
@@ -186,7 +210,17 @@ namespace ft
 	}
 
 	template<typename T, class Alloc>
+	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::begin() const{
+		return (iterator(array));
+	}
+
+	template<typename T, class Alloc>
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::end(){
+		return (iterator(array + _size));
+	}
+
+	template<typename T, class Alloc>
+	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::end() const{
 		return (iterator(array + _size));
 	}
 
@@ -202,12 +236,12 @@ namespace ft
 	}
 
 	template<typename T, class Alloc>
-	T	&vector<T, Alloc>::front() const{
+	T	&vector<T, Alloc>::front(){
 		return (array[0]);
 	}
 	
 	template<typename T, class Alloc>
-	T	&vector<T, Alloc>::back() const{
+	T	&vector<T, Alloc>::back(){
 		return (array[_size]);
 	}
 	
@@ -224,15 +258,15 @@ namespace ft
 			return (array[pos]);
 	}
 
-	template<typename T, class Alloc>
-	T	*vector<T, Alloc>::data(){
-		return (array);
-	}
+	// template<typename T, class Alloc>
+	// T	*vector<T, Alloc>::data(){
+	// 	return (array);
+	// }
 
-	template<typename T, class Alloc>
-	T const	*vector<T, Alloc>::data() const{
-		return (array);
-	}
+	// template<typename T, class Alloc>
+	// T const	*vector<T, Alloc>::data() const{
+	// 	return (array);
+	// }
 	
 	template<typename T, class Alloc>
 	std::size_t	vector<T, Alloc>::max_size() const{
