@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 14:15:31 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:02:57 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,16 @@ namespace ft
 	public:
 		typedef	T									value_type;
 		typedef	Alloc								allocator_type;
-		typedef	std::size_t							size_type;
-		typedef	std::ptrdiff_t						difference_type;
 		typedef	value_type&							reference;
-//		typedef	reference const						const_reference;
+		typedef	const value_type&					const_reference;
 		typedef	typename allocator_type::pointer	pointer;
 		typedef	pointer const						const_pointer;
 		typedef iterator<vector<T> >				iterator;
-		typedef iterator const						const_iterator;	
-	
+		typedef iterator const						const_iterator;
+		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
+		typedef reverse_iterator<iterator>			reverse_iterator;
+		typedef	std::size_t							size_type;
+		typedef	std::ptrdiff_t						difference_type;
 		
 	private:
 		allocator_type	_alloc;
