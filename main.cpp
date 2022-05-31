@@ -6,11 +6,12 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 18:02:26 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:17:10 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
+#include <list>
 #include "vector.hpp"
 #include <iostream>
 #include <cstdlib>
@@ -73,32 +74,38 @@ void printpb(T &xs)
 int	main(){
 	srand(time(0));
 	
-	VECTOR<int> vct(7);
+	VECTOR<int> vct(5);
+	VECTOR<int>::iterator it = vct.begin(), ite = vct.end();
 
-	for (unsigned long int i = 0; i < vct.size(); ++i)
-	{
-		vct.at(i) = (vct.size() - i) * 3;
-		std::cout << "vct[]: " << vct[i] << std::endl;
-	}
+	std::cout << "len: " << (ite - it) << std::endl;
+	for (; it != ite; ++it)
+		*it = (ite - it);
+
+	it = vct.begin();
+	VECTOR<int> vct_range(it, --(--ite));
+	for (int i = 0; it != ite; ++it)
+		*it = ++i * 5;
+
+	it = vct.begin();
+	VECTOR<int> vct_copy(vct);
+	for (int i = 0; it != ite; ++it)
+		*it = ++i * 7;
+	vct_copy.push_back(42);
+	vct_copy.push_back(21);
+
+	std::cout << "\t-- PART ONE --" << std::endl;
 	printSize(vct);
+	printSize(vct_range);
+	printSize(vct_copy);
 
-	VECTOR<int> const vct_c(vct);
+	vct = vct_copy;
+	vct_copy = vct_range;
+	vct_range.clear();
 
-	std::cout << "front(): " << vct.front() << " " << vct_c.front() << std::endl;
-	std::cout << "back(): " << vct.back() << " " <<  vct_c.back() << std::endl;
-
-	for (unsigned long int i = 0; i < vct_c.size(); ++i)
-		std::cout << "vct_c.at(): " << vct_c.at(i) << std::endl;
-	try {
-		std::cout << vct_c.at(10) << std::endl;
-	}
-	catch (std::out_of_range &e) {
-		std::cout << "Catch out_of_range exception!" << std::endl;
-	}
-	catch (std::exception &e) {
-		std::cout << "Catch exception: " << e.what() << std::endl;
-	}
-	printSize(vct_c);
+	std::cout << "\t-- PART TWO --" << std::endl;
+	printSize(vct);
+	printSize(vct_range);
+	printSize(vct_copy);
 	return (0);
 
 	// std::cout << std::endl << "****random tests*****" << std::endl;{

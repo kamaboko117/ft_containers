@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 18:03:48 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:19:15 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ namespace ft
 	class iterator
 	{
 	public:
-		typedef T value_type;
+		typedef T 				value_type;
+		typedef std::ptrdiff_t	difference_type;
 	private:
 		T	*ptr;
 	public:
@@ -74,8 +75,25 @@ namespace ft
 		iterator	operator-(std::size_t i) const{
 			return (iterator(ptr - i));
 		}
+
+		T	*base() const{
+			return (ptr);
+		}
 	};
 
+	template <typename T>
+    typename iterator<T>::difference_type	operator+(const iterator<T> lhs, const iterator<T> rhs){
+        return (lhs.base() + rhs.base());
+    }
+	template <typename T>
+    typename iterator<T>::difference_type	operator-(const iterator<T> lhs, const iterator<T> rhs){
+        return (lhs.base() - rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator-(const iterator<T_L> lhs, const iterator<T_R> rhs){
+        return (lhs.base() - rhs.base());
+    }
+	
 	template<typename T, class Alloc = std::allocator<T> >
 	class vector
 	{	
@@ -103,7 +121,7 @@ namespace ft
 		explicit vector(const std::size_t count, const T &value = T(), const allocator_type &alloc = allocator_type());
 		template<class InputIt>
 		vector(InputIt first, InputIt last, const allocator_type &alloc = allocator_type(),
-			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
+			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type());
 		vector(const vector &rhs);
 		~vector();
 
@@ -139,14 +157,14 @@ namespace ft
 		void					assign(std::size_t count, const T &value);
 		template<class InputIt>
 		void					assign(InputIt first, InputIt last, 
-			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
+			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type());
 		void					push_back(const T &value);
 		void					pop_back();
 		iterator				insert(iterator pos, const T &value);
 		iterator				insert(iterator pos, std::size_t count, const T &value);
 		template<class InputIt>
 		iterator				insert(iterator pos, InputIt first, InputIt last,
-			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = 0);
+			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type());
 		iterator				erase(iterator pos);
 		iterator				erase(iterator first, iterator last);
 		void					swap(vector &);
@@ -185,7 +203,7 @@ namespace ft
 		_capacity = _size;
 		array = _alloc.allocate(_capacity);
 		for (size_t i = 0; i < _size; i++)
-			array[i] = first++;
+			array[i] = *first++;
 	}
 	
 	template<typename T, class Alloc>
@@ -257,10 +275,20 @@ namespace ft
 	}
 	
 	template<typename T, class Alloc>
+	T const	&vector<T, Alloc>::front() const{
+		return (array[0]);
+	}
+	
+	template<typename T, class Alloc>
 	T	&vector<T, Alloc>::back(){
 		return (array[_size]);
 	}
 	
+	template<typename T, class Alloc>
+	T const	&vector<T, Alloc>::back() const{
+		return (array[_size]);
+	}
+
 	template<typename T, class Alloc>
 	bool	vector<T, Alloc>::empty() const{
 		return (_size == 0 ? true : false);
@@ -268,6 +296,14 @@ namespace ft
 
 	template<typename T, class Alloc>
 	T	&vector<T, Alloc>::at(std::size_t pos){
+		if (pos >= _size)
+			throw std::out_of_range("out of range");
+		else
+			return (array[pos]);
+	}
+
+	template<typename T, class Alloc>
+	T const	&vector<T, Alloc>::at(std::size_t pos) const{
 		if (pos >= _size)
 			throw std::out_of_range("out of range");
 		else
@@ -438,6 +474,25 @@ namespace ft
 		_size -= range;
 		return (first);
 	}
-	
+
+//NON MEMBER 
+
+	template <class T, class Alloc>
+	bool operator== (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename ft::vector<T>::const_iterator first1 = lhs.begin();
+		typename ft::vector<T>::const_iterator first2 = rhs.begin();
+		while (first1 != lhs.end())
+		{
+			if (first2 == rhs.end() || *first1 != *first2)
+				return (false);
+			++first1;
+			++first2;
+		}
+		return (true);
+	}
+		
 }
 #endif
