@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:29:41 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 20:20:01 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:30:19 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,34 @@ namespace ft
 //NON MEMBER OPERATORS
 	template<class Iter>
 	bool	operator==(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
+	template<class Iter_L, class Iter_R>
+	bool	operator==(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 	template<class Iter>
 	bool	operator!=(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
+	template<class Iter_L, class Iter_R>
+	bool	operator!=(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 	template<class Iter>
 	bool	operator<(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
+	template<class Iter_L, class Iter_R>
+	bool	operator<(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 	template<class Iter>
 	bool	operator<=(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
+	template<class Iter_L, class Iter_R>
+	bool	operator<=(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 	template<class Iter>
 	bool	operator>(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
+	template<class Iter_L, class Iter_R>
+	bool	operator>(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 	template<class Iter>
 	bool	operator>=(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
+	template<class Iter_L, class Iter_R>
+	bool	operator>=(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 	template<class Iter>
 	reverse_iterator<Iter>	operator+(typename reverse_iterator<Iter>::difference_type n, const reverse_iterator<Iter> &rev_it);
 	template<class Iter>
 	typename reverse_iterator<Iter>::difference_type	operator-(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
-
+	template<class Iter_L, class Iter_R>
+	bool	operator-(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs);
 }	
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 18:00:34 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:25:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,24 +108,30 @@ void	cmp(const VECTOR<T, Alloc> &lhs, const VECTOR<T, Alloc> &rhs)
 int	main(){
 	srand(time(0));
 	
-	VECTOR<int> vct;
-	VECTOR<int>::iterator it = vct.begin();
-	VECTOR<int>::const_iterator cit = vct.begin();
+	const int size = 5;
+	VECTOR<int> vct(size);
+	VECTOR<int>::reverse_iterator it = vct.rbegin();
+	VECTOR<int>::const_reverse_iterator ite = vct.rbegin();
 
-	VECTOR<int>::reverse_iterator rit(it);
-	VECTOR<int>::const_reverse_iterator crit(rit);
-	VECTOR<int>::const_reverse_iterator crit_(it);
-	VECTOR<int>::const_reverse_iterator crit_2(cit);
+	for (int i = 0; i < size; ++i)
+		it[i] = (size - i) * 5;
 
-	/* error expected
-	VECTOR<int>::reverse_iterator rit_(crit);
-	VECTOR<int>::reverse_iterator rit2(cit);
-	VECTOR<int>::iterator it2(rit);
-	VECTOR<int>::const_iterator cit2(crit);
-	*/
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+	std::cout << *(it += 2) << std::endl;
+	std::cout << *(it -= 1) << std::endl;
 
-	std::cout << "OK" << std::endl;
+	*(it -= 2) = 42;
+	*(it += 2) = 21;
 
+	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+
+	std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+	printSize(vct, true);
 	// std::cout << std::endl << "****random tests*****" << std::endl;{
 	// 	int	i = 0;
 		

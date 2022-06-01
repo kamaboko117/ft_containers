@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 18:39:47 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:41:00 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ namespace ft
 		reverse_iterator		rbegin();
 		const_reverse_iterator	rbegin() const;
 		reverse_iterator		rend();
-		reverse_iterator		rend() const;
+		const_reverse_iterator	rend() const;
 		
 		std::size_t				size() const;
 		std::size_t				max_size() const;
@@ -332,25 +332,45 @@ namespace ft
 
 	//ITERATORS
 	template<typename T, class Alloc>
-	typename vector<T, Alloc>::iterator	vector<T, Alloc>::begin(){
+	typename vector<T, Alloc>::iterator					vector<T, Alloc>::begin(){
 		return (iterator(array));
 	}
 
 	template<typename T, class Alloc>
-	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::begin() const{
+	typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::begin() const{
 		return (const_iterator(array));
 	}
 
 	template<typename T, class Alloc>
-	typename vector<T, Alloc>::iterator	vector<T, Alloc>::end(){
+	typename vector<T, Alloc>::iterator					vector<T, Alloc>::end(){
 		return (iterator(array + _size));
 	}
 
 	template<typename T, class Alloc>
-	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::end() const{
+	typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::end() const{
 		return (const_iterator(array + _size));
 	}
 
+	template<typename T, class Alloc>
+	typename vector<T, Alloc>::reverse_iterator			vector<T, Alloc>::rbegin(){
+		return (reverse_iterator(end()));
+	}
+
+	template<typename T, class Alloc>
+	typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rbegin() const{
+		return (const_reverse_iterator(end()));
+	}
+
+	template<typename T, class Alloc>
+	typename vector<T, Alloc>::reverse_iterator			vector<T, Alloc>::rend(){
+		return (reverse_iterator(begin()));
+	}
+
+	template<typename T, class Alloc>
+	typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rend() const{
+		return (const_reverse_iterator(begin()));
+	}
+	
 	//ETC
 	template<typename T, class Alloc>
 	std::size_t	vector<T, Alloc>::capacity() const{
