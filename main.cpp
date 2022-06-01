@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 15:56:05 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:00:34 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,26 +108,23 @@ void	cmp(const VECTOR<T, Alloc> &lhs, const VECTOR<T, Alloc> &rhs)
 int	main(){
 	srand(time(0));
 	
-	VECTOR<int> vct(4);
-	VECTOR<int> vct2(4);
+	VECTOR<int> vct;
+	VECTOR<int>::iterator it = vct.begin();
+	VECTOR<int>::const_iterator cit = vct.begin();
 
-	cmp(vct, vct);  // 0
-	cmp(vct, vct2); // 1
+	VECTOR<int>::reverse_iterator rit(it);
+	VECTOR<int>::const_reverse_iterator crit(rit);
+	VECTOR<int>::const_reverse_iterator crit_(it);
+	VECTOR<int>::const_reverse_iterator crit_2(cit);
 
-	vct2.resize(10);
+	/* error expected
+	VECTOR<int>::reverse_iterator rit_(crit);
+	VECTOR<int>::reverse_iterator rit2(cit);
+	VECTOR<int>::iterator it2(rit);
+	VECTOR<int>::const_iterator cit2(crit);
+	*/
 
-	cmp(vct, vct2); // 2
-	cmp(vct2, vct); // 3
-
-	vct[2] = 42;
-
-	cmp(vct, vct2); // 4
-	cmp(vct2, vct); // 5
-
-	swap(vct, vct2);
-
-	cmp(vct, vct2); // 6
-	cmp(vct2, vct); // 7
+	std::cout << "OK" << std::endl;
 
 	// std::cout << std::endl << "****random tests*****" << std::endl;{
 	// 	int	i = 0;

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:29:41 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 14:57:31 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:20:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,13 @@ namespace ft
 		typedef typename iterator_traits<Iter>::pointer				pointer;
 		typedef typename iterator_traits<Iter>::reference			reference;
 
+	private:
+		iterator_type	_elem;
+	public:
 		reverse_iterator();
 		explicit reverse_iterator(iterator_type it);
-		reverse_iterator(const reverse_iterator<Iter> &src);
+		template<class Iter2>
+		reverse_iterator(const reverse_iterator<Iter2> &src);
 
 		reference			operator*() const;
 		reverse_iterator	operator+(difference_type rhs) const;
@@ -62,6 +66,25 @@ namespace ft
 		iterator_type	base() const;
 	};
 
+	template<class Iter>
+	reverse_iterator<Iter>::reverse_iterator()
+		: _elem(){}
+
+	template<class Iter>
+	reverse_iterator<Iter>::reverse_iterator(iterator_type it)
+		: _elem(it){}
+	
+	template<class Iter>
+	template<class Iter2>
+	reverse_iterator<Iter>::reverse_iterator(const reverse_iterator<Iter2> &src)
+		: _elem(src.base()){}
+
+	template<class Iter>
+	typename reverse_iterator<Iter>::iterator_type	reverse_iterator<Iter>::base() const{
+		return (_elem);
+	}
+	
+//NON MEMBER OPERATORS
 	template<class Iter>
 	bool	operator==(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs);
 	template<class Iter>
