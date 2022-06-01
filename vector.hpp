@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 16:51:53 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:39:47 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #include <iostream>
 namespace ft
-{	
+{
 
 // iterator
 	template<typename T>
@@ -30,6 +30,9 @@ namespace ft
 	public:
 		typedef T 				value_type;
 		typedef std::ptrdiff_t	difference_type;
+		typedef	value_type*		pointer;
+		typedef value_type&		reference;
+		typedef iterator		iterator_category;
 	private:
 		T	*ptr;
 	public:
