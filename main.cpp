@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 20:22:51 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:44:09 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 template <typename T>
 void	printSize(VECTOR<T> const &vct, bool print_content = true)
 {
-	const std::size_t size = vct.size();
-	const std::size_t capacity = vct.capacity();
-	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
+	std::size_t size = vct.size();
+	std::size_t capacity = vct.capacity();
+	std::string const isCapacityOk = (capacity >= size) ? "OK" : "KO";
 	// Cannot limit capacity's max value because it's implementation dependent
 
 	std::cout << "size: " << size << std::endl;
@@ -43,14 +43,6 @@ void	printSize(VECTOR<T> const &vct, bool print_content = true)
 			std::cout << "- " << *it << std::endl;
 	}
 	std::cout << "###############################################" << std::endl;
-}
-
-void	checkErase(VECTOR<std::string> const &vct,
-					VECTOR<std::string>::iterator const &it)
-{
-	static int i = 0;
-	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
-	printSize(vct);
 }
 
 void pointer_func(const int* p, std::size_t size)
@@ -79,37 +71,59 @@ void printpb(T &xs)
     std::cout << "]\n";
 }
 
+void	prepost_incdec(VECTOR<int> &vct)
+{
+	VECTOR<int>::iterator it = vct.begin();
+	VECTOR<int>::iterator it_tmp;
+
+	std::cout << "Pre inc" << std::endl;
+	it_tmp = ++it;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+
+	std::cout << "Pre dec" << std::endl;
+	it_tmp = --it;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+
+	std::cout << "Post inc" << std::endl;
+	it_tmp = it++;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+
+	std::cout << "Post dec" << std::endl;
+	it_tmp = it--;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+	std::cout << "###############################################" << std::endl;
+}
+
 int	main(){
 	srand(time(0));
-std::cout << "plouf" << std::endl;
-	VECTOR<std::string> vct(10);
 	
-std::cout << "plouf" << std::endl;
-	for (unsigned long int i = 0; i < vct.size(); ++i)
-		vct[i] = std::string((vct.size() - i), i + 65);
-std::cout << "plouf" << std::endl;
-	printSize(vct);
-std::cout << "plouf" << std::endl;
-	checkErase(vct, vct.erase(vct.begin() + 2));
+	const int size = 5;
+	VECTOR<int> vct(size);
+	VECTOR<int>::iterator it = vct.begin();
+	VECTOR<int>::const_iterator ite = vct.begin();
 
-	checkErase(vct, vct.erase(vct.begin()));
-	checkErase(vct, vct.erase(vct.end() - 1));
+	for (int i = 0; i < size; ++i)
+		it[i] = (size - i) * 5;
+	prepost_incdec(vct);
 
-	checkErase(vct, vct.erase(vct.begin(), vct.begin() + 3));
-	checkErase(vct, vct.erase(vct.end() - 3, vct.end() - 1));
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+	std::cout << *(it += 2) << std::endl;
+	std::cout << *(it -= 1) << std::endl;
 
-	vct.push_back("Hello");
-	vct.push_back("Hi there");
-	printSize(vct);
-	checkErase(vct, vct.erase(vct.end() - 3, vct.end()));
+	*(it -= 2) = 42;
+	*(it += 2) = 21;
 
-	vct.push_back("ONE");
-	vct.push_back("TWO");
-	vct.push_back("THREE");
-	vct.push_back("FOUR");
-	printSize(vct);
-	checkErase(vct, vct.erase(vct.begin(), vct.end()));
+	std::cout << "const_ite +=: " << *(ite += 2) << std::endl;
+	std::cout << "const_ite -=: " << *(ite -= 2) << std::endl;
 
+	std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+	printSize(vct, true);
+	return (0);
 
 	// std::cout << std::endl << "****random tests*****" << std::endl;{
 	// 	int	i = 0;

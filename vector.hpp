@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/05/31 20:29:04 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:51:05 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,17 @@ namespace ft
 		iterator(){}
 		iterator(T *ptr)
 			: ptr(ptr){}
+		template<typename U>
+		iterator(const iterator<U> &src)
+		: ptr(src.base()){}
 		~iterator(){}
 		
+		iterator	&operator=(const iterator &rhs){
+			if (this == &rhs)
+				return (*this);
+			ptr = rhs.ptr;
+			return (*this);
+		}
 		iterator	&operator++(){
 			this->ptr++;
 			return (*this);
@@ -54,14 +63,14 @@ namespace ft
 			--(*this);
 			return (it);
 		}
-		T			&operator[](std::size_t i){
-			return *(ptr[i]);
+		T			&operator*() const{
+			return (*ptr);
+		}
+		T			&operator[](difference_type i){
+			return (ptr[i]);
 		}
 		T			*operator->(){
 			return (ptr);
-		}
-		T			&operator*() const{
-			return (*ptr);
 		}
 		bool		operator==(const iterator &rhs) const{
 			return (ptr == rhs.ptr);
@@ -75,17 +84,93 @@ namespace ft
 		iterator	operator-(std::size_t i) const{
 			return (iterator(ptr - i));
 		}
-
+		iterator	&operator+=(difference_type n){
+			ptr += n;
+			return (*this);
+		}
+		iterator	&operator-=(difference_type n){
+			ptr -= n;
+			return (*this);
+		}
 		T	*base() const{
 			return (ptr);
 		}
 	};
 
-	template <typename T>
-    typename iterator<T>::difference_type	operator+(const iterator<T> lhs, const iterator<T> rhs){
-        return (lhs.base() + rhs.base());
+	template<typename T>
+	typename iterator<T>::difference_type	operator==(const iterator<T> lhs, const iterator<T> rhs){
+        return (lhs.base() == rhs.base());
     }
-	template <typename T>
+	template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator==(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    {
+        return (lhs.base() == rhs.base());
+    }
+	template<typename T>
+	typename iterator<T>::difference_type	operator!=(const iterator<T> lhs, const iterator<T> rhs)
+    {
+        return (lhs.base() != rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator!=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    {
+        return (lhs.base() != rhs.base());
+    }
+    template<typename T>
+    typename iterator<T>::difference_type	operator<(const iterator<T> lhs, const iterator<T> rhs)
+    {
+        return (lhs.base() < rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator<(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    {
+        return (lhs.base() < rhs.base());
+    }
+	template<typename T>
+    typename iterator<T>::difference_type	operator>(const iterator<T> lhs, const iterator<T> rhs)
+    {
+        return (lhs.base() > rhs.base());
+    }
+    template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator>(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    {
+        return (lhs.base() > rhs.base());
+    }
+	template<typename T>
+    typename iterator<T>::difference_type	operator<=(const iterator<T> lhs, const iterator<T> rhs)
+    {
+        return (lhs.base() <= rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator<=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    {
+        return (lhs.base() <= rhs.base());
+    }
+	template<typename T>
+    typename iterator<T>::difference_type	operator>=(const iterator<T> lhs, const iterator<T> rhs)
+    {
+        return (lhs.base() >= rhs.base());
+    }
+    template<typename T_L, typename T_R>
+    typename iterator<T_L>::difference_type	operator>=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    {
+        return (lhs.base() >= rhs.base());
+    }
+
+	// template<typename T>	
+	// typename iterator<T>::difference_type	operator+(const iterator<T> lhs, const iterator<T> rhs){
+    //     return (lhs.base() + rhs.base());
+    // }
+	// template<typename T_L, typename T_R>
+    // typename iterator<T_L>::difference_type	operator+(const iterator<T_L> lhs, const iterator<T_R> rhs){
+    //     return (lhs.base() + rhs.base());
+    // }
+	template<typename T>
+    ft::iterator<T>	operator+(typename ft::iterator<T>::difference_type n, typename ft::iterator<T>& rai)
+    {
+		return (&(*rai) + n);
+	}
+	template<typename T>
     typename iterator<T>::difference_type	operator-(const iterator<T> lhs, const iterator<T> rhs){
         return (lhs.base() - rhs.base());
     }
@@ -104,8 +189,8 @@ namespace ft
 		typedef	const value_type&					const_reference;
 		typedef	typename allocator_type::pointer	pointer;
 		typedef	pointer const						const_pointer;
-		typedef iterator<T>							iterator;
-		typedef ft::iterator<T const>				const_iterator;
+		typedef ft::iterator<value_type>			iterator;
+		typedef ft::iterator<const value_type>		const_iterator;
 		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef reverse_iterator<iterator>			reverse_iterator;
 		typedef	std::size_t							size_type;
@@ -326,6 +411,17 @@ namespace ft
 	}
 
 	template<typename T, class Alloc>
+	void	vector<T, Alloc>::resize(std::size_t n, T value){
+		if (n < _size){
+			for (std::size_t i = n; i < _size; i++)
+				_alloc.destroy(&(array[i]));
+			_size = n;
+		}
+		else
+			insert(end(), n - _size, value);
+	}
+	
+	template<typename T, class Alloc>
 	void	vector<T, Alloc>::reserve(std::size_t new_cap){	
 		if (new_cap > max_size())
 			throw std::length_error("");
@@ -461,7 +557,7 @@ namespace ft
 		for (iterator it = pos; it != end() - 1; it++)
 			*it = *(it + 1);
 		_size--;
-		return (pos);
+		return (iterator(pos));
 	}
 
 	template<typename T, class Alloc>
@@ -472,7 +568,7 @@ namespace ft
 		for (iterator it = first; last != end(); it++)
 			*it = *(last++);
 		_size -= range;
-		return (first);
+		return (iterator(first));
 	}
 
 //NON MEMBER 
