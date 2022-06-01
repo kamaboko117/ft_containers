@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 15:51:05 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:51:53 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include <memory>
 # include "iterator.hpp"
 # include "type_traits.hpp"
-# include "utils.hpp"
+# include "algorithm.hpp"
 
 #include <iostream>
 namespace ft
 {	
+
+// iterator
 	template<typename T>
 	class iterator
 	{
@@ -97,6 +99,7 @@ namespace ft
 		}
 	};
 
+// iteraror non member operators
 	template<typename T>
 	typename iterator<T>::difference_type	operator==(const iterator<T> lhs, const iterator<T> rhs){
         return (lhs.base() == rhs.base());
@@ -179,6 +182,7 @@ namespace ft
         return (lhs.base() - rhs.base());
     }
 	
+//vector
 	template<typename T, class Alloc = std::allocator<T> >
 	class vector
 	{	
@@ -201,6 +205,7 @@ namespace ft
 		std::size_t		_capacity;
 		std::size_t		_size;
 		T				*array;
+	
 	public:
 		explicit vector(const allocator_type &alloc = allocator_type());
 		explicit vector(const std::size_t count, const T &value = T(), const allocator_type &alloc = allocator_type());
@@ -573,13 +578,13 @@ namespace ft
 
 //NON MEMBER 
 
-	template <class T, class Alloc>
-	bool operator== (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	template<class T, class Alloc>
+	bool	operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
-		typename ft::vector<T>::const_iterator first1 = lhs.begin();
-		typename ft::vector<T>::const_iterator first2 = rhs.begin();
+		typename vector<T>::const_iterator first1 = lhs.begin();
+		typename vector<T>::const_iterator first2 = rhs.begin();
 		while (first1 != lhs.end())
 		{
 			if (first2 == rhs.end() || *first1 != *first2)
@@ -589,6 +594,31 @@ namespace ft
 		}
 		return (true);
 	}
-		
+	
+	template<class T, class Alloc>
+	bool	operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs){
+		return(!(lhs == rhs));
+	}
+
+	template<class T, class Alloc>
+	bool	operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs){
+		return(lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+	
+	template<class T, class Alloc>
+	bool	operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs){
+		return(!(rhs < lhs));
+	}
+	
+	template<class T, class Alloc>
+	bool	operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs){
+		return(rhs < lhs);
+	}
+
+	template<class T, class Alloc>
+	bool	operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs){
+		return(!(lhs < rhs));
+	}
+	
 }
 #endif

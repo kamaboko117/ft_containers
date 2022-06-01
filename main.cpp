@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 15:44:09 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:56:05 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,36 +94,40 @@ void	prepost_incdec(VECTOR<int> &vct)
 	std::cout << "###############################################" << std::endl;
 }
 
+template <class T, class Alloc>
+void	cmp(const VECTOR<T, Alloc> &lhs, const VECTOR<T, Alloc> &rhs)
+{
+	static int i = 0;
+
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+}
+
 int	main(){
 	srand(time(0));
 	
-	const int size = 5;
-	VECTOR<int> vct(size);
-	VECTOR<int>::iterator it = vct.begin();
-	VECTOR<int>::const_iterator ite = vct.begin();
+	VECTOR<int> vct(4);
+	VECTOR<int> vct2(4);
 
-	for (int i = 0; i < size; ++i)
-		it[i] = (size - i) * 5;
-	prepost_incdec(vct);
+	cmp(vct, vct);  // 0
+	cmp(vct, vct2); // 1
 
-	it = it + 5;
-	it = 1 + it;
-	it = it - 4;
-	std::cout << *(it += 2) << std::endl;
-	std::cout << *(it -= 1) << std::endl;
+	vct2.resize(10);
 
-	*(it -= 2) = 42;
-	*(it += 2) = 21;
+	cmp(vct, vct2); // 2
+	cmp(vct2, vct); // 3
 
-	std::cout << "const_ite +=: " << *(ite += 2) << std::endl;
-	std::cout << "const_ite -=: " << *(ite -= 2) << std::endl;
+	vct[2] = 42;
 
-	std::cout << "(it == const_it): " << (ite == it) << std::endl;
-	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+	cmp(vct, vct2); // 4
+	cmp(vct2, vct); // 5
 
-	printSize(vct, true);
-	return (0);
+	swap(vct, vct2);
+
+	cmp(vct, vct2); // 6
+	cmp(vct2, vct); // 7
 
 	// std::cout << std::endl << "****random tests*****" << std::endl;{
 	// 	int	i = 0;
