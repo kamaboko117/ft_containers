@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:29:41 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/02 17:45:20 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:00:27 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,12 +217,12 @@ namespace ft
 	
 	template<class Iter>
 	typename reverse_iterator<Iter>::difference_type	operator-(const reverse_iterator<Iter> &lhs, const reverse_iterator<Iter> &rhs){
-	return (lhs.base() - rhs.base());
+		return (rhs.base() - lhs.base());
 	}
 	
 	template<class Iter_L, class Iter_R>
-	bool	operator-(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs){
-		return (lhs.base() - rhs.base());
+	typename reverse_iterator<Iter_L>::difference_type	operator-(const reverse_iterator<Iter_L> &lhs, const reverse_iterator<Iter_R> &rhs){
+		return (rhs.base() - lhs.base());
 	}
 }	
 

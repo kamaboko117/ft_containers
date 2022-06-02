@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/05/26 18:46:31 by asaboure         ###   ########.fr        #
+#    Updated: 2022/06/02 18:58:32 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,11 @@ STD		= 	containers
 
 SRCS	=	main.cpp
 
-HPP		=	vector.hpp
+HPP		=	vector.hpp\
+			iterator.hpp\
+			type_traits.hpp\
+			utils.hpp\
+			algorithm.hpp
 
 BONUSOBJS	= ${BONUSSRCS:.c=.o}
 

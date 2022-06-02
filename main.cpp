@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/02 17:54:18 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:54:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,31 +108,31 @@ void	cmp(const VECTOR<T, Alloc> &lhs, const VECTOR<T, Alloc> &rhs)
 int	main(){
 	srand(time(0));
 	
-	VECTOR<int> foo(3, 15);
-	VECTOR<int> bar(5, 42);
-	
-	VECTOR<int>::const_iterator it_foo = foo.begin();
-	VECTOR<int>::const_iterator it_bar = bar.begin();
+	const int size = 5;
+	VECTOR<int> vct(size);
+	VECTOR<int>::reverse_iterator it = vct.rbegin();
+	VECTOR<int>::const_reverse_iterator ite = vct.rbegin();
 
-	std::cout << "BEFORE SWAP" << std::endl;
+	for (int i = 0; i < size; ++i)
+		it[i] = (size - i) * 5;
 
-	std::cout << "foo contains:" << std::endl;
-	printSize(foo);
-	std::cout << "bar contains:" << std::endl;
-	printSize(bar);
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+	std::cout << *(it += 2) << std::endl;
+	std::cout << *(it -= 1) << std::endl;
 
-	foo.swap(bar);
+	*(it -= 2) = 42;
+	*(it += 2) = 21;
 
-	std::cout << "AFTER SWAP" << std::endl;
+	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
 
-	std::cout << "foo contains:" << std::endl;
-	printSize(foo);
-	std::cout << "bar contains:" << std::endl;
-	printSize(bar);
+	std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	std::cout << "const_ite: " << *ite <<  " it: " << *it << std::endl;
+	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
 
-	std::cout << "Iterator validity:" << std::endl;
-	std::cout << (it_foo == bar.begin()) << std::endl;
-	std::cout << (it_bar == foo.begin()) << std::endl;
+	printSize(vct, true);
 
 	// std::cout << std::endl << "****random tests*****" << std::endl;{
 	// 	int	i = 0;
