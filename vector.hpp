@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/01 20:41:00 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:05:40 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -599,6 +599,24 @@ namespace ft
 		return (iterator(first));
 	}
 
+	template<typename T, class Alloc>
+	void	vector<T, Alloc>::swap(vector &x){
+		if (x == *this)
+			return ;
+		
+		T			*tmpArray = array;
+		std::size_t	tmpCap = _capacity;
+		std::size_t	tmpSize = _size;
+
+		array = x.array;
+		_capacity = x._capacity;
+		_size = x._size;
+
+		x.array = tmpArray;
+		x._capacity = tmpCap;
+		x._size = tmpSize;
+	}
+	
 //NON MEMBER 
 
 	template<class T, class Alloc>
