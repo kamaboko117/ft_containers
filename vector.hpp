@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/02 18:05:40 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:28:11 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,61 +104,61 @@ namespace ft
 
 // iteraror non member operators
 	template<typename T>
-	typename iterator<T>::difference_type	operator==(const iterator<T> lhs, const iterator<T> rhs){
+	bool	operator==(const iterator<T> lhs, const iterator<T> rhs){
         return (lhs.base() == rhs.base());
     }
 	template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator==(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator==(const iterator<T_L> lhs, const iterator<T_R> rhs)
     {
         return (lhs.base() == rhs.base());
     }
 	template<typename T>
-	typename iterator<T>::difference_type	operator!=(const iterator<T> lhs, const iterator<T> rhs)
+	bool	operator!=(const iterator<T> lhs, const iterator<T> rhs)
     {
         return (lhs.base() != rhs.base());
     }
 	template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator!=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator!=(const iterator<T_L> lhs, const iterator<T_R> rhs)
     {
         return (lhs.base() != rhs.base());
     }
     template<typename T>
-    typename iterator<T>::difference_type	operator<(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator<(const iterator<T> lhs, const iterator<T> rhs)
     {
         return (lhs.base() < rhs.base());
     }
 	template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator<(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator<(const iterator<T_L> lhs, const iterator<T_R> rhs)
     {
         return (lhs.base() < rhs.base());
     }
 	template<typename T>
-    typename iterator<T>::difference_type	operator>(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator>(const iterator<T> lhs, const iterator<T> rhs)
     {
         return (lhs.base() > rhs.base());
     }
     template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator>(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator>(const iterator<T_L> lhs, const iterator<T_R> rhs)
     {
         return (lhs.base() > rhs.base());
     }
 	template<typename T>
-    typename iterator<T>::difference_type	operator<=(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator<=(const iterator<T> lhs, const iterator<T> rhs)
     {
         return (lhs.base() <= rhs.base());
     }
 	template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator<=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator<=(const iterator<T_L> lhs, const iterator<T_R> rhs)
     {
         return (lhs.base() <= rhs.base());
     }
 	template<typename T>
-    typename iterator<T>::difference_type	operator>=(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator>=(const iterator<T> lhs, const iterator<T> rhs)
     {
         return (lhs.base() >= rhs.base());
     }
     template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator>=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator>=(const iterator<T_L> lhs, const iterator<T_R> rhs)
     {
         return (lhs.base() >= rhs.base());
     }
@@ -303,8 +303,8 @@ namespace ft
 	vector<T, Alloc>::vector(const vector<T, Alloc> &src)
 		: _alloc(src._alloc),
 		_capacity(src._capacity),
-		_size(src._size),
-		array(_alloc.allocate(_size))
+		_size(0),
+		array(_alloc.allocate(_capacity))
 	{
 		insert(begin(), src.begin(), src.end());			
 	}
@@ -394,12 +394,12 @@ namespace ft
 	
 	template<typename T, class Alloc>
 	T	&vector<T, Alloc>::back(){
-		return (array[_size]);
+		return (array[_size - 1]);
 	}
 	
 	template<typename T, class Alloc>
 	T const	&vector<T, Alloc>::back() const{
-		return (array[_size]);
+		return (array[_size - 1]);
 	}
 
 	template<typename T, class Alloc>
@@ -435,7 +435,7 @@ namespace ft
 	
 	template<typename T, class Alloc>
 	std::size_t	vector<T, Alloc>::max_size() const{
-		return (std::numeric_limits<difference_type>::max());
+		return (allocator_type().max_size());
 	}
 
 	template<typename T, class Alloc>
