@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/06/03 15:15:51 by asaboure         ###   ########.fr        #
+#    Updated: 2022/06/03 17:35:15 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ HPP		=	vector.hpp\
 			iterator.hpp\
 			type_traits.hpp\
 			utils.hpp\
-			algorithm.hpp
+			algorithm.hpp\
+			map.hpp\
+			utility.hpp
 
 BONUSOBJS	= ${BONUSSRCS:.c=.o}
 
@@ -37,16 +39,16 @@ RM		= rm -f
 
 all:	${FTVEC} ${VEC} ${FTMAP} ${MAP}
 
-${FTVEC}: ${SRCS} ${HPP}
+${FTVEC}: ${VECSRCS} ${HPP}
 	${CC} ${CFLAGS} -o ${FTVEC} ${VECSRCS}
 
-${VEC}: ${SRCS}
+${VEC}: ${VECSRCS}
 		${CC} ${CFLAGS} ${DEFINES} -o ${VEC} ${VECSRCS}
 		
-${FTMAP}: ${SRCS} ${HPP}
+${FTMAP}: ${MAPSRCS} ${HPP}
 	${CC} ${CFLAGS} -o ${FTMAP} ${MAPSRCS}
 
-${MAP}: ${SRCS}
+${MAP}: ${MAPSRCS}
 		${CC} ${CFLAGS} ${DEFINES} -o ${MAP} ${MAPSRCS}
 
 .c.o:

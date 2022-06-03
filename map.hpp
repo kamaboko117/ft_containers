@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/03 15:13:39 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:42:20 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 # include <functional>
 # include "iterator.hpp"
 # include "utility.hpp"
+# include "utils.hpp"
 
 namespace ft
 {
-	
+
+//MAP	
 	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key, T> > >
 	class map
 	{
@@ -41,12 +43,54 @@ namespace ft
 		//difference_type
 		typedef std::size_t							size_type;
 	private:
+		allocator_type	_alloc;
+		key_compare		_keyComp;
+		BstNode<Key, T>	*root;
 		
+		BstNode<Key, T>	*getNewNode(pair<Key, T> data);
+
 	public:
-		map();
+		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type());
+		template<class InputIt>
+		map(InputIt first, InputIt last, const key_compare &comp = key_compare(),
+			const allocator_type &alloc = allocator_type());
+		map(const map &src);
 		~map();
+
+		void	insert(const value_type &value);
 	};
+
+	//CONSTRUCT
+	template<class Key, class T, class Compare, class Alloc>
+	map<Key, T, Compare, Alloc>::map(const key_compare &comp, const allocator_type &alloc)
+		: _alloc(alloc),
+		_keyComp(comp),
+		root(NULL){}
 	
+	// template<class Key, class T, class Compare, class Alloc>
+	// template<class InputIt>
+	// map<Key, T, Compare, Alloc>::map(InputIt first, InputIt last, const key_compare &comp, const allocator_type &alloc)
+	// 	: _alloc(alloc),
+	// 	_keyComp(comp){}
+	
+	template<class Key, class T, class Compare, class Alloc>
+	map<Key, T, Compare, Alloc>::~map(){}
+	
+	//PRIVATE
+	template<class Key, typename T, class Compare, class Alloc>
+	BstNode<Key, T>	*map<Key, T, Compare, Alloc>::getNewNode(pair<Key, T> data){
+		BstNode<Key, T>	*newNode = _alloc.allocate(1);
+		newNode->data = data;
+		newNode->left = NULL;
+		newNode->right = NULL;
+		return (newNode);
+	}
+
+	//ETC
+	// template<class Key, typename T, class Compare, class Alloc>
+	// void	map<Key, T, Compare, Alloc>::insert(const value_type &value){
+		
+	// }
 }
 
 #endif

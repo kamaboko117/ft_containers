@@ -6,12 +6,13 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/03 15:16:36 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/03 19:27:39 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <map>
+#include <functional>
 #include <string>
 #include "map.hpp"
 
@@ -35,5 +36,12 @@ int	main(){
 		std::cout << "The price of " << product1.first << " is $" << product1.second << '\n';
 		std::cout << "The price of " << product2.first << " is $" << product2.second << '\n';
 		std::cout << "The price of " << product3.first << " is $" << product3.second << '\n';
+	}
+
+	std::cout << std::endl << "****BST Search / Insert*****" << std::endl;{
+		ft::BstNode<std::string, int>	*root = NULL;
+		
+		root = ft::BstInsert<std::string, int, class Compare>(root,
+			ft::pair<std::string, int>("sheesh", 42), std::less<std::string>() );
 	}
 }
