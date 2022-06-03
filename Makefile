@@ -6,15 +6,18 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/06/02 18:58:32 by asaboure         ###   ########.fr        #
+#    Updated: 2022/06/03 15:15:51 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	ft_containers
+FTVEC	=	ft_vector
+FTMAP	=	ft_map
 
-STD		= 	containers
+VEC	= 	vector
+MAP	=	map
 
-SRCS	=	main.cpp
+VECSRCS	=	main_vector.cpp
+MAPSRCS =	main_map.cpp
 
 HPP		=	vector.hpp\
 			iterator.hpp\
@@ -28,16 +31,24 @@ CC		= c++
 
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
+DEFINES = -DVECTOR=std::vector -DPAIR=std::pair
+
 RM		= rm -f
 
-all:	${NAME} ${STD}
+all:	${FTVEC} ${VEC} ${FTMAP} ${MAP}
 
-${NAME}: ${SRCS} ${HPP}
-	${CC} ${CFLAGS} -o ${NAME} ${SRCS}
+${FTVEC}: ${SRCS} ${HPP}
+	${CC} ${CFLAGS} -o ${FTVEC} ${VECSRCS}
 
-${STD}: ${SRCS}
-		${CC} ${CFLAGS} -DVECTOR=std::vector -o ${STD} ${SRCS}
+${VEC}: ${SRCS}
+		${CC} ${CFLAGS} ${DEFINES} -o ${VEC} ${VECSRCS}
 		
+${FTMAP}: ${SRCS} ${HPP}
+	${CC} ${CFLAGS} -o ${FTMAP} ${MAPSRCS}
+
+${MAP}: ${SRCS}
+		${CC} ${CFLAGS} ${DEFINES} -o ${MAP} ${MAPSRCS}
+
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
