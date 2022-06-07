@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/03 18:42:20 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:01:25 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,7 @@ namespace ft
 	map<Key, T, Compare, Alloc>::~map(){}
 	
 	//PRIVATE
-	template<class Key, typename T, class Compare, class Alloc>
-	BstNode<Key, T>	*map<Key, T, Compare, Alloc>::getNewNode(pair<Key, T> data){
-		BstNode<Key, T>	*newNode = _alloc.allocate(1);
-		newNode->data = data;
-		newNode->left = NULL;
-		newNode->right = NULL;
-		return (newNode);
-	}
+	
 
 	//ETC
 	// template<class Key, typename T, class Compare, class Alloc>

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/03 19:27:39 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:09:29 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(){
 	std::cout << std::endl << "****BST Search / Insert*****" << std::endl;{
 		ft::BstNode<std::string, int>	*root = NULL;
 		
-		root = ft::BstInsert<std::string, int, class Compare>(root,
-			ft::pair<std::string, int>("sheesh", 42), std::less<std::string>() );
+		root = ft::BstInsert<std::string, int>(root,
+			ft::pair<std::string, int>("sheesh", 42), std::less<std::string>(),
+			std::allocator<ft::BstNode<std::string, int> >());
 	}
 }
