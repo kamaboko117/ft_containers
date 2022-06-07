@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/07 15:09:29 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:35:40 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,16 @@ int	main(){
 
 	std::cout << std::endl << "****BST Search / Insert*****" << std::endl;{
 		ft::BstNode<std::string, int>	*root = NULL;
+		ft::pair<std::string, int>		value("value", 42);
+		ft::pair<std::string, int>		random("random", 42);
 		
+		std::cout << "inserting value in BST" << std::endl;
 		root = ft::BstInsert<std::string, int>(root,
-			ft::pair<std::string, int>("sheesh", 42), std::less<std::string>(),
+			value, std::less<std::string>(),
 			std::allocator<ft::BstNode<std::string, int> >());
+		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>())
+			<< std::endl;
+		std::cout << std::boolalpha << "bst search random: " << ft::BstSearch(root, random, std::less<std::string>())
+			<< std::endl;
 	}
 }

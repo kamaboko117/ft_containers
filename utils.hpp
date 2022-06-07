@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/07 15:17:09 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:32:02 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ namespace ft
 	bool	BstSearch(BstNode<Key, T> *root, const pair<Key, T> &value, Compare keyComp){
 		if (!root)
 			return (false);
-		else if (!keyComp(value.first, root->data.first && !keyComp(value.first, root->data.first)))
+		else if (!keyComp(value.first, root->data.first) && !keyComp(value.first, root->data.first))
 			return (true);
 		else if (keyComp(value.first, root->data.first))
-			return (BstSearch(root->left, value));
+			return (BstSearch(root->left, value, keyComp));
 		else
-			return (BstInsert(root->right, value));
+			return (BstSearch(root->right, value, keyComp));
 	}
 
 }
