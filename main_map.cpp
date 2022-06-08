@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 15:37:07 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:47:11 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 #ifndef PAIR
 # define PAIR ft::pair
 #endif 
+#ifndef MAP
+# define MAP ft::map
+#endif 
 
+//check bst allocation
 int	main(){
-	ft::map<std::string, int>	map;
-
 	std::cout << std::endl << "****pair*****" << std::endl;{
 		std::pair <std::string,double> product1;                     // default constructor
 		std::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
@@ -49,5 +51,17 @@ int	main(){
 			<< std::endl;
 		std::cout << std::boolalpha << "bst search random: " << ft::BstSearch(root, random, std::less<std::string>())
 			<< std::endl;
+	}
+
+	std::cout << std::endl << "****map iterators*****" << std::endl;{
+		MAP<char,int> mymap;
+
+		mymap['b'] = 100;
+		// mymap['a'] = 200;
+		// mymap['c'] = 300;
+
+		// // show content:
+		// for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		// 	std::cout << it->first << " => " << it->second << '\n';
 	}
 }

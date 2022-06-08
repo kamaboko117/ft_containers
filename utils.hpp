@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 15:37:20 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/08 20:57:54 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ namespace ft
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>
-	BstNode<Key, T>	*BstInsert(BstNode<Key, T> *root, const pair<Key, T> &value,
+	BstNode<Key, T>	*BstInsert(BstNode<Key, T> *root, pair<Key, T> value,
 		Compare keyComp, Alloc _alloc){
 		if (!root)
 			return (root = getNewNode(root, value, _alloc));
@@ -229,7 +229,7 @@ namespace ft
 	}
 
 	template<class Key, typename T, class Compare>
-	bool	BstSearch(BstNode<Key, T> *root, const pair<Key, T> &value, Compare keyComp){
+	bool	BstSearch(BstNode<Key, T> *root, const pair<Key, T> value, Compare keyComp){
 		if (!root)
 			return (false);
 		else if (!keyComp(value.first, root->data.first) && !keyComp(value.first, root->data.first))
@@ -238,6 +238,18 @@ namespace ft
 			return (BstSearch(root->left, value, keyComp));
 		else
 			return (BstSearch(root->right, value, keyComp));
+	}
+
+	template<class Key, typename T, class Compare>
+	BstNode<Key, T>	*BstFind(BstNode<Key, T> *root, const Key &value, Compare keyComp){
+		if (!root)
+			return (NULL);
+		else if (!keyComp(value, root->data.first) && !keyComp(value, root->data.first))
+			return (root);
+		else if (keyComp(value, root->data.first))
+			return (BstFind(root->left, value, keyComp));
+		else
+			return (BstFind(root->right, value, keyComp));
 	}
 
 	template<class Key, typename T>

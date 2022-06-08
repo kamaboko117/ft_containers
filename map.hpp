@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 15:24:17 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/08 20:52:03 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ namespace ft
 		allocator_type	_alloc;
 		key_compare		_keyComp;
 		BstNode<Key, T>	*root;
+		BstNode<Key, T> *_last;
 		
-		BstNode<Key, T>	*getNewNode(pair<Key, T> data);
+		typedef typename allocator_type::template rebind<BstNode<key_type, mapped_type> >::other _Node_Allocator;
 
 	public:
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type());
@@ -58,7 +59,13 @@ namespace ft
 		map(const map &src);
 		~map();
 
-		void	insert(const value_type &value);
+		mapped_type	&operator[](const key_type &k);
+		
+		iterator	begin();
+		iterator	end();
+		
+		pair<iterator, bool>	insert(const value_type &value);
+		iterator				find(const key_type &k);
 	};
 
 	//CONSTRUCT
@@ -66,7 +73,8 @@ namespace ft
 	map<Key, T, Compare, Alloc>::map(const key_compare &comp, const allocator_type &alloc)
 		: _alloc(alloc),
 		_keyComp(comp),
-		root(NULL){}
+		root(NULL),
+		_last(root){}
 	
 	// template<class Key, class T, class Compare, class Alloc>
 	// template<class InputIt>
@@ -77,14 +85,49 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	map<Key, T, Compare, Alloc>::~map(){}
 	
-	//PRIVATE
+	//OPERATORS
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>::operator[](const key_type &k){
+		iterator	it = find(k);
+		
+		if (it == end())
+			insert(make_pair(k, mapped_type()));
+		it = find(k);
+		return (it->second);
+	}
+
+	//ITERATORS
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::begin(){
+		return(iterator(root));
+	}
 	
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::end(){
+		//return(iterator(_last));
+		return iterator();
+	}
 
 	//ETC
-	// template<class Key, typename T, class Compare, class Alloc>
-	// void	map<Key, T, Compare, Alloc>::insert(const value_type &value){
-		
-	// }
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::find(const key_type &k){
+		BstNode<Key, T> *node = BstFind(root, k, _keyComp);
+
+		if (!node)
+			return (end());
+		else
+		//	return (iterator(node));
+			return (iterator());
+	}
+	
+	template<class Key, typename T, class Compare, class Alloc>
+	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type &value){
+		iterator it = find(value.first);
+		if (it != end())
+			return (ft::make_pair(it, false));
+		pair<key_type, mapped_type> ret = ft::make_pair(iterator(BstInsert(root, ft::make_pair<key_type, mapped_type>(value.first, value.second), _keyComp, _Node_Allocator())), true);
+		return (ret);
+	}
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 15:28:05 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:19:57 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ namespace ft
 			return (it);
 		}
 		T			&operator*() const{
-			return (node->data);
+			return (*node);
 		}
 		// T			&operator[](difference_type i){
 		// 	return (node[i]);
 		// }
 		T			*operator->(){
-			return (&node->data);
+			return (node);
 		}
 		bool		operator==(const BSTiterator &rhs) const{
 			return (node == rhs.node);
