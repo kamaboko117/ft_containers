@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/07 15:01:25 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:24:17 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "iterator.hpp"
 # include "utility.hpp"
 # include "utils.hpp"
+# include "BSTiterator.hpp"
 
 namespace ft
 {
@@ -36,7 +37,7 @@ namespace ft
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		//iterator
+		typedef BSTiterator<value_type, key_compare>		iterator;
 		//const_iterator
 		//reverse_iterator
 		//const_reverse_iterator

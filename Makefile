@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/06/03 17:35:15 by asaboure         ###   ########.fr        #
+#    Updated: 2022/06/08 15:21:06 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ HPP		=	vector.hpp\
 			utils.hpp\
 			algorithm.hpp\
 			map.hpp\
-			utility.hpp
+			utility.hpp\
+			BSTiterator.hpp
 
 BONUSOBJS	= ${BONUSSRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/07 15:35:40 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:37:07 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #endif 
 
 int	main(){
-//	ft::map<std::string, int>	map;
+	ft::map<std::string, int>	map;
 
 	std::cout << std::endl << "****pair*****" << std::endl;{
 		std::pair <std::string,double> product1;                     // default constructor
@@ -44,9 +44,7 @@ int	main(){
 		ft::pair<std::string, int>		random("random", 42);
 		
 		std::cout << "inserting value in BST" << std::endl;
-		root = ft::BstInsert<std::string, int>(root,
-			value, std::less<std::string>(),
-			std::allocator<ft::BstNode<std::string, int> >());
+		root = ft::BstInsert<std::string, int>(root, value, std::less<std::string>(), std::allocator<ft::BstNode<std::string, int> >());
 		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>())
 			<< std::endl;
 		std::cout << std::boolalpha << "bst search random: " << ft::BstSearch(root, random, std::less<std::string>())
