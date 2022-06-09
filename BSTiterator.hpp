@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 17:19:57 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:35:38 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ namespace ft
 		typedef value_type&		reference;
 		typedef BSTiterator		BSTiterator_category;
 	private:
-		T		*node;
-		Compare	comp;
+		BstNode<T>		*node;
+		Compare			comp;
 	public:
 		BSTiterator(const Compare &comp = Compare())
 			: node(),

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 20:57:54 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:04:51 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,48 +31,48 @@
 namespace ft
 {
 
-// iterator
+// v_iterator
 	template<typename T>
-	class iterator
+	class v_iterator
 	{
 	public:
 		typedef T 				value_type;
 		typedef std::ptrdiff_t	difference_type;
 		typedef	value_type*		pointer;
 		typedef value_type&		reference;
-		typedef iterator		iterator_category;
+		typedef v_iterator		v_iterator_category;
 	private:
 		T	*ptr;
 	public:
-		iterator(){}
-		iterator(T *ptr)
+		v_iterator(){}
+		v_iterator(T *ptr)
 			: ptr(ptr){}
 		template<typename U>
-		iterator(const iterator<U> &src)
+		v_iterator(const v_iterator<U> &src)
 		: ptr(src.base()){}
-		~iterator(){}
+		~v_iterator(){}
 		
-		iterator	&operator=(const iterator &rhs){
+		v_iterator	&operator=(const v_iterator &rhs){
 			if (this == &rhs)
 				return (*this);
 			ptr = rhs.ptr;
 			return (*this);
 		}
-		iterator	&operator++(){
+		v_iterator	&operator++(){
 			this->ptr++;
 			return (*this);
 		}
-		iterator	operator++(int){
-			iterator it = *this;
+		v_iterator	operator++(int){
+			v_iterator it = *this;
 			++(*this);
 			return (it);
 		}
-		iterator	&operator--(){
+		v_iterator	&operator--(){
 			ptr--;
 			return (*this);
 		}
-		iterator	operator--(int){
-			iterator it = *this;
+		v_iterator	operator--(int){
+			v_iterator it = *this;
 			--(*this);
 			return (it);
 		}
@@ -85,23 +85,23 @@ namespace ft
 		T			*operator->(){
 			return (ptr);
 		}
-		bool		operator==(const iterator &rhs) const{
+		bool		operator==(const v_iterator &rhs) const{
 			return (ptr == rhs.ptr);
 		}
-		bool		operator!=(const iterator &rhs) const{
+		bool		operator!=(const v_iterator &rhs) const{
 			return (ptr != rhs.ptr);
 		}
-		iterator	operator+(std::size_t i) const{
-			return (iterator(ptr + i));
+		v_iterator	operator+(std::size_t i) const{
+			return (v_iterator(ptr + i));
 		}
-		iterator	operator-(std::size_t i) const{
-			return (iterator(ptr - i));
+		v_iterator	operator-(std::size_t i) const{
+			return (v_iterator(ptr - i));
 		}
-		iterator	&operator+=(difference_type n){
+		v_iterator	&operator+=(difference_type n){
 			ptr += n;
 			return (*this);
 		}
-		iterator	&operator-=(difference_type n){
+		v_iterator	&operator-=(difference_type n){
 			ptr -= n;
 			return (*this);
 		}
@@ -112,103 +112,103 @@ namespace ft
 
 // iteraror non member operators
 	template<typename T>
-	bool	operator==(const iterator<T> lhs, const iterator<T> rhs){
+	bool	operator==(const v_iterator<T> lhs, const v_iterator<T> rhs){
         return (lhs.base() == rhs.base());
     }
 	template<typename T_L, typename T_R>
-    bool	operator==(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator==(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
     {
         return (lhs.base() == rhs.base());
     }
 	template<typename T>
-	bool	operator!=(const iterator<T> lhs, const iterator<T> rhs)
+	bool	operator!=(const v_iterator<T> lhs, const v_iterator<T> rhs)
     {
         return (lhs.base() != rhs.base());
     }
 	template<typename T_L, typename T_R>
-    bool	operator!=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator!=(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
     {
         return (lhs.base() != rhs.base());
     }
     template<typename T>
-    bool	operator<(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator<(const v_iterator<T> lhs, const v_iterator<T> rhs)
     {
         return (lhs.base() < rhs.base());
     }
 	template<typename T_L, typename T_R>
-    bool	operator<(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator<(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
     {
         return (lhs.base() < rhs.base());
     }
 	template<typename T>
-    bool	operator>(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator>(const v_iterator<T> lhs, const v_iterator<T> rhs)
     {
         return (lhs.base() > rhs.base());
     }
     template<typename T_L, typename T_R>
-    bool	operator>(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator>(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
     {
         return (lhs.base() > rhs.base());
     }
 	template<typename T>
-    bool	operator<=(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator<=(const v_iterator<T> lhs, const v_iterator<T> rhs)
     {
         return (lhs.base() <= rhs.base());
     }
 	template<typename T_L, typename T_R>
-    bool	operator<=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator<=(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
     {
         return (lhs.base() <= rhs.base());
     }
 	template<typename T>
-    bool	operator>=(const iterator<T> lhs, const iterator<T> rhs)
+    bool	operator>=(const v_iterator<T> lhs, const v_iterator<T> rhs)
     {
         return (lhs.base() >= rhs.base());
     }
     template<typename T_L, typename T_R>
-    bool	operator>=(const iterator<T_L> lhs, const iterator<T_R> rhs)
+    bool	operator>=(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
     {
         return (lhs.base() >= rhs.base());
     }
 
 	// template<typename T>	
-	// typename iterator<T>::difference_type	operator+(const iterator<T> lhs, const iterator<T> rhs){
+	// typename v_iterator<T>::difference_type	operator+(const v_iterator<T> lhs, const v_iterator<T> rhs){
     //     return (lhs.base() + rhs.base());
     // }
 	// template<typename T_L, typename T_R>
-    // typename iterator<T_L>::difference_type	operator+(const iterator<T_L> lhs, const iterator<T_R> rhs){
+    // typename v_iterator<T_L>::difference_type	operator+(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs){
     //     return (lhs.base() + rhs.base());
     // }
 	template<typename T>
-    ft::iterator<T>	operator+(typename ft::iterator<T>::difference_type n, typename ft::iterator<T>& rai)
+    ft::v_iterator<T>	operator+(typename ft::v_iterator<T>::difference_type n, typename ft::v_iterator<T>& rai)
     {
 		return (&(*rai) + n);
 	}
 	template<typename T>
-    typename iterator<T>::difference_type	operator-(const iterator<T> lhs, const iterator<T> rhs){
+    typename v_iterator<T>::difference_type	operator-(const v_iterator<T> lhs, const v_iterator<T> rhs){
         return (lhs.base() - rhs.base());
     }
 	template<typename T_L, typename T_R>
-    typename iterator<T_L>::difference_type	operator-(const iterator<T_L> lhs, const iterator<T_R> rhs){
+    typename v_iterator<T_L>::difference_type	operator-(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs){
         return (lhs.base() - rhs.base());
     }
 	
 
 //BST
 //https://www.youtube.com/watch?v=COZK7NATh4k
-	template<class Key, typename T>
+	template<class T>
 	struct BstNode
 	{
-		pair<Key, T> data;
+		T data;
 
 		BstNode	*left;
 		BstNode *right;
 		BstNode	*parent;
 	};
 
-	template<class Key, typename T, class Alloc>
-	BstNode<Key, T>	*getNewNode(BstNode<Key, T> *root, pair<Key, T> data, Alloc _alloc){
-		BstNode<Key, T>	*newNode = _alloc.allocate(1);
+	template<typename T, class Alloc>
+	BstNode<T>	*getNewNode(BstNode<T> *root, T data, Alloc _alloc){
+		BstNode<T>	*newNode = _alloc.allocate(1);
 		newNode->data = data;
 		newNode->left = NULL;
 		newNode->right = NULL;
@@ -216,8 +216,8 @@ namespace ft
 		return (newNode);
 	}
 
-	template<class Key, typename T, class Compare, class Alloc>
-	BstNode<Key, T>	*BstInsert(BstNode<Key, T> *root, pair<Key, T> value,
+	template<typename T, class Compare, class Alloc>
+	BstNode<T>	*BstInsert(BstNode<T> *root, T value,
 		Compare keyComp, Alloc _alloc){
 		if (!root)
 			return (root = getNewNode(root, value, _alloc));
@@ -228,8 +228,8 @@ namespace ft
 		return (root);
 	}
 
-	template<class Key, typename T, class Compare>
-	bool	BstSearch(BstNode<Key, T> *root, const pair<Key, T> value, Compare keyComp){
+	template<typename T, class Compare>
+	bool	BstSearch(BstNode<T> *root, const T value, Compare keyComp){
 		if (!root)
 			return (false);
 		else if (!keyComp(value.first, root->data.first) && !keyComp(value.first, root->data.first))
@@ -241,7 +241,7 @@ namespace ft
 	}
 
 	template<class Key, typename T, class Compare>
-	BstNode<Key, T>	*BstFind(BstNode<Key, T> *root, const Key &value, Compare keyComp){
+	BstNode<T>	*BstFind(BstNode<T> *root, const Key &value, Compare keyComp){
 		if (!root)
 			return (NULL);
 		else if (!keyComp(value, root->data.first) && !keyComp(value, root->data.first))
@@ -253,7 +253,7 @@ namespace ft
 	}
 
 	template<class Key, typename T>
-	int BstHeight(BstNode<Key, T> *root)
+	int BstHeight(BstNode<T> *root)
 	{
 		if (!root)
 			return 0;

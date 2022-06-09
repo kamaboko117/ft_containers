@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 15:22:11 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:30:40 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ namespace ft
 		typedef	const value_type&					const_reference;
 		typedef	typename allocator_type::pointer	pointer;
 		typedef	pointer const						const_pointer;
-		typedef ft::iterator<value_type>			iterator;
-		typedef ft::iterator<const value_type>		const_iterator;
+		typedef ft::v_iterator<value_type>			iterator;
+		typedef ft::v_iterator<const value_type>		const_iterator;
 		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef reverse_iterator<iterator>			reverse_iterator;
 		typedef	std::size_t							size_type;

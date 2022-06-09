@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 20:52:03 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/09 21:52:53 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ namespace ft
 	private:
 		allocator_type	_alloc;
 		key_compare		_keyComp;
-		BstNode<Key, T>	*root;
-		BstNode<Key, T> *_last;
+		BstNode<value_type>	*root;
+		BstNode<value_type> *_last;
 		
-		typedef typename allocator_type::template rebind<BstNode<key_type, mapped_type> >::other _Node_Allocator;
+		typedef typename allocator_type::template rebind<BstNode<value_type> >::other _Node_Allocator;
 
 	public:
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type());
@@ -111,7 +111,7 @@ namespace ft
 	//ETC
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::find(const key_type &k){
-		BstNode<Key, T> *node = BstFind(root, k, _keyComp);
+		BstNode<value_type> *node = BstFind(root, k, _keyComp);
 
 		if (!node)
 			return (end());
@@ -125,7 +125,11 @@ namespace ft
 		iterator it = find(value.first);
 		if (it != end())
 			return (ft::make_pair(it, false));
-		pair<key_type, mapped_type> ret = ft::make_pair(iterator(BstInsert(root, ft::make_pair<key_type, mapped_type>(value.first, value.second), _keyComp, _Node_Allocator())), true);
+		key_type 	keyCpy(value.first);
+		mapped_type	mappedCpy(value.second);
+		BstNode<value_type> *node = BstInsert(root, ft::make_pair<key_type, mapped_type>(keyCpy, mappedCpy), _keyComp, _Node_Allocator());
+		iterator it2(node, _keyComp);
+		pair<iterator, bool> ret = ft::make_pair(it, true);
 		return (ret);
 	}
 }
