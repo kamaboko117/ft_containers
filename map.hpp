@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 19:03:15 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:40:29 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
 	public:
 		typedef Key											key_type;
 		typedef T											mapped_type;
-		typedef pair<const key_type, mapped_type>			value_type;
+		typedef pair<key_type, mapped_type>					value_type;
 		typedef Compare										key_compare;
 		//value_compare?
 		typedef	Alloc										allocator_type;
@@ -90,6 +90,7 @@ namespace ft
 	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>::operator[](const key_type &k){
 		iterator	it = find(k);
 		
+		std::cout << "[]operator" << std::endl;
 		if (it == end())
 			insert(make_pair(k, mapped_type()));
 		it = find(k);
@@ -99,13 +100,14 @@ namespace ft
 	//ITERATORS
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::begin(){
+		std::cout << "begin()" << std::endl;
 		return(iterator(root));
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::end(){
-		//return(iterator(_last));
-		return iterator();
+		std::cout << "end()" << std::endl;
+		return(iterator(_last));
 	}
 
 	//ETC
@@ -116,18 +118,22 @@ namespace ft
 		if (!node)
 			return (end());
 		else
-		//	return (iterator(node));
-			return (iterator());
+			return (iterator(node));
 	}
 	
 	template<class Key, typename T, class Compare, class Alloc>
 	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type &value){
 		iterator it = find(value.first);
+		std::cout << "map insert" << std::endl;
 		if (it != end())
 			return (ft::make_pair(it, false));
-		mapped_type	mappedCpy(value.second);
-		pair<Key, mapped_type> toinsert = make_pair(value.first, mappedCpy);
-		iterator it2(BstInsert(root, toinsert, _keyComp, _Node_Allocator()), _keyComp);
+		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
+		BstNode<value_type> *node = BstInsert(root, toinsert, _keyComp, _Node_Allocator());
+		iterator it2(node, _keyComp);
+		if (_last == root || _keyComp(_last->data.first, it2->first)){
+			_last = node;
+			std::cout << "check" << std::endl;
+		}
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
 	}

@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/06/08 15:47:41 by asaboure         ###   ########.fr        #
+#    Updated: 2022/06/10 19:21:45 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ CC		= c++
 
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
-DEFINES = -DVECTOR=std::vector -DPAIR=std::pair -DMAP=std::map
+DEFINES = -DVECTOR=std::vector -DPAIR=std::pair -DNAME=std
 
 RM		= rm -f
 

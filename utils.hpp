@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 19:04:39 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:18:43 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define UTILS_HPP
 # include "utility.hpp"
 
+#include <iostream>
 // static class nullptr_t
 // {
 // public:
@@ -225,6 +226,7 @@ namespace ft
 
 	template<typename T, class Compare, class Alloc>
 	BstNode<T>	*BstInsert(BstNode<T> *root, T &value, Compare keyComp, Alloc _alloc){
+		std::cout << "BSTinsert" << std::endl;
 		if (!root)
 			return (root = getNewNode(root, value, _alloc));
 		else if (keyComp(value.first, root->data.first))

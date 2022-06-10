@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 17:51:01 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:46:21 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ namespace ft
 			return (*this);
 		}
 		BSTiterator	&operator++(){
-			T *current = node;
-			
-			if (comp(node->data.first, node->right.data.first))
+			std::cout << "iterator ++" << std::endl;
+			BstNode<T> *current = node;
+			std::cout << "iterator ++" << std::endl;
+			if (comp(node->data.first, node->right->data.first))
 				current = node->right;
 			else{
-				while(current->parent && comp(node->parent.data.first, current->data.first))
+				while(current->parent && comp(node->parent->data.first, current->data.first))
 					current = current->parent;
 			}
 			node = current;
@@ -96,6 +97,7 @@ namespace ft
 			return (node == rhs.node);
 		}
 		bool		operator!=(const BSTiterator &rhs) const{
+			std::cout << "iterator !=" << std::endl;
 			return (node != rhs.node);
 		}
 		// BSTiterator	operator+(std::size_t i) const{

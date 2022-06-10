@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 18:46:31 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:50:02 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #ifndef PAIR
 # define PAIR ft::pair
 #endif 
-#ifndef MAP
-# define MAP ft::map
+#ifndef NAME
+# define NAME ft
 #endif 
 
 //check bst allocation
@@ -54,15 +54,19 @@ int	main(){
 	}
 
 	std::cout << std::endl << "****map iterators*****" << std::endl;{
-		MAP<char,int> mymap;
+		NAME::map<char,int> mymap;
 
-		mymap.insert(ft::make_pair('b', 100));
-		// mymap['b'] = 100;
+		mymap.insert(NAME::make_pair('b', 100));
+		//mymap['b'] = 100;
 		// mymap['a'] = 200;
 		// mymap['c'] = 300;
 
-		// // show content:
-		// for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-		// 	std::cout << it->first << " => " << it->second << '\n';
+		// show content:
+		std::cout << "plouf" << std::endl;
+		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
+			std::cout << it->first << std::endl;
+			std::cout << it->first << " => " << it->second << '\n';
+		}
+		std::cout << "done" << std::endl;
 	}
 }
