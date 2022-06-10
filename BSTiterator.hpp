@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/09 18:35:38 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:51:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft
 		BSTiterator(const Compare &comp = Compare())
 			: node(),
 			comp(comp){}
-		BSTiterator(T *node, const Compare &comp = Compare())
+		BSTiterator(BstNode<T> *node, const Compare &comp = Compare())
 			: node(node),
 			comp(comp){}
 		template<typename U, class Comp>
@@ -84,13 +84,13 @@ namespace ft
 			return (it);
 		}
 		T			&operator*() const{
-			return (*node);
+			return (node->data);
 		}
 		// T			&operator[](difference_type i){
 		// 	return (node[i]);
 		// }
 		T			*operator->(){
-			return (node);
+			return (&node->data);
 		}
 		bool		operator==(const BSTiterator &rhs) const{
 			return (node == rhs.node);

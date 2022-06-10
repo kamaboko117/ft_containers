@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/09 19:23:00 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:46:31 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	main(){
 	std::cout << std::endl << "****map iterators*****" << std::endl;{
 		MAP<char,int> mymap;
 
-		mymap['b'] = 100;
+		mymap.insert(ft::make_pair('b', 100));
+		// mymap['b'] = 100;
 		// mymap['a'] = 200;
 		// mymap['c'] = 300;
 

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/09 20:04:51 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:04:39 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 
 namespace ft
 {
+
+	template<typename T>
+	struct type_identity
+	{
+		typedef T type;
+	};
+
 
 // v_iterator
 	template<typename T>
@@ -207,7 +214,7 @@ namespace ft
 	};
 
 	template<typename T, class Alloc>
-	BstNode<T>	*getNewNode(BstNode<T> *root, T data, Alloc _alloc){
+	BstNode<T>	*getNewNode(BstNode<T> *root, typename type_identity<T>::type data, Alloc _alloc){
 		BstNode<T>	*newNode = _alloc.allocate(1);
 		newNode->data = data;
 		newNode->left = NULL;
@@ -217,8 +224,7 @@ namespace ft
 	}
 
 	template<typename T, class Compare, class Alloc>
-	BstNode<T>	*BstInsert(BstNode<T> *root, T value,
-		Compare keyComp, Alloc _alloc){
+	BstNode<T>	*BstInsert(BstNode<T> *root, T &value, Compare keyComp, Alloc _alloc){
 		if (!root)
 			return (root = getNewNode(root, value, _alloc));
 		else if (keyComp(value.first, root->data.first))
@@ -266,6 +272,7 @@ namespace ft
 				return r + 1;
 		}
 	}
+
 }
 
 #endif

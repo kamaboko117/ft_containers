@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/09 21:52:53 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:03:15 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ namespace ft
 		//difference_type
 		typedef std::size_t							size_type;
 	private:
-		allocator_type	_alloc;
-		key_compare		_keyComp;
+		allocator_type		_alloc;
+		key_compare			_keyComp;
 		BstNode<value_type>	*root;
 		BstNode<value_type> *_last;
 		
@@ -125,11 +125,10 @@ namespace ft
 		iterator it = find(value.first);
 		if (it != end())
 			return (ft::make_pair(it, false));
-		key_type 	keyCpy(value.first);
 		mapped_type	mappedCpy(value.second);
-		BstNode<value_type> *node = BstInsert(root, ft::make_pair<key_type, mapped_type>(keyCpy, mappedCpy), _keyComp, _Node_Allocator());
-		iterator it2(node, _keyComp);
-		pair<iterator, bool> ret = ft::make_pair(it, true);
+		pair<Key, mapped_type> toinsert = make_pair(value.first, mappedCpy);
+		iterator it2(BstInsert(root, toinsert, _keyComp, _Node_Allocator()), _keyComp);
+		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
 	}
 }
