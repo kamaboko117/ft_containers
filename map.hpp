@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 20:40:29 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:50:48 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ namespace ft
 		: _alloc(alloc),
 		_keyComp(comp),
 		root(NULL),
-		_last(root){}
+		_last(NULL){}
 	
 	// template<class Key, class T, class Compare, class Alloc>
 	// template<class InputIt>
@@ -100,14 +100,14 @@ namespace ft
 	//ITERATORS
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::begin(){
-		std::cout << "begin()" << std::endl;
 		return(iterator(root));
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::end(){
-		std::cout << "end()" << std::endl;
-		return(iterator(_last));
+		if (!_last)
+			return (iterator(_last));
+		return(iterator(_last->right));
 	}
 
 	//ETC
@@ -124,15 +124,15 @@ namespace ft
 	template<class Key, typename T, class Compare, class Alloc>
 	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type &value){
 		iterator it = find(value.first);
-		std::cout << "map insert" << std::endl;
 		if (it != end())
 			return (ft::make_pair(it, false));
 		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
 		BstNode<value_type> *node = BstInsert(root, toinsert, _keyComp, _Node_Allocator());
 		iterator it2(node, _keyComp);
-		if (_last == root || _keyComp(_last->data.first, it2->first)){
+		if (!root)
+			root = node;
+		else if (_last == root || _keyComp(_last->data.first, it2->first)){
 			_last = node;
-			std::cout << "check" << std::endl;
 		}
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);

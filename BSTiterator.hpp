@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 20:46:21 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:51:53 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft
 		Compare			comp;
 	public:
 		BSTiterator(const Compare &comp = Compare())
-			: node(),
+			: node(NULL),
 			comp(comp){}
 		BSTiterator(BstNode<T> *node, const Compare &comp = Compare())
 			: node(node),
@@ -50,12 +50,17 @@ namespace ft
 			return (*this);
 		}
 		BSTiterator	&operator++(){
-			std::cout << "iterator ++" << std::endl;
+			if (!node){
+				return (*this);
+			}
 			BstNode<T> *current = node;
-			std::cout << "iterator ++" << std::endl;
-			if (comp(node->data.first, node->right->data.first))
+			if (node->right && comp(node->data.first, node->right->data.first)){
 				current = node->right;
+			}
 			else{
+				if (!(node->parent)){
+					node = NULL;
+					return (*this);}
 				while(current->parent && comp(node->parent->data.first, current->data.first))
 					current = current->parent;
 			}
@@ -97,7 +102,6 @@ namespace ft
 			return (node == rhs.node);
 		}
 		bool		operator!=(const BSTiterator &rhs) const{
-			std::cout << "iterator !=" << std::endl;
 			return (node != rhs.node);
 		}
 		// BSTiterator	operator+(std::size_t i) const{

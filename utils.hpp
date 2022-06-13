@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 20:18:43 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:51:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,11 +204,13 @@ namespace ft
 
 //BST
 //https://www.youtube.com/watch?v=COZK7NATh4k
+//TRUE = RED
 	template<class T>
 	struct BstNode
 	{
 		T data;
-
+		bool red;
+		
 		BstNode	*left;
 		BstNode *right;
 		BstNode	*parent;
@@ -220,15 +222,18 @@ namespace ft
 		newNode->data = data;
 		newNode->left = NULL;
 		newNode->right = NULL;
+		newNode->red = true;
 		newNode->parent = root;
 		return (newNode);
 	}
 
 	template<typename T, class Compare, class Alloc>
 	BstNode<T>	*BstInsert(BstNode<T> *root, T &value, Compare keyComp, Alloc _alloc){
-		std::cout << "BSTinsert" << std::endl;
-		if (!root)
-			return (root = getNewNode(root, value, _alloc));
+		if (!root){
+			root = getNewNode(root, value, _alloc);
+			root->red = false;
+			return (root);
+		}
 		else if (keyComp(value.first, root->data.first))
 			root->left = BstInsert(root->left, value, keyComp, _alloc);
 		else
@@ -236,6 +241,88 @@ namespace ft
 		return (root);
 	}
 
+	template<typename T>
+	void	leftRotate(BstNode<T> *x, BstNode<T> *root){
+		BstNode<T> *y = x->right;
+		x->right = y->left;
+		if (y->left)
+			y->left->parent = x;
+		y->parent = x->parent;
+		if (!(x->parent))
+			root = y;
+		else if (x == x->parent->left)
+			x->parent->left = y;
+		else
+			x->parent->right = y;
+		y->left = x;
+		x->parent = y;
+	}
+
+	template<typename T>
+	void	rightRotate(BstNode<T> *x, BstNode<T> *root){
+		BstNode<T> *y = x->left;
+		x->left = y->right;
+		if (y->right)
+			y->right->parent = x;
+		y->parent = x->parent;
+		if (!(x->parent))
+			root = y;
+		else if (x == x->parent->left)
+			x->parent->right = y;
+		else
+			x->parent->left = y;
+		y->right = x;
+		x->parent = y;
+	}
+
+	//https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/
+	template<typename T, class Compare, class Alloc>
+	BstNode<T>	*RBInsert(BstNode<T> *root, T &value, Compare keyComp, Alloc _alloc){
+		BstNode<T>	*oldRoot = root;
+		root = BstInsert(root, value, keyComp, _alloc);
+		while (root->parent->red){
+			if (root->parent == root->parent->parent->right){
+				BstNode<T> *u = root->parent->left; //uncle
+				if (u->red){
+					u->red = false;
+					root->parent->red = false;
+					root->parent->parent->red = true;
+					root = root->parent->parent;
+				}
+				else{
+					if (root == root->parent->left){
+						root = root->parent;
+						rightRotate(root, oldRoot);
+					}
+					root->parent->red = false;
+					root->parent->parent->red = true;
+					leftRotate(root, oldRoot);
+				}
+			}
+			else{
+				BstNode<T> *u = root->parent->right; //uncle
+				if (u->red){
+					u->red = false;
+					root->parent->red = false;
+					root->parent->parent->red = true;
+					root = root->parent->parent;
+				}
+				else{
+					if (root == root->parent->right){
+						root = root->parent;
+						leftRotate(root, oldRoot);
+					}
+					root->parent->red = false;
+					root->parent->parent->red = true;
+					rightRotate(root, oldRoot);
+				}
+			}
+			if (root == oldRoot)
+				break ;
+		}
+		oldRoot->red = false;
+	}
+	
 	template<typename T, class Compare>
 	bool	BstSearch(BstNode<T> *root, const T value, Compare keyComp){
 		if (!root)

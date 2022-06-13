@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/10 20:50:02 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:55:35 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ int	main(){
 		NAME::map<char,int> mymap;
 
 		mymap.insert(NAME::make_pair('b', 100));
-		//mymap['b'] = 100;
+		std::cout << "plouf" << std::endl;
+		mymap.insert(NAME::make_pair('a', 200));
+		// mymap['b'] = 100;
 		// mymap['a'] = 200;
 		// mymap['c'] = 300;
 
-		// show content:
 		std::cout << "plouf" << std::endl;
+		// show content:
 		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
-			std::cout << it->first << std::endl;
 			std::cout << it->first << " => " << it->second << '\n';
 		}
 		std::cout << "done" << std::endl;
