@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/13 19:50:48 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/13 20:21:42 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ namespace ft
 		key_compare			_keyComp;
 		BstNode<value_type>	*root;
 		BstNode<value_type> *_last;
+		BstNode<value_type> *_first;
 		
 		typedef typename allocator_type::template rebind<BstNode<value_type> >::other _Node_Allocator;
 
@@ -74,7 +75,8 @@ namespace ft
 		: _alloc(alloc),
 		_keyComp(comp),
 		root(NULL),
-		_last(NULL){}
+		_last(NULL),
+		_first(NULL){}
 	
 	// template<class Key, class T, class Compare, class Alloc>
 	// template<class InputIt>
@@ -100,7 +102,7 @@ namespace ft
 	//ITERATORS
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::begin(){
-		return(iterator(root));
+		return(iterator(_first));
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
@@ -130,9 +132,14 @@ namespace ft
 		BstNode<value_type> *node = BstInsert(root, toinsert, _keyComp, _Node_Allocator());
 		iterator it2(node, _keyComp);
 		if (!root)
-			root = node;
-		else if (_last == root || _keyComp(_last->data.first, it2->first)){
-			_last = node;
+			root = _first = _last = node;
+		else{
+			std::cout << "first: " << _first->data.first << " last: "
+				<< _last->data.first << " node: " << node->data.first << std::endl;
+			if (_keyComp(_last->data.first, node->data.first))
+				_last = node;
+			if (_keyComp(node->data.first, _first->data.first))
+				_first = node;
 		}
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
