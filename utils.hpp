@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/13 19:51:01 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:40:26 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,27 +217,27 @@ namespace ft
 	};
 
 	template<typename T, class Alloc>
-	BstNode<T>	*getNewNode(BstNode<T> *root, typename type_identity<T>::type data, Alloc _alloc){
+	BstNode<T>	*getNewNode(BstNode<T> *parent, typename type_identity<T>::type data, Alloc _alloc){
 		BstNode<T>	*newNode = _alloc.allocate(1);
 		newNode->data = data;
 		newNode->left = NULL;
 		newNode->right = NULL;
 		newNode->red = true;
-		newNode->parent = root;
+		newNode->parent = parent;
 		return (newNode);
 	}
 
 	template<typename T, class Compare, class Alloc>
-	BstNode<T>	*BstInsert(BstNode<T> *root, T &value, Compare keyComp, Alloc _alloc){
+	BstNode<T>	*BstInsert(BstNode<T> *root, BstNode<T> *parent, T &value, Compare keyComp, Alloc _alloc){
 		if (!root){
-			root = getNewNode(root, value, _alloc);
+			root = getNewNode(parent, value, _alloc);
 			root->red = false;
 			return (root);
 		}
 		else if (keyComp(value.first, root->data.first))
-			root->left = BstInsert(root->left, value, keyComp, _alloc);
+			root->left = BstInsert(root->left, root, value, keyComp, _alloc);
 		else
-			root->right = BstInsert(root->right, value, keyComp, _alloc);
+			root->right = BstInsert(root->right, root, value, keyComp, _alloc);
 		return (root);
 	}
 

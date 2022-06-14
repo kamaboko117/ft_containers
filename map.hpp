@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/13 20:21:42 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:40:40 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,24 @@ namespace ft
 		if (it != end())
 			return (ft::make_pair(it, false));
 		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
-		BstNode<value_type> *node = BstInsert(root, toinsert, _keyComp, _Node_Allocator());
-		iterator it2(node, _keyComp);
+		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator());
 		if (!root)
 			root = _first = _last = node;
 		else{
-			std::cout << "first: " << _first->data.first << " last: "
-				<< _last->data.first << " node: " << node->data.first << std::endl;
+			node = BstFind(root, value.first, _keyComp);
 			if (_keyComp(_last->data.first, node->data.first))
 				_last = node;
 			if (_keyComp(node->data.first, _first->data.first))
 				_first = node;
 		}
+		iterator it2(node, _keyComp);
+		std::cout << "first: " << _first->data.first << " last: "
+				<< _last->data.first << " node: " << node->data.first
+				<< " keycomp(a, b): " << _keyComp('a', 'b')
+				<< " a < b: " << ('a' < 'b')
+				<< " root: " << root->data.first
+				<< " node parent: " << node->parent
+				<< " root parent: " << root->parent << std::endl;
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
 	}

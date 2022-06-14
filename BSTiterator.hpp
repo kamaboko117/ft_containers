@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/13 19:51:53 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ namespace ft
 			}
 			else{
 				if (!(node->parent)){
+					std::cout << "check" << std::endl;
 					node = NULL;
 					return (*this);}
-				while(current->parent && comp(node->parent->data.first, current->data.first))
+				while(current->parent && comp(current->data.first, node->parent->data.first))
 					current = current->parent;
 			}
 			node = current;
