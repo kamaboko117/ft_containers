@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 13:40:40 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:52:33 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ namespace ft
 	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>::operator[](const key_type &k){
 		iterator	it = find(k);
 		
-		std::cout << "[]operator" << std::endl;
 		if (it == end())
 			insert(make_pair(k, mapped_type()));
 		it = find(k);
@@ -140,13 +139,6 @@ namespace ft
 				_first = node;
 		}
 		iterator it2(node, _keyComp);
-		std::cout << "first: " << _first->data.first << " last: "
-				<< _last->data.first << " node: " << node->data.first
-				<< " keycomp(a, b): " << _keyComp('a', 'b')
-				<< " a < b: " << ('a' < 'b')
-				<< " root: " << root->data.first
-				<< " node parent: " << node->parent
-				<< " root parent: " << root->parent << std::endl;
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
 	}

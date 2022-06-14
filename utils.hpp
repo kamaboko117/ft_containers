@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 13:40:26 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:31:44 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,7 @@ namespace ft
 	BstNode<T>	*BstFind(BstNode<T> *root, const Key &value, Compare keyComp){
 		if (!root)
 			return (NULL);
-		else if (!keyComp(value, root->data.first) && !keyComp(value, root->data.first))
+		else if (!keyComp(value, root->data.first) && !keyComp(root->data.first, value))
 			return (root);
 		else if (keyComp(value, root->data.first))
 			return (BstFind(root->left, value, keyComp));
