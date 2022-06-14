@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 14:31:44 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 18:17:26 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,38 @@ namespace ft
 			root->left = BstInsert(root->left, root, value, keyComp, _alloc);
 		else
 			root->right = BstInsert(root->right, root, value, keyComp, _alloc);
+		return (root);
+	}
+
+	template<typename T>
+	BstNode<T>	*BstMinValueNode(BstNode<T> *node)
+	{
+		BstNode<T> *current = node;
+	
+		while (current && current->left)
+			current = current->left;
+		return current;
+	}
+	
+	//https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
+	template<typename T, class Compare, class Alloc>
+	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc){
+		root = BstFind(root, value->first, keyComp);
+		if (!root)
+			return (root);
+		if (!root->left){
+			BstNode<T> *ret = root->right;
+			_alloc.deallocate(root, 1);
+			return (ret);
+		}
+		else if (!root->right){
+			BstNode<T> *ret = root->left;
+			_alloc.deallocate(root, 1);
+			return (ret);
+		}
+		BstNode<T> *tmp = BstMinValueNode(root->right);
+		root->data = tmp->data;
+		root->right = BstDelete(root->right, value, keyComp, _alloc);
 		return (root);
 	}
 

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 14:50:55 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:11:44 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(){
 		std::cout << "The price of " << product3.first << " is $" << product3.second << '\n';
 	}
 
-	std::cout << std::endl << "****BST Search / Insert*****" << std::endl;{
+	std::cout << std::endl << "****BST Search / Insert / delete*****" << std::endl;{
 		ft::BstNode<ft::pair<std::string, int> >	*root = NULL;
 		ft::pair<std::string, int>		value("value", 42);
 		ft::pair<std::string, int>		random("random", 42);
@@ -51,6 +51,9 @@ int	main(){
 			<< std::endl;
 		std::cout << std::boolalpha << "bst search random: " << ft::BstSearch(root, random, std::less<std::string>())
 			<< std::endl;
+		std::cout << "deleting value in BST" << std::endl;
+		root = ft::BstDelete(root, &value, std::less<std::string>(), std::allocator<ft::BstNode<ft::pair<std::string, int> > >());
+		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>());
 	}
 
 	std::cout << std::endl << "****map iterators*****" << std::endl;{
@@ -63,5 +66,30 @@ int	main(){
 		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
 		std::cout << "done: " << std::endl;
+	}
+
+	std::cout << std::endl << "****map erase*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		NAME::map<char,int>::iterator it;
+
+		// insert some values:
+		mymap['a']=10;
+		mymap['b']=20;
+		mymap['c']=30;
+		mymap['d']=40;
+		mymap['e']=50;
+		mymap['f']=60;
+
+		it=mymap.find('b');
+		mymap.erase (it);                   // erasing by iterator
+
+		mymap.erase ('c');                  // erasing by key
+
+		it=mymap.find ('e');
+		mymap.erase ( it, mymap.end() );    // erasing by range
+
+		// show content:
+		for (it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 	}
 }

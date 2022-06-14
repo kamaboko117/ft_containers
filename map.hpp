@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 14:52:33 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:17:57 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,16 @@ namespace ft
 		iterator	end();
 		
 		pair<iterator, bool>	insert(const value_type &value);
+		void					erase(iterator position);
+		size_type				erase(const key_type &k);
+		void					erase(iterator first, iterator last);
 		iterator				find(const key_type &k);
 	};
 
 	//CONSTRUCT
 	template<class Key, class T, class Compare, class Alloc>
-	map<Key, T, Compare, Alloc>::map(const key_compare &comp, const allocator_type &alloc)
+	map<Key, T, Compare, Alloc>
+		::map(const key_compare &comp, const allocator_type &alloc)
 		: _alloc(alloc),
 		_keyComp(comp),
 		root(NULL),
@@ -85,11 +89,13 @@ namespace ft
 	// 	_keyComp(comp){}
 	
 	template<class Key, class T, class Compare, class Alloc>
-	map<Key, T, Compare, Alloc>::~map(){}
+	map<Key, T, Compare, Alloc>
+		::~map(){}
 	
 	//OPERATORS
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>::operator[](const key_type &k){
+	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>
+		::operator[](const key_type &k){
 		iterator	it = find(k);
 		
 		if (it == end())
@@ -100,12 +106,14 @@ namespace ft
 
 	//ITERATORS
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::begin(){
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::begin(){
 		return(iterator(_first));
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::end(){
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::end(){
 		if (!_last)
 			return (iterator(_last));
 		return(iterator(_last->right));
@@ -113,7 +121,14 @@ namespace ft
 
 	//ETC
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>::find(const key_type &k){
+	void	map<Key, T, Compare, Alloc>
+		::erase(iterator position){
+		BstDelete(root, &*position, _keyComp, _alloc);
+	}
+	
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::find(const key_type &k){
 		BstNode<value_type> *node = BstFind(root, k, _keyComp);
 
 		if (!node)
@@ -123,7 +138,8 @@ namespace ft
 	}
 	
 	template<class Key, typename T, class Compare, class Alloc>
-	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type &value){
+	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>
+		::insert(const value_type &value){
 		iterator it = find(value.first);
 		if (it != end())
 			return (ft::make_pair(it, false));
