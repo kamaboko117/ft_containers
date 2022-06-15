@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 18:17:26 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/15 20:15:48 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,16 @@ namespace ft
 		return current;
 	}
 	
+	template<typename T, class Compare>
+	void	BstReplace(BstNode<T> *parent, BstNode<T> *src, T &value, Compare comp){
+		if (comp(value.first, parent->data.first))
+			parent->left = src;
+		else
+			parent->right =src;
+		if (src) 
+			src->parent = parent;
+	}
+
 	//https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
 	template<typename T, class Compare, class Alloc>
 	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc){
@@ -258,13 +268,22 @@ namespace ft
 		if (!root)
 			return (root);
 		if (!root->left){
-			BstNode<T> *ret = root->right;
-			_alloc.deallocate(root, 1);
-			return (ret);
+			// BstNode<T> *ret = root->right;
+			if (root->parent)
+				BstReplace(root->parent, root->right, root->data, keyComp);
+			else
+				root = root->right;
+			//_alloc.deallocate(root, 1);
+			// root = ret;
+			return (root);
 		}
 		else if (!root->right){
 			BstNode<T> *ret = root->left;
-			_alloc.deallocate(root, 1);
+			if (root->parent)
+				BstReplace(root->parent, root->left, root->data, keyComp);
+			else
+				root = root->left;
+			// _alloc.deallocate(root, 1);
 			return (ret);
 		}
 		BstNode<T> *tmp = BstMinValueNode(root->right);

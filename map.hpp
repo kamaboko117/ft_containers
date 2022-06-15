@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 17:17:57 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:43:57 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
 {
 
 //MAP	
-	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key, T> > >
+	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<Key, T> > >
 	class map
 	{
 	public:
@@ -123,7 +123,25 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	void	map<Key, T, Compare, Alloc>
 		::erase(iterator position){
-		BstDelete(root, &*position, _keyComp, _alloc);
+		BstDelete(root, &*position, _keyComp, _Node_Allocator());
+		std::cout << "first: " << _first->data.first << " last: "
+			<< _last->data.first << " root: " << root->data.first
+			<< std::endl;
+	}
+	
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
+		::erase(const key_type &k){
+		pair<key_type, mapped_type> toDel = make_pair(k, mapped_type());
+		BstDelete(root, &toDel, _keyComp, _Node_Allocator());
+		return (1);
+	}
+		
+	template<class Key, class T, class Compare, class Alloc>
+	void	map<Key, T, Compare, Alloc>
+		::erase(iterator first, iterator last){
+		for (iterator it = first; it != last; it++)
+			BstDelete(root, &*it, _keyComp, _Node_Allocator());
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
