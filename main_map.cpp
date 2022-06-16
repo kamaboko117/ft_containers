@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/15 19:40:33 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:44:21 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,41 @@ int	main(){
 		ft::pair<std::string, int>		random("random", 42);
 		
 		std::cout << "inserting value in BST" << std::endl;
-		root = ft::BstInsert(root, root, value, std::less<std::string>(), std::allocator<ft::BstNode<ft::pair<std::string, int> > >());
+		// root = ft::BstInsert(root, root, value, std::less<std::string>(), std::allocator<ft::BstNode<ft::pair<std::string, int> > >());
 		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>())
 			<< std::endl;
 		std::cout << std::boolalpha << "bst search random: " << ft::BstSearch(root, random, std::less<std::string>())
 			<< std::endl;
 		std::cout << "deleting value in BST" << std::endl;
-		root = ft::BstDelete(root, &value, std::less<std::string>(), std::allocator<ft::BstNode<ft::pair<std::string, int> > >());
-		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>());
+		//not usable outside of map anymore
+		//root = ft::BstDelete(root, &value, std::less<std::string>(), std::allocator<ft::BstNode<ft::pair<std::string, int> > >());
+		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>()) << std::endl;;
 	}
 
 	std::cout << std::endl << "****map iterators*****" << std::endl;{
 		NAME::map<char,int> mymap;
-
 		mymap['b'] = 100;
 		mymap['a'] = 200;
 		mymap['c'] = 300;
 		// show content:
-		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
+		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
 			std::cout << it->first << " => " << it->second << '\n';
-		std::cout << "done: " << std::endl;
+		}
+	}
+
+	std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		mymap['x'] = 100;
+		mymap['y'] = 200;
+		mymap['z'] = 300;
+
+		// show content:
+		NAME::map<char,int>::reverse_iterator rit;
+		for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit){
+			std::cout << "loop" << std::endl;
+			std::cout << rit->first << " => " << rit->second << '\n';
+		}
 	}
 
 	std::cout << std::endl << "****map erase*****" << std::endl;{

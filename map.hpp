@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/15 19:43:57 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:45:23 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@ namespace ft
 	class map
 	{
 	public:
-		typedef Key											key_type;
-		typedef T											mapped_type;
-		typedef pair<key_type, mapped_type>					value_type;
-		typedef Compare										key_compare;
+		typedef Key												key_type;
+		typedef T												mapped_type;
+		typedef pair<key_type, mapped_type>						value_type;
+		typedef Compare											key_compare;
 		//value_compare?
-		typedef	Alloc										allocator_type;
-		typedef typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef BSTiterator<value_type, key_compare>		iterator;
-		//const_iterator
-		//reverse_iterator
-		//const_reverse_iterator
-		//difference_type
-		typedef std::size_t							size_type;
+		typedef	Alloc											allocator_type;
+		typedef typename allocator_type::reference				reference;
+		typedef typename allocator_type::const_reference		const_reference;
+		typedef typename allocator_type::pointer				pointer;
+		typedef typename allocator_type::const_pointer			const_pointer;
+		typedef BSTiterator<value_type, key_compare>			iterator;
+		typedef BSTiterator<const value_type, key_compare>		const_iterator;
+		typedef ft::reverse_iterator<iterator>					reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+	//	typedef ft::iterator_traits<iterator>::difference_type	difference_type;
+		typedef std::size_t										size_type;
 	private:
 		allocator_type		_alloc;
 		key_compare			_keyComp;
@@ -62,8 +62,14 @@ namespace ft
 
 		mapped_type	&operator[](const key_type &k);
 		
-		iterator	begin();
-		iterator	end();
+		iterator				begin();
+		const_iterator			begin() const;
+		iterator				end();
+		const_iterator			end() const;
+		reverse_iterator		rbegin();
+		const_reverse_iterator	rbegin() const;
+		reverse_iterator		rend();
+		const_reverse_iterator	rend() const;
 		
 		pair<iterator, bool>	insert(const value_type &value);
 		void					erase(iterator position);
@@ -80,7 +86,10 @@ namespace ft
 		_keyComp(comp),
 		root(NULL),
 		_last(NULL),
-		_first(NULL){}
+		_first(NULL){
+		BstNode<value_type> last;
+		_last = &last;		
+	}
 	
 	// template<class Key, class T, class Compare, class Alloc>
 	// template<class InputIt>
@@ -112,28 +121,61 @@ namespace ft
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
-		::end(){
-		if (!_last)
-			return (iterator(_last));
-		return(iterator(_last->right));
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::begin() const{
+		return(const_iterator(_first));
 	}
 
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::end(){
+			return (iterator(_last));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::end() const{
+			return (const_iterator(_last));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::reverse_iterator	map<Key, T, Compare, Alloc>
+		::rbegin(){
+		std::cout << "rbegin" << std::endl;
+		return (reverse_iterator(end()));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_reverse_iterator	map<Key, T, Compare, Alloc>
+		::rbegin() const{
+		return (const_reverse_iterator(end()));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::reverse_iterator	map<Key, T, Compare, Alloc>
+		::rend(){
+		std::cout << "rend" << std::endl;
+		return (reverse_iterator(begin()));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_reverse_iterator	map<Key, T, Compare, Alloc>
+		::rend() const{
+		return (const_reverse_iterator(begin()));
+	}
+	
 	//ETC
 	template<class Key, class T, class Compare, class Alloc>
 	void	map<Key, T, Compare, Alloc>
 		::erase(iterator position){
-		BstDelete(root, &*position, _keyComp, _Node_Allocator());
-		std::cout << "first: " << _first->data.first << " last: "
-			<< _last->data.first << " root: " << root->data.first
-			<< std::endl;
+		BstDelete(root, &*position, _keyComp, _Node_Allocator(), _last);
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
 		::erase(const key_type &k){
 		pair<key_type, mapped_type> toDel = make_pair(k, mapped_type());
-		BstDelete(root, &toDel, _keyComp, _Node_Allocator());
+		BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
 		return (1);
 	}
 		
@@ -141,14 +183,13 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::erase(iterator first, iterator last){
 		for (iterator it = first; it != last; it++)
-			BstDelete(root, &*it, _keyComp, _Node_Allocator());
+			BstDelete(root, &*it, _keyComp, _Node_Allocator(), _last);
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
 		::find(const key_type &k){
-		BstNode<value_type> *node = BstFind(root, k, _keyComp);
-
+		BstNode<value_type> *node = BstFind(root, k, _keyComp, _last);
 		if (!node)
 			return (end());
 		else
@@ -162,13 +203,18 @@ namespace ft
 		if (it != end())
 			return (ft::make_pair(it, false));
 		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
-		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator());
-		if (!root)
-			root = _first = _last = node;
+		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator(), _last);
+		if (!root){
+			root = _first = node;
+			root->right = _last;
+			_last->parent = root;
+		}
 		else{
-			node = BstFind(root, value.first, _keyComp);
-			if (_keyComp(_last->data.first, node->data.first))
-				_last = node;
+			node = BstFind(root, value.first, _keyComp, _last);
+			if (_keyComp(_last->parent->data.first, node->data.first)){
+				_last->parent = node;
+				node->right = _last;
+			}
 			if (_keyComp(node->data.first, _first->data.first))
 				_first = node;
 		}

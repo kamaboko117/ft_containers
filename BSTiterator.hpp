@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/14 14:48:52 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:44:05 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 		typedef std::ptrdiff_t	difference_type;
 		typedef	value_type*		pointer;
 		typedef value_type&		reference;
-		typedef BSTiterator		BSTiterator_category;
+		typedef BSTiterator		iterator_category;
 	private:
 		BstNode<T>		*node;
 		Compare			comp;
@@ -50,7 +50,7 @@ namespace ft
 			return (*this);
 		}
 		BSTiterator	&operator++(){
-			if (!node )
+			if (!node)
 				return (*this);
 			if ((!(node->right) && comp(node->parent->data.first, node->data.first))){
 				node = node->right;
@@ -62,13 +62,14 @@ namespace ft
 			}
 			else{
 				if (!(node->parent)){
-					std::cout << "check" << std::endl;
 					node = NULL;
 					return (*this);}
 				while(current->parent && comp(current->data.first, node->parent->data.first))
 					current = current->parent;
+				node = current;
+				return (*this);
 			}
-			node = current;
+			node = current->right;
 			return (*this);
 		}
 		BSTiterator	operator++(int){
@@ -77,12 +78,12 @@ namespace ft
 			return (it);
 		}
 		BSTiterator	&operator--(){
-			T	*current;
+			BstNode<T>	*current = node;
 			
-			if (comp(node->left.data.first, node->data.first))
+			if (comp(node->left->data.first, node->data.first))
 				current = node->left;
 			else{
-				while(current->parent && comp(node->data.first, current->parent.data.first))
+				while(current->parent && comp(node->data.first, current->parent->data.first))
 					current = current->parent;
 			}
 			node = current;
@@ -111,9 +112,13 @@ namespace ft
 		// BSTiterator	operator+(std::size_t i) const{
 		// 	return (BSTiterator(node + i));
 		// }
-		// BSTiterator	operator-(std::size_t i) const{
-		// 	return (BSTiterator(node - i));
-		// }
+		BSTiterator	operator-(std::size_t i) const{
+			BSTiterator<T, Compare>	ret(*this);
+			
+			for (size_t j = 0; j < i; j++)
+				ret--;
+			return (ret);
+		}
 		// BSTiterator	&operator+=(difference_type n){
 		// 	node += n;
 		// 	return (*this);
