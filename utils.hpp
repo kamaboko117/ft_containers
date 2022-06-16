@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/15 20:15:48 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:46:19 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ft
 		typedef std::ptrdiff_t	difference_type;
 		typedef	value_type*		pointer;
 		typedef value_type&		reference;
-		typedef v_iterator		v_iterator_category;
+		typedef v_iterator		iterator_category;
 	private:
 		T	*ptr;
 	public:
@@ -228,16 +228,16 @@ namespace ft
 	}
 
 	template<typename T, class Compare, class Alloc>
-	BstNode<T>	*BstInsert(BstNode<T> *root, BstNode<T> *parent, T &value, Compare keyComp, Alloc _alloc){
-		if (!root){
+	BstNode<T>	*BstInsert(BstNode<T> *root, BstNode<T> *parent, T &value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
+		if (!root || root == last){
 			root = getNewNode(parent, value, _alloc);
 			root->red = false;
 			return (root);
 		}
 		else if (keyComp(value.first, root->data.first))
-			root->left = BstInsert(root->left, root, value, keyComp, _alloc);
+			root->left = BstInsert(root->left, root, value, keyComp, _alloc, last);
 		else
-			root->right = BstInsert(root->right, root, value, keyComp, _alloc);
+			root->right = BstInsert(root->right, root, value, keyComp, _alloc, last);
 		return (root);
 	}
 
@@ -263,8 +263,8 @@ namespace ft
 
 	//https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
 	template<typename T, class Compare, class Alloc>
-	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc){
-		root = BstFind(root, value->first, keyComp);
+	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
+		root = BstFind(root, value->first, keyComp, last);
 		if (!root)
 			return (root);
 		if (!root->left){
@@ -288,7 +288,7 @@ namespace ft
 		}
 		BstNode<T> *tmp = BstMinValueNode(root->right);
 		root->data = tmp->data;
-		root->right = BstDelete(root->right, value, keyComp, _alloc);
+		root->right = BstDelete(root->right, value, keyComp, _alloc, last);
 		return (root);
 	}
 
@@ -387,15 +387,15 @@ namespace ft
 	}
 
 	template<class Key, typename T, class Compare>
-	BstNode<T>	*BstFind(BstNode<T> *root, const Key &value, Compare keyComp){
-		if (!root)
+	BstNode<T>	*BstFind(BstNode<T> *root, const Key &value, Compare keyComp, BstNode<T> *last){
+		if (!root || root == last)
 			return (NULL);
 		else if (!keyComp(value, root->data.first) && !keyComp(root->data.first, value))
 			return (root);
 		else if (keyComp(value, root->data.first))
-			return (BstFind(root->left, value, keyComp));
+			return (BstFind(root->left, value, keyComp, last));
 		else
-			return (BstFind(root->right, value, keyComp));
+			return (BstFind(root->right, value, keyComp, last));
 	}
 
 	template<class Key, typename T>
