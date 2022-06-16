@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/16 19:44:05 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:46:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,19 @@ namespace ft
 		}
 		BSTiterator	&operator--(){
 			BstNode<T>	*current = node;
-			
+			std::cout << "--" << std::endl;
 			if (comp(node->left->data.first, node->data.first))
 				current = node->left;
 			else{
-				while(current->parent && comp(node->data.first, current->parent->data.first))
+				while(current->parent && comp(node->data.first, current->parent->data.first)){
+					std::cout << "cc" << std::endl;
 					current = current->parent;
+				}
 			}
-			node = current;
+			if (node == current)
+				node = node->parent;
+			else
+				node = current;
 			return (*this);
 		}
 		BSTiterator	operator--(int){

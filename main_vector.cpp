@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main_vector.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/02 19:30:46 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:25:10 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,18 @@ int	main(){
 		std::cout << '\n';
 	}
 	
-	 
+	std::cout << std::endl << "****reverse iterator*****" << std::endl;{
+		VECTOR<int> myvector (5);  // 5 default-constructed ints
+		int i = 0;
+		VECTOR<int>::reverse_iterator rit = myvector.rbegin();
+		
+		for (; rit!= myvector.rend(); ++rit)
+			*rit = ++i;
+
+		std::cout << "myvector contains:";
+		for (VECTOR<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+			std::cout << ' ' << *it;
+		std::cout << '\n';
+	}
 	std::cout << "DONE" << std::endl;
 }
