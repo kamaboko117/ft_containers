@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/16 20:50:56 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:54:38 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,28 @@ int	main(){
 	// 	}
 	// }
 
-	// std::cout << std::endl << "****map erase*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
-	// 	NAME::map<char,int>::iterator it;
+	std::cout << std::endl << "****map erase*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		NAME::map<char,int>::iterator it;
 
-	// 	// insert some values:
-	// 	mymap['a']=10;
-	// 	mymap['b']=20;
-	// 	mymap['c']=30;
-	// 	mymap['d']=40;
-	// 	mymap['e']=50;
-	// 	mymap['f']=60;
+		// insert some values:
+		mymap['a']=10;
+		mymap['b']=20;
+		mymap['c']=30;
+		mymap['d']=40;
+		mymap['e']=50;
+		mymap['f']=60;
 
-	// 	it=mymap.find('b');
-	// 	mymap.erase (it);                   // erasing by iterator
+		it=mymap.find('b');
+		mymap.erase (it);                   // erasing by iterator
 
-	// 	mymap.erase ('c');                  // erasing by key
+		mymap.erase ('c');                  // erasing by key
 
-	// 	it=mymap.find ('e');
-	// 	mymap.erase ( it, mymap.end() );    // erasing by range
+		it=mymap.find ('e');
+		mymap.erase ( it, mymap.end() );    // erasing by range
 
-	// 	// show content:
-	// 	for (it=mymap.begin(); it!=mymap.end(); ++it)
-	// 		std::cout << it->first << " => " << it->second << '\n';
-	// }
+		// show content:
+		for (it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
 }
