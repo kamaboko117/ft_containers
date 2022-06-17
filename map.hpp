@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/17 16:57:14 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:43:45 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::reverse_iterator	map<Key, T, Compare, Alloc>
 		::rbegin(){
-		std::cout << "rbegin" << std::endl;
+		std::cout << "end(): " <<  << std::endl;
 		return (reverse_iterator(end()));
 	}
 

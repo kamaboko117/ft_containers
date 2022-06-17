@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/17 18:26:44 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:39:44 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ int	main(){
 
 		// show content:
 		NAME::map<char,int>::reverse_iterator rit;
-		for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit){
-			std::cout << "loop" << std::endl;
+		for (rit = mymap.rbegin(); rit != mymap.rend(); ++rit){
 			std::cout << rit->first << " => " << rit->second << '\n';
 		}
 	}
