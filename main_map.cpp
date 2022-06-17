@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/17 13:54:38 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:26:44 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,20 @@ int	main(){
 		}
 	}
 
-	// std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
+	std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-	// 	mymap['x'] = 100;
-	// 	mymap['y'] = 200;
-	// 	mymap['z'] = 300;
+		mymap['x'] = 100;
+		mymap['y'] = 200;
+		mymap['z'] = 300;
 
-	// 	// show content:
-	// 	NAME::map<char,int>::reverse_iterator rit;
-	// 	for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit){
-	// 		std::cout << "loop" << std::endl;
-	// 		std::cout << rit->first << " => " << rit->second << '\n';
-	// 	}
-	// }
+		// show content:
+		NAME::map<char,int>::reverse_iterator rit;
+		for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit){
+			std::cout << "loop" << std::endl;
+			std::cout << rit->first << " => " << rit->second << '\n';
+		}
+	}
 
 	std::cout << std::endl << "****map erase*****" << std::endl;{
 		NAME::map<char,int> mymap;

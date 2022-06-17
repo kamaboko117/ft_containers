@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/16 19:45:23 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:57:14 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,14 @@ namespace ft
 		: _alloc(alloc),
 		_keyComp(comp),
 		root(NULL),
-		_last(NULL),
+		_last(_Node_Allocator().allocate(1)),
 		_first(NULL){
-		BstNode<value_type> last;
-		_last = &last;		
+		_last->data = pair<key_type, mapped_type>();
+		_last->right = NULL;
+		_last->left = NULL;
+		_last->parent = NULL;
+		_last->red = false;
+		_first = _last;	
 	}
 	
 	// template<class Key, class T, class Compare, class Alloc>
@@ -99,7 +103,9 @@ namespace ft
 	
 	template<class Key, class T, class Compare, class Alloc>
 	map<Key, T, Compare, Alloc>
-		::~map(){}
+		::~map(){
+			_Node_Allocator().deallocate(_last, 1);
+		}
 	
 	//OPERATORS
 	template<class Key, class T, class Compare, class Alloc>
