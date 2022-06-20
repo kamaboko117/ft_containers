@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 18:00:27 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:14:54 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ namespace ft
 					node = node->right;
 					return (*this);
 				}
-				while (current->parent && comp(node->data.first, current->parent->data.first))
+				while (current->parent){
 					current = current->parent;
+					if (comp(node->data.first, current->data.first))
+						break ;
+				}
 			}
 			if (comp(node->data.first, current->data.first))
 				node = current;
