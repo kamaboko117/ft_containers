@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 14:09:25 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:43:35 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 #ifndef NAME
 # define NAME ft
 #endif 
+
+bool fncomp (char lhs, char rhs){
+	return lhs<rhs;
+}
+
+struct classcomp {
+	bool operator() (const char& lhs, const char& rhs) const{
+		return lhs<rhs;
+	}
+};
 
 //check bst allocation
 int	main(){
@@ -57,6 +67,36 @@ int	main(){
 		std::cout << std::boolalpha << "bst search value: " << ft::BstSearch(root, value, std::less<std::string>()) << std::endl;;
 	}
 
+	// std::cout << std::endl << "****Construct*****" << std::endl;{
+	// 	NAME::map<char,int> first;
+
+	// 	first['a']=10;
+	// 	first['b']=30;
+	// 	first['c']=50;
+	// 	first['d']=70;
+	// 	std::cout << "default constructor with insert" << std::endl;
+	// 	for (NAME::map<char,int>::iterator it = first.begin(); it != first.end(); ++it){
+	// 		std::cout << it->first << " => " << it->second << '\n';
+	// 	}
+
+	// 	NAME::map<char,int> second (first.begin(),first.end());
+	// 	std::cout << "range constructor with first" << std::endl;
+	// 	for (NAME::map<char,int>::iterator it = second.begin(); it != second.end(); ++it){
+	// 		std::cout << it->first << " => " << it->second << '\n';
+	// 	}
+		
+	// 	NAME::map<char,int> third (second);
+	// 	std::cout << "copy constructor with second" << std::endl;
+	// 	for (NAME::map<char,int>::iterator it = third.begin(); it != third.end(); ++it){
+	// 		std::cout << it->first << " => " << it->second << '\n';
+	// 	}
+		
+	// 	NAME::map<char,int,classcomp> fourth;                 // class as Compare
+
+	// 	bool(*fn_pt)(char,char) = fncomp;
+	// 	NAME::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+	// }
+
 	std::cout << std::endl << "****map iterators*****" << std::endl;{
 		NAME::map<char,int> mymap;
 		mymap['b'] = 100;
@@ -80,6 +120,63 @@ int	main(){
 		for (rit = mymap.rbegin(); rit != mymap.rend(); ++rit){
 			std::cout << rit->first << " => " << rit->second << '\n';
 		}
+	}
+
+	std::cout << std::endl << "****map find*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		NAME::map<char,int>::iterator it;
+
+		mymap['a']=50;
+		mymap['b']=100;
+		mymap['c']=150;
+		mymap['d']=200;
+
+		it = mymap.find('b');
+		if (it != mymap.end())
+			mymap.erase (it);
+
+		// print content:
+		std::cout << "elements in mymap:" << '\n';
+		std::cout << "a => " << mymap.find('a')->second << '\n';
+		std::cout << "c => " << mymap.find('c')->second << '\n';
+		std::cout << "d => " << mymap.find('d')->second << '\n';
+	}
+	
+	std::cout << std::endl << "****map insert*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		// first insert function version (single parameter):
+		mymap.insert ( NAME::pair<char,int>('a',100) );
+		mymap.insert ( NAME::pair<char,int>('z',200) );
+
+		NAME::pair<NAME::map<char,int>::iterator,bool> ret;
+		ret = mymap.insert ( NAME::pair<char,int>('z',500) );
+		if (ret.second==false) {
+			std::cout << "element 'z' already existed";
+			std::cout << " with a value of " << ret.first->second << '\n';
+		}
+
+		// second insert function version (with hint position):
+		NAME::map<char,int>::iterator it = mymap.begin();
+		std::cout << "ddd" << std::endl;
+	mymap.insert(NAME::pair<char,int>('b',300));
+	// mymap.insert(NAME::pair<char,int>('c',400));
+		// mymap.insert (it, NAME::pair<char,int>('b',300));  // max efficiency inserting (no difference in FT)
+		// mymap.insert (it, NAME::pair<char,int>('c',400));  // no max efficiency inserting
+		// std::cout << "plouf" << std::endl;
+		// // third insert function version (range insertion):
+		// NAME::map<char,int> anothermap;
+		// std::cout << "find: " << mymap.find('c')->first << std::endl;
+		// anothermap.insert(mymap.begin(),mymap.find('c'));
+		// showing contents:
+		std::cout << "mymap contains:\n";
+		for (it = mymap.begin(); it != mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	
+
+		// std::cout << "anothermap contains:\n";
+		// for (it = anothermap.begin(); it != anothermap.end(); ++it)
+		// 	std::cout << it->first << " => " << it->second << '\n';
 	}
 
 	std::cout << std::endl << "****map erase*****" << std::endl;{
@@ -106,4 +203,5 @@ int	main(){
 		for (it=mymap.begin(); it!=mymap.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
 	}
+
 }
