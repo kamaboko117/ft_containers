@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/16 18:46:19 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:06:12 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ namespace ft
 	struct BstNode
 	{
 		T data;
-		bool red;
+		int red;
 		
 		BstNode	*left;
 		BstNode *right;
@@ -222,7 +222,7 @@ namespace ft
 		newNode->data = data;
 		newNode->left = NULL;
 		newNode->right = NULL;
-		newNode->red = true;
+		newNode->red = 1;
 		newNode->parent = parent;
 		return (newNode);
 	}
@@ -231,7 +231,7 @@ namespace ft
 	BstNode<T>	*BstInsert(BstNode<T> *root, BstNode<T> *parent, T &value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
 		if (!root || root == last){
 			root = getNewNode(parent, value, _alloc);
-			root->red = false;
+			root->red = 0;
 			return (root);
 		}
 		else if (keyComp(value.first, root->data.first))
@@ -335,9 +335,9 @@ namespace ft
 			if (root->parent == root->parent->parent->right){
 				BstNode<T> *u = root->parent->left; //uncle
 				if (u->red){
-					u->red = false;
-					root->parent->red = false;
-					root->parent->parent->red = true;
+					u->red = 0;
+					root->parent->red = 0;
+					root->parent->parent->red = 1;
 					root = root->parent->parent;
 				}
 				else{
@@ -345,17 +345,17 @@ namespace ft
 						root = root->parent;
 						rightRotate(root, oldRoot);
 					}
-					root->parent->red = false;
-					root->parent->parent->red = true;
+					root->parent->red = 0;
+					root->parent->parent->red = 1;
 					leftRotate(root, oldRoot);
 				}
 			}
 			else{
 				BstNode<T> *u = root->parent->right; //uncle
 				if (u->red){
-					u->red = false;
-					root->parent->red = false;
-					root->parent->parent->red = true;
+					u->red = 0;
+					root->parent->red = 0;
+					root->parent->parent->red = 1;
 					root = root->parent->parent;
 				}
 				else{
@@ -363,8 +363,8 @@ namespace ft
 						root = root->parent;
 						leftRotate(root, oldRoot);
 					}
-					root->parent->red = false;
-					root->parent->parent->red = true;
+					root->parent->red = 0;
+					root->parent->parent->red = 1;
 					rightRotate(root, oldRoot);
 				}
 			}
