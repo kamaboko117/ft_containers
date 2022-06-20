@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 14:09:52 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:01:05 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ namespace ft
 		const_reverse_iterator	rend() const;
 		
 		pair<iterator, bool>	insert(const value_type &value);
+		iterator				insert(iterator position, const value_type	&val);
+		template<class InputIt>
+		void					insert(InputIt first, InputIt last);
 		void					erase(iterator position);
 		size_type				erase(const key_type &k);
 		void					erase(iterator first, iterator last);
 		iterator				find(const key_type &k);
+		const_iterator			find(const key_type &k) const;
 	};
 
 	//CONSTRUCT
@@ -86,7 +90,8 @@ namespace ft
 		_keyComp(comp),
 		root(NULL),
 		_last(_Node_Allocator().allocate(1)),
-		_first(NULL){
+		_first(NULL)
+	{
 		_last->data = pair<key_type, mapped_type>();
 		_last->right = NULL;
 		_last->left = NULL;
@@ -97,9 +102,22 @@ namespace ft
 	
 	// template<class Key, class T, class Compare, class Alloc>
 	// template<class InputIt>
-	// map<Key, T, Compare, Alloc>::map(InputIt first, InputIt last, const key_compare &comp, const allocator_type &alloc)
+	// map<Key, T, Compare, Alloc>
+	// 	::map(InputIt first, InputIt last, const key_compare &comp, const allocator_type &alloc)
 	// 	: _alloc(alloc),
-	// 	_keyComp(comp){}
+	// 	_keyComp(comp),
+	// 	root(NULL),
+	// 	_last(_Node_Allocator().allocate(1)),
+	// 	_first(NULL)
+	// {
+	// 	_last->data = pair<key_type, mapped_type>();
+	// 	_last->right = NULL;
+	// 	_last->left = NULL;
+	// 	_last->parent = NULL;
+	// 	_last->red = 2;
+	// 	_first = _last;
+				
+	// }
 	
 	template<class Key, class T, class Compare, class Alloc>
 	map<Key, T, Compare, Alloc>
@@ -202,12 +220,15 @@ namespace ft
 	
 	template<class Key, typename T, class Compare, class Alloc>
 	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>
-		::insert(const value_type &value){
+		::insert(const value_type &value)
+	{
 		iterator it = find(value.first);
 		if (it != end())
 			return (ft::make_pair(it, false));
 		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
 		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator(), _last);
+
+		
 		if (!root){
 			root = _first = node;
 			root->right = _last;
@@ -226,6 +247,24 @@ namespace ft
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
 	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::insert(iterator position, const value_type &val)
+	{
+		(void)position;
+		return (insert(val).first);
+	}
+	
+	template<class Key, typename T, class Compare, class Alloc>
+	template<class InputIt>
+	void	map<Key, T, Compare, Alloc>
+		::insert(InputIt first, InputIt last)
+	{
+		for (InputIt it = first; it != last; it++)
+			insert(*it);
+	}
+
 }
 
 #endif
