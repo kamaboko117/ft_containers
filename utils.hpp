@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 14:06:12 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:57:05 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,8 @@ namespace ft
 	template<class T>
 	struct BstNode
 	{
+		typedef	T	value_type;
+
 		T data;
 		int red;
 		

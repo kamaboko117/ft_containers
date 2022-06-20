@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 18:01:05 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:33:41 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ namespace ft
 		typedef typename allocator_type::const_reference		const_reference;
 		typedef typename allocator_type::pointer				pointer;
 		typedef typename allocator_type::const_pointer			const_pointer;
-		typedef BSTiterator<value_type, key_compare>			iterator;
-		typedef BSTiterator<const value_type, key_compare>		const_iterator;
+		typedef BSTiterator<BstNode<value_type>, key_compare>			iterator;
+		typedef BSTconstIterator<BstNode<value_type>, key_compare>		const_iterator;
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 	//	typedef ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -100,25 +100,43 @@ namespace ft
 		_first = _last;	
 	}
 	
-	// template<class Key, class T, class Compare, class Alloc>
-	// template<class InputIt>
-	// map<Key, T, Compare, Alloc>
-	// 	::map(InputIt first, InputIt last, const key_compare &comp, const allocator_type &alloc)
-	// 	: _alloc(alloc),
-	// 	_keyComp(comp),
-	// 	root(NULL),
-	// 	_last(_Node_Allocator().allocate(1)),
-	// 	_first(NULL)
-	// {
-	// 	_last->data = pair<key_type, mapped_type>();
-	// 	_last->right = NULL;
-	// 	_last->left = NULL;
-	// 	_last->parent = NULL;
-	// 	_last->red = 2;
-	// 	_first = _last;
-				
-	// }
+	template<class Key, class T, class Compare, class Alloc>
+	template<class InputIt>
+	map<Key, T, Compare, Alloc>
+		::map(InputIt first, InputIt last, const key_compare &comp, const allocator_type &alloc)
+		: _alloc(alloc),
+		_keyComp(comp),
+		root(NULL),
+		_last(_Node_Allocator().allocate(1)),
+		_first(NULL)
+	{
+		_last->data = pair<key_type, mapped_type>();
+		_last->right = NULL;
+		_last->left = NULL;
+		_last->parent = NULL;
+		_last->red = 2;
+		_first = _last;
+		insert(first, last);			
+	}
 	
+	template<class Key, class T, class Compare, class Alloc>
+	map<Key, T, Compare, Alloc>
+		::map(const map &src)
+		: _alloc(src._alloc),
+		_keyComp(src._keyComp),
+		root(NULL),
+		_last(_Node_Allocator().allocate(1)),
+		_first(NULL)
+	{
+		_last->data = pair<key_type, mapped_type>();
+		_last->right = NULL;
+		_last->left = NULL;
+		_last->parent = NULL;
+		_last->red = 2;
+		_first = _last;
+		insert(src.begin(), src.end());
+	}
+
 	template<class Key, class T, class Compare, class Alloc>
 	map<Key, T, Compare, Alloc>
 		::~map(){

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 18:14:54 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:36:46 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ namespace ft
 	class BSTiterator
 	{
 	public:
-		typedef T 				value_type;
-		typedef std::ptrdiff_t	difference_type;
-		typedef	value_type*		pointer;
-		typedef value_type&		reference;
-		typedef BSTiterator		iterator_category;
+		typedef typename T::value_type 	value_type;
+		typedef std::ptrdiff_t			difference_type;
+		typedef	value_type*				pointer;
+		typedef value_type&				reference;
+		typedef BSTiterator				iterator_category;
 	private:
-		BstNode<T>		*node;
-		Compare			comp;
+		T			*node;
+		Compare		comp;
 	public:
 		BSTiterator(const Compare &comp = Compare())
 			: node(NULL),
 			comp(comp){}
-		BSTiterator(BstNode<T> *node, const Compare &comp = Compare())
+		BSTiterator(BstNode<value_type> *node, const Compare &comp = Compare())
 			: node(node),
 			comp(comp){}
 		template<typename U, class Comp>
@@ -52,7 +52,7 @@ namespace ft
 		BSTiterator	&operator++(){
 			if (!node)
 				return (*this);
-			BstNode<T> *current = node;
+			BstNode<value_type> *current = node;
 			if (node->right && comp(node->data.first, node->right->data.first)){
 				current = node->right;
 				while (current->left && comp(node->data.first, current->left->data.first))
@@ -81,7 +81,7 @@ namespace ft
 			return (it);
 		}
 		BSTiterator	&operator--(){
-			BstNode<T>	*current = node;
+			BstNode<value_type>	*current = node;
 			if (node->red == 2){
 				node = node->parent;
 				return (*this);
@@ -103,13 +103,13 @@ namespace ft
 			--(*this);
 			return (it);
 		}
-		T			&operator*() const{
+		value_type	&operator*() const{
 			return (node->data);
 		}
 		// T			&operator[](difference_type i){
 		// 	return (node[i]);
 		// }
-		T			*operator->(){
+		value_type	*operator->(){
 			return (&node->data);
 		}
 		bool		operator==(const BSTiterator &rhs) const{
@@ -223,7 +223,131 @@ namespace ft
 //     typename BSTiterator<T_L>::difference_type	operator-(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs){
 //         return (lhs.base() - rhs.base());
 //     }
-	
+
+	// BSTconstIterator
+	template<typename T, class Compare>
+	class BSTconstIterator
+	{
+	public:
+		typedef typename T::value_type  		value_type;
+		typedef std::ptrdiff_t					difference_type;
+		typedef	value_type*						pointer;
+		typedef value_type&						reference;
+		typedef BSTconstIterator				iterator_category;
+	private:
+		T		*node;
+		Compare	comp;
+	public:
+		BSTconstIterator(const Compare &comp = Compare())
+			: node(NULL),
+			comp(comp){}
+		BSTconstIterator(T *node, const Compare &comp = Compare())
+			: node(node),
+			comp(comp){}
+		template<typename U, class Comp>
+		BSTconstIterator(const BSTconstIterator<U, Comp> &src)
+			: node(src.node),
+			comp(src.comp){}
+		~BSTconstIterator(){}
+		
+		BSTconstIterator	&operator=(const BSTconstIterator &rhs){
+			if (this == &rhs)
+				return (*this);
+			node = rhs.node;
+			comp = rhs.comp;
+			return (*this);
+		}
+		BSTconstIterator	&operator++(){
+			if (!node)
+				return (*this);
+			BstNode<value_type> *current = node;
+			if (node->right && comp(node->data.first, node->right->data.first)){
+				current = node->right;
+				while (current->left && comp(node->data.first, current->left->data.first))
+					current = current->left;
+			}
+			else{
+				if (!(node->parent)){
+					node = node->right;
+					return (*this);
+				}
+				while (current->parent){
+					current = current->parent;
+					if (comp(node->data.first, current->data.first))
+						break ;
+				}
+			}
+			if (comp(node->data.first, current->data.first))
+				node = current;
+			else
+				node = node->right;
+			return (*this);
+		}
+		BSTconstIterator	operator++(int){
+			BSTconstIterator it = *this;
+			++(*this);
+			return (it);
+		}
+		BSTconstIterator	&operator--(){
+			BstNode<value_type>	*current = node;
+			if (node->red == 2){
+				node = node->parent;
+				return (*this);
+			}
+			if (node->left && comp(node->left->data.first, node->data.first))
+				current = node->left;
+			else{
+				while(current->parent && comp(node->data.first, current->parent->data.first))
+					current = current->parent;
+			}
+			if (node == current)
+				node = node->parent;
+			else
+				node = current;
+			return (*this);
+		}
+		BSTconstIterator	operator--(int){
+			BSTconstIterator it = *this;
+			--(*this);
+			return (it);
+		}
+		value_type	&operator*() const{
+			return (node->data);
+		}
+		// T			&operator[](difference_type i){
+		// 	return (node[i]);
+		// }
+		value_type	*operator->(){
+			return (&node->data);
+		}
+		bool		operator==(const BSTconstIterator &rhs) const{
+			return (node == rhs.node);
+		}
+		bool		operator!=(const BSTconstIterator &rhs) const{
+			return (node != rhs.node);	
+		}
+		// BSTconstIterator	operator+(std::size_t i) const{
+		// 	return (BSTconstIterator(node + i));
+		// }
+		BSTconstIterator	operator-(std::size_t i) const{
+			BSTconstIterator<T, Compare>	ret(*this);
+			
+			for (size_t j = 0; j < i; j++)
+				ret--;
+			return (ret);
+		}
+		// BSTconstIterator	&operator+=(difference_type n){
+		// 	node += n;
+		// 	return (*this);
+		// }
+		// BSTconstIterator	&operator-=(difference_type n){
+		// 	node -= n;
+		// 	return (*this);
+		// }
+		// T	*base() const{
+		// 	return (node);
+		// }
+	};
 	
 }
 
