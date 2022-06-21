@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:31:25 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:55:00 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ namespace ft
 		
 		bool		empty() const;
 		size_type	size() const;
+		size_type	max_size() const;
 
 		pair<iterator, bool>	insert(const value_type &value);
 		iterator				insert(iterator position, const value_type	&val);
@@ -337,6 +338,12 @@ namespace ft
 		return (!size());
 	}
 
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
+		::max_size() const
+	{
+		return (_Node_Allocator().max_size());
+	}
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:29:37 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:56:34 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,4 +244,9 @@ int	main(){
 		}
 	}
 
+	std::cout << std::endl << "****max_size()*****" << std::endl;{
+		NAME::map<char, char> q;
+		std::cout.imbue(std::locale("en_US.UTF-8"));    
+		std::cout << "Maximum size of a map is " << q.max_size() << '\n';
+	}
 }
