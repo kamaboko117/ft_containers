@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 13:50:52 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:21:30 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,26 @@ int	main(){
 
 		std::cout << "mymap.size() is " << mymap.size() << '\n';
 
+	}
+
+	std::cout << std::endl << "****clear()*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		mymap['x'] = 100;
+		mymap['y'] = 200;
+		mymap['z'] = 300;
+
+		std::cout << "mymap contains:\n";
+		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+
+		mymap.clear();
+		mymap['a'] = 1101;
+		mymap['b'] = 2202;
+
+		std::cout << "mymap contains:\n";
+		for (NAME::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 	}
 
 	std::cout << std::endl << "****operator=*****" << std::endl;{

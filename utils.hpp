@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 19:57:05 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:24:41 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,8 +273,10 @@ namespace ft
 			// BstNode<T> *ret = root->right;
 			if (root->parent)
 				BstReplace(root->parent, root->right, root->data, keyComp);
-			else
+			else{
 				root = root->right;
+				root->parent = NULL;
+			}
 			//_alloc.deallocate(root, 1);
 			// root = ret;
 			return (root);

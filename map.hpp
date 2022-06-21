@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 14:10:00 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:20:19 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,23 +223,36 @@ namespace ft
 	//ETC
 	template<class Key, class T, class Compare, class Alloc>
 	void	map<Key, T, Compare, Alloc>
-		::erase(iterator position){
-		BstDelete(root, &*position, _keyComp, _Node_Allocator(), _last);
+		::erase(iterator position)
+	{
+		erase(position->first);
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
-		::erase(const key_type &k){
+		::erase(const key_type &k)
+	{
+		BstNode<value_type>	*tmp;
+
 		pair<key_type, mapped_type> toDel = make_pair(k, mapped_type());
-		BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
+		tmp = BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
+		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
+			_first = tmp;
+		if (!_keyComp(k, root->data.first) && !_keyComp(root->data.first, k))
+			root = tmp;
+		if (!_last->parent){
+			root = NULL;
+			_first = _last;
+		}
 		return (1);
 	}
 		
 	template<class Key, class T, class Compare, class Alloc>
 	void	map<Key, T, Compare, Alloc>
-		::erase(iterator first, iterator last){
+		::erase(iterator first, iterator last)
+	{
 		for (iterator it = first; it != last; it++)
-			BstDelete(root, &*it, _keyComp, _Node_Allocator(), _last);
+			erase(it->first);
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
@@ -262,7 +275,6 @@ namespace ft
 		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
 		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator(), _last);
 
-		
 		if (!root){
 			root = _first = node;
 			root->right = _last;
