@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 20:05:40 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:50:52 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,32 @@ int	main(){
 
 		bool(*fn_pt)(char,char) = fncomp;
 		NAME::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+	}
+
+	std::cout << std::endl << "****size()*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		mymap['a'] = 101;
+		mymap['b'] = 202;
+		mymap['c'] = 302;
+
+		std::cout << "mymap.size() is " << mymap.size() << '\n';
+
+	}
+
+	std::cout << std::endl << "****operator=*****" << std::endl;{
+		NAME::map<char,int> first;
+		NAME::map<char,int> second;
+
+		first['x'] = 8;
+		first['y'] = 16;
+		first['z'] = 32;
+
+		second = first;                // second now contains 3 ints
+		first = NAME::map<char,int>();  // and first is now empty
+
+		std::cout << "Size of first: " << first.size() << '\n';
+		std::cout << "Size of second: " << second.size() << '\n';
 	}
 
 	std::cout << std::endl << "****map iterators*****" << std::endl;{

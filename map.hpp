@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 20:33:41 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:10:00 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ namespace ft
 		map(const map &src);
 		~map();
 
+		map			&operator=(const map &rhs);
 		mapped_type	&operator[](const key_type &k);
 		
 		iterator				begin();
@@ -71,6 +72,8 @@ namespace ft
 		reverse_iterator		rend();
 		const_reverse_iterator	rend() const;
 		
+		size_type	size() const;
+
 		pair<iterator, bool>	insert(const value_type &value);
 		iterator				insert(iterator position, const value_type	&val);
 		template<class InputIt>
@@ -78,8 +81,11 @@ namespace ft
 		void					erase(iterator position);
 		size_type				erase(const key_type &k);
 		void					erase(iterator first, iterator last);
+		void					clear();
+
 		iterator				find(const key_type &k);
 		const_iterator			find(const key_type &k) const;
+
 	};
 
 	//CONSTRUCT
@@ -144,6 +150,16 @@ namespace ft
 		}
 	
 	//OPERATORS
+	template<class Key, class T, class Compare, class Alloc>
+	map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>
+		::operator=(const map &rhs)
+	{
+		_keyComp = rhs._keyComp;
+		clear();
+		insert(rhs.begin(), rhs.end());
+		return (*this);
+	}
+
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>
 		::operator[](const key_type &k){
@@ -283,6 +299,23 @@ namespace ft
 			insert(*it);
 	}
 
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
+		::size() const
+	{
+		size_type	ret = 0;
+
+		for (const_iterator it = begin(); it != end(); it++)
+			ret++;
+		return (ret);
+	} 	
+
+	template<class Key, typename T, class Compare, class Alloc>
+	void	map<Key, T, Compare, Alloc>
+		::clear()
+	{
+		erase(begin(), end());
+	}
 }
 
 #endif
