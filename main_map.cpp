@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:21:30 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:29:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,20 @@ int	main(){
 		// show content:
 		for (it=mymap.begin(); it!=mymap.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
+	}
+
+	std::cout << std::endl << "****empty()*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		mymap['a']=10;
+		mymap['b']=20;
+		mymap['c']=30;
+
+		while (!mymap.empty())
+		{
+			std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+			mymap.erase(mymap.begin());
+		}
 	}
 
 }

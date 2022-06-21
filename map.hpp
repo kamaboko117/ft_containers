@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:20:19 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:31:25 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ namespace ft
 		reverse_iterator		rend();
 		const_reverse_iterator	rend() const;
 		
+		bool		empty() const;
 		size_type	size() const;
 
 		pair<iterator, bool>	insert(const value_type &value);
@@ -328,6 +329,14 @@ namespace ft
 	{
 		erase(begin(), end());
 	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	bool	map<Key, T, Compare, Alloc>
+		::empty() const
+	{
+		return (!size());
+	}
+
 }
 
 #endif
