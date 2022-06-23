@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 22:01:30 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:22:24 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,10 @@ namespace ft
 		iterator		find(const key_type &k);
 		const_iterator	find(const key_type &k) const;
 		size_type		count(const key_type &k) const;
+		iterator		lower_bound(const key_type &k);
+		const_iterator	lower_bound(const key_type &k) const;
+		iterator		upper_bound(const key_type &k);
+		const_iterator	upper_bound(const key_type &k) const;
 	};
 
 	//CONSTRUCT
@@ -402,8 +406,8 @@ namespace ft
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::
-		count(const key_type &k) const
+	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
+		::count(const key_type &k) const
 	{
 		for (const_iterator it = begin(); it != end(); it++)
 		{
@@ -412,6 +416,55 @@ namespace ft
 		}
 		return (0);
 	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::lower_bound(const key_type &k)
+	{
+		iterator	it = begin();
+		for (; it != end(); it++){
+			if (!_keyComp(it->first, k))
+				return (it);
+		}
+		return (it);
+	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::lower_bound(const key_type &k) const
+	{
+		const_iterator	it = begin();
+		for (; it != end(); it++){
+			if (!_keyComp(it->first, k))
+				return (it);
+		}
+		return (it);
+	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
+		::upper_bound(const key_type &k)
+	{
+		iterator	it = begin();
+		for (; it != end(); it++){
+			if (_keyComp(k, it->first))
+				return (it);
+		}
+		return (it);
+	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::upper_bound(const key_type &k) const
+	{
+		const_iterator	it = begin();
+		for (; it != end(); it++){
+			if (_keyComp(k, it->first))
+				return (it);
+		}
+		return (it);
+	}
+
 }
 
 #endif
