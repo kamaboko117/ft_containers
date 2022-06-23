@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 19:55:10 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:09:03 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	main(){
 		}
 	}
 
-	std::cout << std::endl << "****map find*****" << std::endl;{
+	std::cout << std::endl << "****find()*****" << std::endl;{
 		NAME::map<char,int> mymap;
 		NAME::map<char,int>::iterator it;
 
@@ -171,7 +171,7 @@ int	main(){
 		std::cout << "d => " << mymap.find('d')->second << '\n';
 	}
 	
-	std::cout << std::endl << "****map insert*****" << std::endl;{
+	std::cout << std::endl << "****insert()*****" << std::endl;{
 		NAME::map<char,int> mymap;
 
 		// first insert function version (single parameter):
@@ -205,7 +205,7 @@ int	main(){
 			std::cout << it->first << " => " << it->second << '\n';
 	}
 
-	std::cout << std::endl << "****map erase*****" << std::endl;{
+	std::cout << std::endl << "****erase()*****" << std::endl;{
 		NAME::map<char,int> mymap;
 		NAME::map<char,int>::iterator it;
 
@@ -249,6 +249,7 @@ int	main(){
 		std::cout.imbue(std::locale("en_US.UTF-8"));    
 		std::cout << "Maximum size of a map is " << q.max_size() << '\n';
 	}
+	
 	std::cout << std::endl << "****operator[]*****" << std::endl;{
 		// NAME::map<char, int> mymap;
 		
@@ -268,5 +269,26 @@ int	main(){
 		std::cout << "mymap['d'] is " << mymap['d'] << '\n';
 
 		std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+	}
+
+	std::cout << std::endl << "****swap*****" << std::endl;{
+		NAME::map<char,int> foo,bar;
+
+		foo['x']=100;
+		foo['y']=200;
+
+		bar['a']=11;
+		bar['b']=22;
+		bar['c']=33;
+
+		foo.swap(bar);
+
+		std::cout << "foo contains:\n";
+		for (NAME::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+
+		std::cout << "bar contains:\n";
+		for (NAME::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 	}
 }
