@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 21:40:13 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:01:30 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ namespace ft
 
 		iterator		find(const key_type &k);
 		const_iterator	find(const key_type &k) const;
-
+		size_type		count(const key_type &k) const;
 	};
 
 	//CONSTRUCT
@@ -290,6 +290,17 @@ namespace ft
 			return (iterator(node));
 	}
 	
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::find(const key_type &k) const
+	{
+		BstNode<value_type> *node = BstFind(root, k, _keyComp, _last);
+		if (!node)
+			return (end());
+		else
+			return (const_iterator(node));
+	}
+	
 	template<class Key, typename T, class Compare, class Alloc>
 	pair<typename map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>
 		::insert(const value_type &value)
@@ -388,6 +399,18 @@ namespace ft
 		::value_comp() const
 	{
 		return (value_compare(key_compare()));
+	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::
+		count(const key_type &k) const
+	{
+		for (const_iterator it = begin(); it != end(); it++)
+		{
+			if (!_keyComp(it->first, k) && !_keyComp(k, it->first))
+				return (1);
+		}
+		return (0);
 	}
 }
 

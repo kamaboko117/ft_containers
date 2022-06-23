@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 21:39:58 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:59:27 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,24 @@ int	main(){
 		do {
 			std::cout << it->first << " => " << it->second << '\n';
 		} while ( mymap.value_comp()(*it++, highest) );
+	}
+
+	std::cout << std::endl << "****count*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		char c;
+
+		mymap ['a']=101;
+		mymap ['c']=202;
+		mymap ['f']=303;
+
+		for (c = 'a'; c < 'h'; c++)
+		{
+			std::cout << c;
+			if (mymap.count(c)>0)
+				std::cout << " is an element of mymap.\n";
+			else 
+				std::cout << " is not an element of mymap.\n";
+		}
 	}
 
 }
