@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 20:13:16 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:22:22 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,10 @@ namespace ft
 		void					swap(map &x);
 		void					clear();
 
-		iterator				find(const key_type &k);
-		const_iterator			find(const key_type &k) const;
+		key_compare	key_comp() const;
+
+		iterator		find(const key_type &k);
+		const_iterator	find(const key_type &k) const;
 
 	};
 
@@ -354,6 +356,14 @@ namespace ft
 		*this = x;
 		x = tmp;
 	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::key_compare	map<Key, T, Compare, Alloc>
+		::key_comp() const
+	{
+		return (key_compare());
+	}
+
 }
 
 #endif

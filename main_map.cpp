@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 20:09:03 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:24:07 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,4 +291,26 @@ int	main(){
 		for (NAME::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
 	}
+
+	std::cout << std::endl << "****key_comp*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		NAME::map<char,int>::key_compare mycomp = mymap.key_comp();
+
+		mymap['a']=100;
+		mymap['b']=200;
+		mymap['c']=300;
+
+		std::cout << "mymap contains:\n";
+
+		char highest = mymap.rbegin()->first;     // key value of last element
+
+		NAME::map<char,int>::iterator it = mymap.begin();
+		do {
+			std::cout << it->first << " => " << it->second << '\n';
+		} while ( mycomp((*it++).first, highest) );
+
+		std::cout << '\n';
+	}
+
 }
