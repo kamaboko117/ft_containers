@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:05 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/08 19:36:21 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:11:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ namespace ft
 
 	template<class T1, class T2>
 	pair<T1, T2>::pair()
-		: first(T1()),
-		second(T2()){}
+		: first(),
+		second(){}
 
 	template<class T1, class T2>
 	template<class U, class V>

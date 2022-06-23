@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:55:00 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:52:51 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ namespace ft
 		_last(_Node_Allocator().allocate(1)),
 		_first(NULL)
 	{
-		_last->data = pair<key_type, mapped_type>();
+		_alloc.construct(&_last->data, value_type());
 		_last->right = NULL;
 		_last->left = NULL;
 		_last->parent = NULL;
@@ -164,11 +164,12 @@ namespace ft
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::mapped_type	&map<Key, T, Compare, Alloc>
-		::operator[](const key_type &k){
+		::operator[](const key_type &k)
+	{
 		iterator	it = find(k);
 		
 		if (it == end())
-			insert(make_pair(k, mapped_type()));
+			insert(ft::make_pair(k, mapped_type()));
 		it = find(k);
 		return (it->second);
 	}
@@ -274,9 +275,8 @@ namespace ft
 		iterator it = find(value.first);
 		if (it != end())
 			return (ft::make_pair(it, false));
-		pair<Key, mapped_type> toinsert = make_pair(value.first, value.second);
+		pair<Key, mapped_type> toinsert = ft::make_pair(value.first, value.second);
 		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator(), _last);
-
 		if (!root){
 			root = _first = node;
 			root->right = _last;

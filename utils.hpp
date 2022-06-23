@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:24:41 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:56:51 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ namespace ft
 	template<typename T, class Alloc>
 	BstNode<T>	*getNewNode(BstNode<T> *parent, typename type_identity<T>::type data, Alloc _alloc){
 		BstNode<T>	*newNode = _alloc.allocate(1);
+		_alloc.construct(newNode, BstNode<T>());
 		newNode->data = data;
 		newNode->left = NULL;
 		newNode->right = NULL;

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/21 18:56:34 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:55:10 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,5 +248,25 @@ int	main(){
 		NAME::map<char, char> q;
 		std::cout.imbue(std::locale("en_US.UTF-8"));    
 		std::cout << "Maximum size of a map is " << q.max_size() << '\n';
+	}
+	std::cout << std::endl << "****operator[]*****" << std::endl;{
+		// NAME::map<char, int> mymap;
+		
+		// std::cout << "?" << std::endl;
+		// mymap['a'] = 1;
+		// mymap['b'] = 2;
+		// mymap['c']=mymap['b'];
+		NAME::map<char, std::string> mymap;
+		
+		mymap['a'] = "an element";
+		mymap['b'] = "another element";
+		mymap['c']=mymap['b'];
+
+		std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+		std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+		std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+		std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+
+		std::cout << "mymap now contains " << mymap.size() << " elements.\n";
 	}
 }
