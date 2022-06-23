@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 22:22:24 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:37:20 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,15 @@ namespace ft
 		key_compare		key_comp() const;
 		value_compare	value_comp() const;
 
-		iterator		find(const key_type &k);
-		const_iterator	find(const key_type &k) const;
-		size_type		count(const key_type &k) const;
-		iterator		lower_bound(const key_type &k);
-		const_iterator	lower_bound(const key_type &k) const;
-		iterator		upper_bound(const key_type &k);
-		const_iterator	upper_bound(const key_type &k) const;
+		iterator								find(const key_type &k);
+		const_iterator							find(const key_type &k) const;
+		size_type								count(const key_type &k) const;
+		iterator								lower_bound(const key_type &k);
+		const_iterator							lower_bound(const key_type &k) const;
+		iterator								upper_bound(const key_type &k);
+		const_iterator							upper_bound(const key_type &k) const;
+		pair<iterator, iterator>				equal_range (const key_type &k);
+		pair<const_iterator, const_iterator>	equal_range (const key_type &k) const;
 	};
 
 	//CONSTRUCT
@@ -465,6 +467,18 @@ namespace ft
 		return (it);
 	}
 
+	template<class Key, typename T, class Compare, class Alloc>
+	pair<typename map<Key, T, Compare, Alloc>::iterator, typename map<Key, T, Compare, Alloc>::iterator>	map<Key, T, Compare, Alloc>
+		::equal_range(const key_type &k)
+	{
+		
+	}
+	
+	template<class Key, typename T, class Compare, class Alloc>
+	pair<typename map<Key, T, Compare, Alloc>::const_iterator, typename map<Key, T, Compare, Alloc>::const_iterator>	map<Key, T, Compare, Alloc>
+		::equal_range(const key_type &k) const
+	{
+	}
 }
 
 #endif
