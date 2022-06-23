@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 19:52:51 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:13:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ namespace ft
 		void					erase(iterator position);
 		size_type				erase(const key_type &k);
 		void					erase(iterator first, iterator last);
+		void					swap(map &x);
 		void					clear();
 
 		iterator				find(const key_type &k);
@@ -343,6 +344,15 @@ namespace ft
 		::max_size() const
 	{
 		return (_Node_Allocator().max_size());
+	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	void	map<Key, T, Compare, Alloc>
+		::swap(map &x)
+	{
+		map<Key, T>	tmp = (*this);
+		*this = x;
+		x = tmp;
 	}
 }
 
