@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 20:24:07 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:39:58 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,23 @@ int	main(){
 		} while ( mycomp((*it++).first, highest) );
 
 		std::cout << '\n';
+	}
+
+	std::cout << std::endl << "****value_comp*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		mymap['x']=1001;
+		mymap['y']=2002;
+		mymap['z']=3003;
+
+		std::cout << "mymap contains:\n";
+
+		NAME::pair<char,int> highest = *mymap.rbegin();          // last element
+
+		NAME::map<char,int>::iterator it = mymap.begin();
+		do {
+			std::cout << it->first << " => " << it->second << '\n';
+		} while ( mymap.value_comp()(*it++, highest) );
 	}
 
 }

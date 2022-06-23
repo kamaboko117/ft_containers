@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 20:22:22 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:40:13 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ namespace ft
 		typedef T												mapped_type;
 		typedef pair<key_type, mapped_type>						value_type;
 		typedef Compare											key_compare;
-		//value_compare?
 		typedef	Alloc											allocator_type;
 		typedef typename allocator_type::reference				reference;
 		typedef typename allocator_type::const_reference		const_reference;
@@ -43,6 +42,25 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 	//	typedef ft::iterator_traits<iterator>::difference_type	difference_type;
 		typedef std::size_t										size_type;
+		class	value_compare
+		{
+			//https://cplusplus.com/reference/map/map/value_comp/
+			friend class map<key_type, mapped_type, key_compare, Alloc>;
+				
+			protected:
+				Compare comp;
+				value_compare (Compare c) : comp(c) {}
+				
+			public:
+				typedef bool 		result_type;
+  				typedef value_type	first_argument_type;
+  				typedef value_type	second_argument_type;
+				
+				bool operator() (const value_type& x, const value_type& y) const{
+					return (comp(x.first, y.first));
+				}
+			};
+
 	private:
 		allocator_type		_alloc;
 		key_compare			_keyComp;
@@ -86,7 +104,8 @@ namespace ft
 		void					swap(map &x);
 		void					clear();
 
-		key_compare	key_comp() const;
+		key_compare		key_comp() const;
+		value_compare	value_comp() const;
 
 		iterator		find(const key_type &k);
 		const_iterator	find(const key_type &k) const;
@@ -364,6 +383,12 @@ namespace ft
 		return (key_compare());
 	}
 
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>
+		::value_comp() const
+	{
+		return (value_compare(key_compare()));
+	}
 }
 
 #endif
