@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/20 20:36:46 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:34:24 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ namespace ft
 		// T			&operator[](difference_type i){
 		// 	return (node[i]);
 		// }
-		value_type	*operator->(){
+		value_type	*operator->() const{
 			return (&node->data);
 		}
 		bool		operator==(const BSTiterator &rhs) const{
@@ -317,7 +317,7 @@ namespace ft
 		// T			&operator[](difference_type i){
 		// 	return (node[i]);
 		// }
-		value_type	*operator->(){
+		value_type	*operator->() const{
 			return (&node->data);
 		}
 		bool		operator==(const BSTconstIterator &rhs) const{
