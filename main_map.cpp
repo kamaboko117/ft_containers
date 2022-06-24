@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 22:21:19 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:46:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,6 +366,24 @@ int	main(){
 		// print content:
 		for (NAME::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
+	}
+
+	std::cout << std::endl << "****equal range*****" << std::endl;{
+		NAME::map<char,int> mymap;
+
+		mymap['a']=10;
+		mymap['c']=20;
+		mymap['d']=30;
+
+		NAME::pair<NAME::map<char,int>::iterator,NAME::map<char,int>::iterator> ret;
+		ret = mymap.equal_range('b');
+
+		std::cout << "lower bound points to: ";
+		std::cout << ret.first->first << " => " << ret.first->second << '\n';
+
+		std::cout << "upper bound points to: ";
+		std::cout << ret.second->first << " => " << ret.second->second << '\n';
+
 	}
 
 }

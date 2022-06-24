@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 22:37:20 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:44:41 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,13 +471,14 @@ namespace ft
 	pair<typename map<Key, T, Compare, Alloc>::iterator, typename map<Key, T, Compare, Alloc>::iterator>	map<Key, T, Compare, Alloc>
 		::equal_range(const key_type &k)
 	{
-		
+		return (ft::make_pair(lower_bound(k), upper_bound(k)));
 	}
 	
 	template<class Key, typename T, class Compare, class Alloc>
 	pair<typename map<Key, T, Compare, Alloc>::const_iterator, typename map<Key, T, Compare, Alloc>::const_iterator>	map<Key, T, Compare, Alloc>
 		::equal_range(const key_type &k) const
 	{
+		return (ft::make_pair(lower_bound(k), upper_bound(k)));
 	}
 }
 
