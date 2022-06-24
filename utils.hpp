@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 19:56:51 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:25:20 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,13 +216,14 @@ namespace ft
 		BstNode	*left;
 		BstNode *right;
 		BstNode	*parent;
+
+		BstNode(T data) : data(data){}
 	};
 
 	template<typename T, class Alloc>
 	BstNode<T>	*getNewNode(BstNode<T> *parent, typename type_identity<T>::type data, Alloc _alloc){
 		BstNode<T>	*newNode = _alloc.allocate(1);
-		_alloc.construct(newNode, BstNode<T>());
-		newNode->data = data;
+		_alloc.construct(newNode, BstNode<T>(data));
 		newNode->left = NULL;
 		newNode->right = NULL;
 		newNode->red = 1;
@@ -292,7 +293,11 @@ namespace ft
 			return (ret);
 		}
 		BstNode<T> *tmp = BstMinValueNode(root->right);
-		root->data = tmp->data;
+		BstNode<T> *old = root;
+		root = getNewNode(old->parent, tmp->data, _alloc);
+		root->right = old->right;
+		root->left = old->left;
+		root->red = old->red;
 		root->right = BstDelete(root->right, value, keyComp, _alloc, last);
 		return (root);
 	}

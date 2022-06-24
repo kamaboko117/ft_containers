@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/24 12:44:41 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:37:49 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ namespace ft
 {
 
 //MAP	
-	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<Key, T> > >
+	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
 	class map
 	{
 	public:
 		typedef Key												key_type;
 		typedef T												mapped_type;
-		typedef pair<key_type, mapped_type>						value_type;
+		typedef pair<const key_type, mapped_type>						value_type;
 		typedef Compare											key_compare;
 		typedef	Alloc											allocator_type;
 		typedef typename allocator_type::reference				reference;
@@ -116,6 +116,8 @@ namespace ft
 		const_iterator							upper_bound(const key_type &k) const;
 		pair<iterator, iterator>				equal_range (const key_type &k);
 		pair<const_iterator, const_iterator>	equal_range (const key_type &k) const;
+	
+		allocator_type	get_allocator() const;
 	};
 
 	//CONSTRUCT
@@ -146,7 +148,7 @@ namespace ft
 		_last(_Node_Allocator().allocate(1)),
 		_first(NULL)
 	{
-		_last->data = pair<key_type, mapped_type>();
+		_alloc.construct(&_last->data, value_type());
 		_last->right = NULL;
 		_last->left = NULL;
 		_last->parent = NULL;
@@ -164,7 +166,6 @@ namespace ft
 		_last(_Node_Allocator().allocate(1)),
 		_first(NULL)
 	{
-		_last->data = pair<key_type, mapped_type>();
 		_last->right = NULL;
 		_last->left = NULL;
 		_last->parent = NULL;
@@ -265,7 +266,7 @@ namespace ft
 	{
 		BstNode<value_type>	*tmp;
 
-		pair<key_type, mapped_type> toDel = make_pair(k, mapped_type());
+		value_type toDel = make_pair(k, mapped_type());
 		tmp = BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
 		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
 			_first = tmp;
@@ -314,7 +315,7 @@ namespace ft
 		iterator it = find(value.first);
 		if (it != end())
 			return (ft::make_pair(it, false));
-		pair<Key, mapped_type> toinsert = ft::make_pair(value.first, value.second);
+		value_type toinsert = ft::make_pair(value.first, value.second);
 		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator(), _last);
 		if (!root){
 			root = _first = node;
@@ -479,6 +480,13 @@ namespace ft
 		::equal_range(const key_type &k) const
 	{
 		return (ft::make_pair(lower_bound(k), upper_bound(k)));
+	}
+
+	template<class Key, typename T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
+		::get_allocator() const
+	{
+		return (allocator_type(_alloc));
 	}
 }
 

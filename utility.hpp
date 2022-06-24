@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:05 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/23 19:11:16 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:50:20 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,18 @@ namespace ft
 	
 	template<class T1, class T2>
 	pair<T1, T2>	&pair<T1, T2>::operator=(const pair &rhs){
-		// if (*this == rhs)
-		// 	return (*this);
-		first = rhs.first;
-		second = rhs.second;
+		if (*this == rhs)
+		 	return (*this);
+		this->first = rhs.first;
+		this->second = rhs.second;
 		return (*this);
 	}
+
+	template <class T1, class T2>
+    bool operator==(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2> &rhs)
+    {
+    	return (lhs.first == rhs.first && lhs.second == rhs.second);
+    }
 
 	template<class T1, class T2>
 	pair<T1, T2>	make_pair(T1 x, T2 y){
