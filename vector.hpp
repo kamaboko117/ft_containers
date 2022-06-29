@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 15:17:02 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:47:17 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,10 +325,10 @@ namespace ft
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator pos, const T &value){
 		std::size_t index = 0;
 
-		for (iterator it = begin(); it != pos; it++)
-			index++;
 		if (_capacity == 0)
 			reserve(1);
+		for (iterator it = begin(); it != pos; it++)
+			index++;		
 		if (_size + 1 >= _capacity)
 			reserve(_capacity * 2);
 		_size++;
@@ -364,23 +364,25 @@ namespace ft
 		typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type){
 		std::size_t	index = 0;
 		std::size_t	count = 0;
+		T 			value;
 		
 		for (iterator it = begin(); it != pos; it++)
 			index++;
 		for (InputIt it = first; it != last; it++)
 			count++;
-		if (_capacity == 0)
-			reserve(1);
-		while (_size + count >= _capacity)
-			reserve(_capacity * 2);
-		_size += count;
-		for (std::size_t i = _size; i >= index + count; i--)
-			array[i] = array[i - count];
-		T value = *first;
-		for (size_t i = 0; i < count; i++){
-			array[index + i] = value;
-			first++;
-			value = *first;
+		if (count){
+			if (_capacity == 0)
+				reserve(1);
+			while (_size + count >= _capacity)
+				reserve(_capacity * 2);
+			_size += count;
+			for (std::size_t i = _size; i >= index + count; i--)
+				array[i] = array[i - count];
+			for (size_t i = 0; i < count; i++){
+				value = *first;
+				array[index + i] = value;
+				first++;
+			}
 		}
 		return (iterator(array + index));
 	}
