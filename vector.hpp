@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 18:47:17 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/29 21:48:20 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,10 +325,10 @@ namespace ft
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator pos, const T &value){
 		std::size_t index = 0;
 
+		for (iterator it = begin(); it != pos; it++)
+			index++;
 		if (_capacity == 0)
 			reserve(1);
-		for (iterator it = begin(); it != pos; it++)
-			index++;		
 		if (_size + 1 >= _capacity)
 			reserve(_capacity * 2);
 		_size++;
