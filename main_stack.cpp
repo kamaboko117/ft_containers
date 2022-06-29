@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:38:43 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 19:24:13 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:33:42 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,42 @@ int	main(){
 			mystack.pop();
 		}
 		std::cout << '\n';
+	}
+		
+	std::cout << std::endl << "****relational operators*****" << std::endl;{
+		NAME::stack<int> a;
+		NAME::stack<int> b;
+		NAME::stack<int> c;
+		
+		for (int i=0; i<5; ++i)
+			a.push(i);
+		for (int i=0; i<5; ++i)
+			b.push(i);
+		for (int i=0; i<5; ++i)
+			a.push(i + 1);
+
+		std::cout << std::boolalpha;
+		std::cout << "a == b: " << (a == b) << std::endl;
+		std::cout << "a == a: " << (a == a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a != b: " << (a != b) << std::endl;
+		std::cout << "a != a: " << (a != a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a < b: " << (a < b) << std::endl;
+		std::cout << "a < a: " << (a < a) << std::endl;
+		std::cout << "b < a: " << (b < a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a <= b: " << (a <= b) << std::endl;
+		std::cout << "a <= a: " << (a <= a) << std::endl;
+		std::cout << "b <= a: " << (b <= a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a > b: " << (a > b) << std::endl;
+		std::cout << "a > a: " << (a > a) << std::endl;
+		std::cout << "b > a: " << (b > a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a >= b: " << (a >= b) << std::endl;
+		std::cout << "a >= a: " << (a >= a) << std::endl;
+		std::cout << "b >= a: " << (b >= a) << std::endl;
+		std::cout << std::endl;
 	}
 }

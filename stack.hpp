@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:30:16 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 19:30:19 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:25:23 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ namespace ft
 		const value_type	&top() const;
 		void				push(const value_type &val);
 		void				pop();
+
+		friend	bool	operator==(const stack &lhs, const stack &rhs){
+			return (lhs._ctnr == rhs._ctnr);
+		};
+		friend bool 	operator!=(const stack &lhs, const stack& rhs){
+			return lhs._ctnr != rhs._ctnr;
+		}
+        friend bool 	operator<(const stack &lhs, const stack& rhs){
+			return lhs._ctnr < rhs._ctnr;
+		}
+        friend bool 	operator<=(const stack &lhs, const stack& rhs){
+			return lhs._ctnr <= rhs._ctnr;
+		}
+        friend bool 	operator>(const stack &lhs, const stack& rhs){
+			return lhs._ctnr > rhs._ctnr;
+		}
+        friend bool 	operator>=(const stack &lhs, const stack& rhs){
+			return lhs._ctnr >= rhs._ctnr;
+		}
 	};
 
 	template<class T, class Container>
