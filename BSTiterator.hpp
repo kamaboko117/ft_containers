@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 14:23:53 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:27:21 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,10 +244,6 @@ namespace ft
 		BSTconstIterator(T *node, const Compare &comp = Compare())
 			: node(node),
 			comp(comp){}
-				template<typename U, class Comp>
-		BSTconstIterator(const BSTconstIterator<U, Comp> &src)
-			: node(src.node),
-			comp(src.comp){}
 		BSTconstIterator(const BSTconstIterator<T, Compare> &src)
 			: node(src.node),
 			comp(src.comp){}
