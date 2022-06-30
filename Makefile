@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/06/29 15:37:54 by asaboure         ###   ########.fr        #
+#    Updated: 2022/06/29 21:14:22 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ clean:
 	 ${RM} ${OBJS}
 
 fclean:	clean
-	${RM} ${FTVEC} ${VEC} ${FTMAP} ${MAP} ${STD}
+	${RM} ${FTVEC} ${VEC} ${FTMAP} ${MAP} ${FTSTACK} ${STACK}
 
 re:		fclean all
 

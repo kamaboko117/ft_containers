@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 21:48:20 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:22:01 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ namespace ft
 		_capacity = _size;
 		array = _alloc.allocate(_capacity);
 		for (size_t i = 0; i < _size; i++)
-			array[i] = *first++;
+			_alloc.construct(&array[i], *first++);
 	}
 	
 	template<typename T, class Alloc>
@@ -298,7 +298,7 @@ namespace ft
 			tmp = _alloc.allocate(new_cap);
 			_capacity = new_cap;
 			for (size_t i = 0; i < _size; i++)
-				tmp[i] = array[i];
+				_alloc.construct(&tmp[i], array[i]);
 			_alloc.deallocate(array, old_cap);
 			array = tmp;
 		}
@@ -310,7 +310,7 @@ namespace ft
 			reserve(1);
 		else if (_size >= _capacity)
 			reserve(_capacity * 2);
-		array[_size] = value;
+		_alloc.construct(&array[_size], value);
 		_size++;
 	}
 
@@ -332,10 +332,9 @@ namespace ft
 		if (_size + 1 >= _capacity)
 			reserve(_capacity * 2);
 		_size++;
-		for (std::size_t i = _size; i > index; i--){
-			array[i] = array[i - 1];
-		}
-		array[index] = value;
+		for (std::size_t i = _size; i > index; i--)
+			_alloc.construct(&array[i], array[i - 1]);
+		_alloc.construct(&array[index], value);
 		return (iterator(array + index));
 	}
 
@@ -352,9 +351,9 @@ namespace ft
 			reserve(_capacity * 2);
 		_size += count;
 		for (std::size_t i = _size; i >= index + count; i--)
-			array[i] = array[i - count];
+			_alloc.construct(&array[i], array[i - count]);
 		for (size_t i = 0; i < count; i++)
-			array[index + i] = value;
+			_alloc.construct(&array[index + i], value);
 		return (iterator(array + index));
 	}
 
@@ -377,10 +376,10 @@ namespace ft
 				reserve(_capacity * 2);
 			_size += count;
 			for (std::size_t i = _size; i >= index + count; i--)
-				array[i] = array[i - count];
+				_alloc.construct(&array[i], array[i - count]);
 			for (size_t i = 0; i < count; i++){
 				value = *first;
-				array[index + i] = value;
+				_alloc.construct(&array[index + i], value);
 				first++;
 			}
 		}
@@ -394,7 +393,7 @@ namespace ft
 		_size = count;
 		_capacity = count;
 		for (size_t i = 0; i < count; i++)
-			array[i] = value;
+			_alloc.construct(&array[i], value);
 	}
 	
 	template<typename T, class Alloc>
@@ -410,7 +409,7 @@ namespace ft
 		_capacity = range;
 		for (size_t i = 0; i < range; i++)
 		{
-			array[i] = *first;
+			_alloc.construct(&array[i], *first);
 			first++;
 		}
 	}
@@ -423,7 +422,7 @@ namespace ft
 	template<typename T, class Alloc>
 	typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator pos){
 		for (iterator it = pos; it != end() - 1; it++)
-			*it = *(it + 1);
+			_alloc.construct(&(*it), *(it + 1));
 		_size--;
 		return (iterator(pos));
 	}
@@ -434,7 +433,7 @@ namespace ft
 		for (iterator it = first; it != last; it++)
 			range++;
 		for (iterator it = first; last != end(); it++)
-			*it = *(last++);
+			_alloc.construct(&(*it), *(last++));
 		_size -= range;
 		return (iterator(first));
 	}
