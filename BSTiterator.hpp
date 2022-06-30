@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 17:27:21 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:26:34 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
 	public:
 		typedef typename T::value_type 	value_type;
 		typedef std::ptrdiff_t			difference_type;
-		typedef	value_type*				pointer;
+		typedef value_type*				pointer;
 		typedef value_type&				reference;
 		typedef BSTiterator				iterator_category;
 
@@ -231,8 +231,8 @@ namespace ft
 	public:
 		typedef typename T::value_type  		value_type;
 		typedef std::ptrdiff_t					difference_type;
-		typedef	value_type*						pointer;
-		typedef value_type&						reference;
+		typedef	const value_type*						pointer;
+		typedef const value_type&						reference;
 		typedef BSTconstIterator				iterator_category;
 
 		T		*node;
@@ -320,13 +320,13 @@ namespace ft
 			--(*this);
 			return (it);
 		}
-		value_type	&operator*() const{
+		value_type const	&operator*() const{
 			return (node->data);
 		}
 		// T			&operator[](difference_type i){
 		// 	return (node[i]);
 		// }
-		value_type	*operator->() const{
+		value_type const	*operator->() const{
 			return (&node->data);
 		}
 		bool		operator==(const BSTconstIterator &rhs) const{
