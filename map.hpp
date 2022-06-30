@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 14:28:39 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:35:54 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -487,6 +487,24 @@ namespace ft
 		::get_allocator() const
 	{
 		return (allocator_type(_alloc));
+	}
+
+//NON MEMBER
+
+	template<class Key, typename T, class Compare, class Alloc>
+	bool	operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs){
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename ft::map<Key, T, Compare, Alloc>::const_iterator first1 = lhs.begin();
+		typename ft::map<Key, T, Compare, Alloc>::const_iterator first2 = rhs.begin();
+		while (first1 != lhs.end())
+		{
+			if (first2 == rhs.end() || *first1 != *first2)
+				return (false);
+			++first1;
+			++first2;
+		}
+		return (true);
 	}
 }
 
