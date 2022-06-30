@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:05 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 17:20:00 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:03:21 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ namespace ft
 
 	template <class T1, class T2>
 	bool	operator<(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2> &rhs){
-		return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (lhs.first < rhs.first || (!(lhs.first < rhs.first) && lhs.second < rhs.second));
 	}
 
 	template <class T1, class T2>
