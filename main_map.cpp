@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/24 15:57:25 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:36:48 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -513,47 +513,82 @@ int	main(){
 
 		std::cout << "The allocated array has a size of " << psize << " bytes.\n";
 
-		//mymap.get_allocator().deallocate(p,5);
+		mymap.get_allocator().deallocate(p,5);
 	}
 
-	std::cout << std::endl << "****etc*****" << std::endl;{
-		std::list<T3> lst;
-		unsigned int lst_size = 10;
-		for (unsigned int i = 0; i < lst_size; ++i)
-			lst.push_back(T3(i + 1, (i + 1) * 3));
-		NAME::map<T1, T2> mp(lst.begin(), lst.end());
-		printSize(mp);
+	std::cout << std::endl << "****relational operators*****" << std::endl;{
+		NAME::map<char,int> a,b,c;
 
-		ft_const_bound(mp, -10);
-		ft_const_bound(mp, 1);
-		ft_const_bound(mp, 5);
-		ft_const_bound(mp, 10);
-		ft_const_bound(mp, 50);
+		a['x']=100;
+		a['y']=200;
+		a['z']=300;
+		
+		b['a']=11;
+		b['b']=22;
+		b['c']=33;
 
-		printSize(mp);
-
-		mp.lower_bound(3)->second = 404;
-		mp.upper_bound(7)->second = 842;
-		ft_bound(mp, 5);
-		ft_bound(mp, 7);
-
-		printSize(mp);
+		std::cout << std::boolalpha;
+		std::cout << "a == b: " << (a == b) << std::endl;
+		std::cout << "a == a: " << (a == a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a != b: " << (a != b) << std::endl;
+		std::cout << "a != a: " << (a != a) << std::endl;
+		// std::cout << std::endl;
+		// std::cout << "a < b: " << (a < b) << std::endl;
+		// std::cout << "a < a: " << (a < a) << std::endl;
+		// std::cout << "b < a: " << (b < a) << std::endl;
+		// std::cout << std::endl;
+		// std::cout << "a <= b: " << (a <= b) << std::endl;
+		// std::cout << "a <= a: " << (a <= a) << std::endl;
+		// std::cout << "b <= a: " << (b <= a) << std::endl;
+		// std::cout << std::endl;
+		// std::cout << "a > b: " << (a > b) << std::endl;
+		// std::cout << "a > a: " << (a > a) << std::endl;
+		// std::cout << "b > a: " << (b > a) << std::endl;
+		// std::cout << std::endl;
+		// std::cout << "a >= b: " << (a >= b) << std::endl;
+		// std::cout << "a >= a: " << (a >= a) << std::endl;
+		// std::cout << "b >= a: " << (b >= a) << std::endl;
+		// std::cout << std::endl;
 	}
+	// std::cout << std::endl << "****etc*****" << std::endl;{
+	// 	std::list<T3> lst;
+	// 	unsigned int lst_size = 10;
+	// 	for (unsigned int i = 0; i < lst_size; ++i)
+	// 		lst.push_back(T3(i + 1, (i + 1) * 3));
+	// 	NAME::map<T1, T2> mp(lst.begin(), lst.end());
+	// 	printSize(mp);
+
+	// 	ft_const_bound(mp, -10);
+	// 	ft_const_bound(mp, 1);
+	// 	ft_const_bound(mp, 5);
+	// 	ft_const_bound(mp, 10);
+	// 	ft_const_bound(mp, 50);
+
+	// 	printSize(mp);
+
+	// 	mp.lower_bound(3)->second = 404;
+	// 	mp.upper_bound(7)->second = 842;
+	// 	ft_bound(mp, 5);
+	// 	ft_bound(mp, 7);
+
+	// 	printSize(mp);
+	// }
 
 	
-	{
-		NAME::map<char, foo<float> >	mp;
+	// {
+	// 	NAME::map<char, foo<float> >	mp;
 
-		mp['a'] = 2.3;
-		mp['b'] = 1.4;
-		mp['c'] = 0.3;
-		mp['d'] = 4.2;
-		printSize(mp);
+	// 	mp['a'] = 2.3;
+	// 	mp['b'] = 1.4;
+	// 	mp['c'] = 0.3;
+	// 	mp['d'] = 4.2;
+	// 	printSize(mp);
 
-		for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
-			for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
-				ft_comp(mp, it1, it2);
+	// 	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
+	// 		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
+	// 			ft_comp(mp, it1, it2);
 
-		printSize(mp);
-	}
+	// 	printSize(mp);
+	// }
 }
