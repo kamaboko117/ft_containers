@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/24 15:34:24 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:23:53 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ namespace ft
 		typedef	value_type*				pointer;
 		typedef value_type&				reference;
 		typedef BSTiterator				iterator_category;
-	private:
+
 		T			*node;
 		Compare		comp;
-	public:
+
 		BSTiterator(const Compare &comp = Compare())
 			: node(NULL),
 			comp(comp){}
@@ -234,18 +234,24 @@ namespace ft
 		typedef	value_type*						pointer;
 		typedef value_type&						reference;
 		typedef BSTconstIterator				iterator_category;
-	private:
+
 		T		*node;
 		Compare	comp;
-	public:
+
 		BSTconstIterator(const Compare &comp = Compare())
 			: node(NULL),
 			comp(comp){}
 		BSTconstIterator(T *node, const Compare &comp = Compare())
 			: node(node),
 			comp(comp){}
-		template<typename U, class Comp>
+				template<typename U, class Comp>
 		BSTconstIterator(const BSTconstIterator<U, Comp> &src)
+			: node(src.node),
+			comp(src.comp){}
+		BSTconstIterator(const BSTconstIterator<T, Compare> &src)
+			: node(src.node),
+			comp(src.comp){}
+		BSTconstIterator(const BSTiterator<T, Compare> &src)
 			: node(src.node),
 			comp(src.comp){}
 		~BSTconstIterator(){}
@@ -257,6 +263,13 @@ namespace ft
 			comp = rhs.comp;
 			return (*this);
 		}
+		// BSTconstIterator	&operator=(const BSTiterator<T, Compare> &rhs){
+		// 	if (this == &rhs)
+		// 		return (*this);
+		// 	node = rhs.node;
+		// 	comp = rhs.comp;
+		// 	return (*this);
+		// }
 		BSTconstIterator	&operator++(){
 			if (!node)
 				return (*this);
