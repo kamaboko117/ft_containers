@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 17:36:48 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:48:45 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -533,23 +533,23 @@ int	main(){
 		std::cout << std::endl;
 		std::cout << "a != b: " << (a != b) << std::endl;
 		std::cout << "a != a: " << (a != a) << std::endl;
-		// std::cout << std::endl;
-		// std::cout << "a < b: " << (a < b) << std::endl;
-		// std::cout << "a < a: " << (a < a) << std::endl;
-		// std::cout << "b < a: " << (b < a) << std::endl;
-		// std::cout << std::endl;
-		// std::cout << "a <= b: " << (a <= b) << std::endl;
-		// std::cout << "a <= a: " << (a <= a) << std::endl;
-		// std::cout << "b <= a: " << (b <= a) << std::endl;
-		// std::cout << std::endl;
-		// std::cout << "a > b: " << (a > b) << std::endl;
-		// std::cout << "a > a: " << (a > a) << std::endl;
-		// std::cout << "b > a: " << (b > a) << std::endl;
-		// std::cout << std::endl;
-		// std::cout << "a >= b: " << (a >= b) << std::endl;
-		// std::cout << "a >= a: " << (a >= a) << std::endl;
-		// std::cout << "b >= a: " << (b >= a) << std::endl;
-		// std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << "a < b: " << (a < b) << std::endl;
+		std::cout << "a < a: " << (a < a) << std::endl;
+		std::cout << "b < a: " << (b < a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a <= b: " << (a <= b) << std::endl;
+		std::cout << "a <= a: " << (a <= a) << std::endl;
+		std::cout << "b <= a: " << (b <= a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a > b: " << (a > b) << std::endl;
+		std::cout << "a > a: " << (a > a) << std::endl;
+		std::cout << "b > a: " << (b > a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a >= b: " << (a >= b) << std::endl;
+		std::cout << "a >= a: " << (a >= a) << std::endl;
+		std::cout << "b >= a: " << (b >= a) << std::endl;
+		std::cout << std::endl;
 	}
 	// std::cout << std::endl << "****etc*****" << std::endl;{
 	// 	std::list<T3> lst;
