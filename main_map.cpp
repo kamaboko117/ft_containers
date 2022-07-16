@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 08:46:16 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 09:15:11 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -614,5 +614,21 @@ int	main(){
 		mp.erase(1);
 		printSize(mp);
 
+		std::list<NAME::pair<int, char> > lst2;
+		lst_size = 7;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst2.push_back(T3('a' + i, lst_size - i));
+		NAME::map<int, char> foo(lst2.begin(), lst2.end());
+
+		lst2.clear(); lst_size = 4;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst2.push_back(T3('z' - i, i * 5));
+		NAME::map<int, char> bar = foo;
+		NAME::map<int, char>::iterator it_foo = foo.begin();
+		NAME::map<int, char>::iterator it_bar = bar.begin();
+
+		std::cout << "Iterator validity:" << std::endl;
+		std::cout << (it_foo == bar.begin()) << std::endl;
+		std::cout << (it_bar == foo.begin()) << std::endl;
 	}
 }

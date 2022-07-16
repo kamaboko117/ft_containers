@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 08:47:33 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:50:22 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,11 +266,15 @@ namespace ft
 		::erase(const key_type &k)
 	{
 		BstNode<value_type>	*tmp;
-
+		iterator it = find(k);
+		if (it == end())
+			return (0);
+		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
+			_first = BstNextNode( _first, _keyComp);
+		if (!_keyComp(k, _last->parent->data.first) && !_keyComp(_last->parent->data.first, k))
+			_last->parent = BstPreviousNode(_last->parent, _keyComp);
 		value_type toDel = ft::make_pair(k, mapped_type());
 		tmp = BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
-		if (!tmp)
-			return (0);
 		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
 			_first = tmp;
 		if (!_keyComp(k, root->data.first) && !_keyComp(root->data.first, k)){
@@ -394,9 +398,15 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::swap(map &x)
 	{
-		map<Key, T>	tmp = (*this);
-		*this = x;
-		x = tmp;
+		BstNode<value_type>	*tmp = root;
+		root = x.root;
+		x.root = tmp;
+		tmp = _first;
+		_first = x._first;
+		x._first = tmp;
+		tmp = _last;
+		_last = x._last;
+		x._last = tmp;
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>

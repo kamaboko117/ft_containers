@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 08:47:51 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:13:24 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,42 +266,64 @@ namespace ft
 	}
 
 	//https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
+	// template<typename T, class Compare, class Alloc>
+	// BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
+	// 	root = BstFind(root, value->first, keyComp, last);
+	// 	if (!root)
+	// 		return (root);
+	// 	if (!root->left){
+	// 		// BstNode<T> *ret = root->right;
+	// 		if (root->parent)
+	// 			BstReplace(root->parent, root->right, root->data, keyComp);
+	// 		else{
+	// 			root = root->right;
+	// 			root->parent = NULL;
+	// 		}
+	// 		//_alloc.deallocate(root, 1);
+	// 		// root = ret;
+	// 		return (root);
+	// 	}
+	// 	else if (!root->right){
+	// 		BstNode<T> *ret = root->left;
+	// 		if (root->parent)
+	// 			BstReplace(root->parent, root->left, root->data, keyComp);
+	// 		else
+	// 			root = root->left;
+	// 		// _alloc.deallocate(root, 1);
+	// 		return (ret);
+	// 	}
 	template<typename T, class Compare, class Alloc>
 	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
-		root = BstFind(root, value->first, keyComp, last);
-		if (!root)
+		if (!root || root->red == 2)
 			return (root);
-		if (!root->left){
-			// BstNode<T> *ret = root->right;
-			if (root->parent)
-				BstReplace(root->parent, root->right, root->data, keyComp);
-			else{
-				root = root->right;
-				root->parent = NULL;
+		// std::cout << "root: " << root->data.first << " value: " << value->first << std::endl;
+		if (keyComp(value->first, root->data.first))
+			root->left = BstDelete(root->left, value, keyComp, _alloc, last);
+		else if (keyComp(root->data.first, value->first))
+			root->right = BstDelete(root->right, value, keyComp, _alloc, last);
+		else {
+			if (!root->left && !root->right)
+				return (NULL);
+			else if (!root->left){
+				root->right->parent = root->parent;
+				return (root->right);
 			}
-			//_alloc.deallocate(root, 1);
-			// root = ret;
-			return (root);
+			else if (!root->right){
+				root->left->parent = root->parent;
+				return (root->left);
+			}
+				
+			BstNode<T> *tmp = BstMinValueNode(root->right);
+			BstNode<T> *old = root;
+			root = getNewNode(old->parent, tmp->data, _alloc);
+			root->parent = old->parent;
+			root->left = old->left;
+			root->left->parent = root;
+			root->red = old->red;
+			root->right = BstDelete(old->right, &tmp->data, keyComp, _alloc, last);
+			if (root->right)
+				root->right->parent = root;
 		}
-		else if (!root->right){
-			BstNode<T> *ret = root->left;
-			if (root->parent)
-				BstReplace(root->parent, root->left, root->data, keyComp);
-			else
-				root = root->left;
-			// _alloc.deallocate(root, 1);
-			return (ret);
-		}
-		
-		BstNode<T> *tmp = BstMinValueNode(root->right);
-		BstNode<T> *old = root;
-		root = getNewNode(old->parent, tmp->data, _alloc);
-		root->right = tmp->right;
-		root->left = old->left;
-		root->left->parent = root;
-		root->red = old->red;
-		if (root->right)
-			root->right->parent = root;
 		return (root);
 	}
 
@@ -426,6 +448,51 @@ namespace ft
 		}
 	}
 
+	template<typename T, class Compare>
+	BstNode<T>	*BstNextNode(BstNode<T> *node, Compare comp){
+		BstNode<T> *current = node;
+		if (node->right && comp(node->data.first, node->right->data.first)){
+			current = node->right;
+			while (current->left && comp(node->data.first, current->left->data.first))
+				current = current->left;
+		}
+		else{
+			if (!(node->parent)){
+				node = node->right;
+				return (node);
+			}
+			while (current->parent){
+				current = current->parent;
+				if (comp(node->data.first, current->data.first))
+					break ;
+			}
+		}
+		if (comp(node->data.first, current->data.first))
+			node = current;
+		else
+			node = node->right;
+		return (node);
+	}
+
+	template<typename T, class Compare>
+	BstNode<T>	*BstPreviousNode(BstNode<T> *node, Compare comp){
+		BstNode<T>	*current = node;
+		if (node->red == 2){
+			node = node->parent;
+			return (node);
+		}
+		if (node->left && comp(node->left->data.first, node->data.first))
+			current = node->left;
+		else{
+			while(current->parent && comp(node->data.first, current->parent->data.first))
+				current = current->parent;
+		}
+		if (node == current)
+			node = node->parent;
+		else
+			node = current;
+		return (node);
+	}
 }
 
 #endif
