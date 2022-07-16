@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 18:39:03 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:10:19 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ namespace ft
 	{
 		_keyComp = rhs._keyComp;
 		clear();
-		_last = _Node_Allocator().allocate(1);
 		_alloc.construct(&_last->data, value_type());
 		_last->right = NULL;
 		_last->left = NULL;

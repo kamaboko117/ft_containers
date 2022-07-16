@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 18:49:13 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:17:54 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define NAME ft
 #endif 
 
-// static int iter = 0;
+static int iter = 0;
 
 template <typename T>
 class foo {
@@ -92,35 +92,35 @@ void	printSize(T_MAP const &mp, bool print_content = 1)
 	std::cout << "###############################################" << std::endl;
 }
 
-// template <typename MAP>
-// void	ft_const_bound(const MAP &mp, const T1 &param)
-// {
-// 	ft_const_iterator ite = mp.end(), it[2];
-// 	PAIR<ft_const_iterator, ft_const_iterator> ft_range;
+template <typename MAP>
+void	ft_const_bound(const MAP &mp, const T1 &param)
+{
+	ft_const_iterator ite = mp.end(), it[2];
+	PAIR<ft_const_iterator, ft_const_iterator> ft_range;
 
-// 	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
-// 	std::cout << "with key [" << param << "]:" << std::endl;
-// 	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-// 	ft_range = mp.equal_range(param);
-// 	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-// 	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-// 	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-// }
+	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+	ft_range = mp.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
 
-// template <typename MAP>
-// void	ft_bound(MAP &mp, const T1 &param)
-// {
-// 	ft_iterator ite = mp.end(), it[2];
-// 	PAIR<ft_iterator, ft_iterator> ft_range;
+template <typename MAP>
+void	ft_bound(MAP &mp, const T1 &param)
+{
+	ft_iterator ite = mp.end(), it[2];
+	PAIR<ft_iterator, ft_iterator> ft_range;
 
-// 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-// 	std::cout << "with key [" << param << "]:" << std::endl;
-// 	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-// 	ft_range = mp.equal_range(param);
-// 	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-// 	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-// 	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-// }
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+	ft_range = mp.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
 
 bool fncomp (char lhs, char rhs){
 	return lhs<rhs;
@@ -240,379 +240,379 @@ int	main(){
 		std::cout << "Size of second: " << second.size() << '\n';
 	}
 
-	// std::cout << std::endl << "****map iterators*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
-	// 	mymap['b'] = 100;
-	// 	mymap['a'] = 200;
-	// 	mymap['c'] = 300;
-	// 	// show content:
-	// 	for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
-	// 		std::cout << it->first << " => " << it->second << '\n';
-	// 	}
-	// }
+	std::cout << std::endl << "****map iterators*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		mymap['b'] = 100;
+		mymap['a'] = 200;
+		mymap['c'] = 300;
+		// show content:
+		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
+			std::cout << it->first << " => " << it->second << '\n';
+		}
+	}
 
-	// std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
+	std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-	// 	mymap['x'] = 100;
-	// 	mymap['y'] = 200;
-	// 	mymap['z'] = 300;
+		mymap['x'] = 100;
+		mymap['y'] = 200;
+		mymap['z'] = 300;
 
-	// 	// show content:
-	// 	NAME::map<char,int>::reverse_iterator rit;
-	// 	for (rit = mymap.rbegin(); rit != mymap.rend(); ++rit){
-	// 		std::cout << rit->first << " => " << rit->second << '\n';
-	// 	}
-	// }
+		// show content:
+		NAME::map<char,int>::reverse_iterator rit;
+		for (rit = mymap.rbegin(); rit != mymap.rend(); ++rit){
+			std::cout << rit->first << " => " << rit->second << '\n';
+		}
+	}
 
-	// std::cout << std::endl << "****find()*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
-	// 	NAME::map<char,int>::iterator it;
+	std::cout << std::endl << "****find()*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		NAME::map<char,int>::iterator it;
 
-	// 	mymap['a']=50;
-	// 	mymap['b']=100;
-	// 	mymap['c']=150;
-	// 	mymap['d']=200;
+		mymap['a']=50;
+		mymap['b']=100;
+		mymap['c']=150;
+		mymap['d']=200;
 
-	// 	it = mymap.find('b');
-	// 	if (it != mymap.end())
-	// 		mymap.erase (it);
+		it = mymap.find('b');
+		if (it != mymap.end())
+			mymap.erase (it);
 
-	// 	// print content:
-	// 	std::cout << "elements in mymap:" << '\n';
-	// 	std::cout << "a => " << mymap.find('a')->second << '\n';
-	// 	std::cout << "c => " << mymap.find('c')->second << '\n';
-	// 	std::cout << "d => " << mymap.find('d')->second << '\n';
-	// }
+		// print content:
+		std::cout << "elements in mymap:" << '\n';
+		std::cout << "a => " << mymap.find('a')->second << '\n';
+		std::cout << "c => " << mymap.find('c')->second << '\n';
+		std::cout << "d => " << mymap.find('d')->second << '\n';
+	}
 	
-	// std::cout << std::endl << "****insert()*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
+	std::cout << std::endl << "****insert()*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-	// 	// first insert function version (single parameter):
-	// 	mymap.insert ( NAME::pair<char,int>('a',100) );
-	// 	mymap.insert ( NAME::pair<char,int>('z',200) );
+		// first insert function version (single parameter):
+		mymap.insert ( NAME::pair<char,int>('a',100) );
+		mymap.insert ( NAME::pair<char,int>('z',200) );
 
-	// 	NAME::pair<NAME::map<char,int>::iterator,bool> ret;
-	// 	ret = mymap.insert ( NAME::pair<char,int>('z',500) );
-	// 	if (ret.second==false) {
-	// 		std::cout << "element 'z' already existed";
-	// 		std::cout << " with a value of " << ret.first->second << '\n';
-	// 	}
+		NAME::pair<NAME::map<char,int>::iterator,bool> ret;
+		ret = mymap.insert ( NAME::pair<char,int>('z',500) );
+		if (ret.second==false) {
+			std::cout << "element 'z' already existed";
+			std::cout << " with a value of " << ret.first->second << '\n';
+		}
 
-	// 	// second insert function version (with hint position):
-	// 	NAME::map<char,int>::iterator it = mymap.begin();
+		// second insert function version (with hint position):
+		NAME::map<char,int>::iterator it = mymap.begin();
 
-	// 	mymap.insert (it, NAME::pair<char,int>('b',300));  // max efficiency inserting (no difference in FT)
-	// 	mymap.insert (it, NAME::pair<char,int>('c',400));  // no max efficiency inserting
+		mymap.insert (it, NAME::pair<char,int>('b',300));  // max efficiency inserting (no difference in FT)
+		mymap.insert (it, NAME::pair<char,int>('c',400));  // no max efficiency inserting
 
-	// 	// third insert function version (range insertion):
-	// 	NAME::map<char,int> anothermap;
-	// 	std::cout << "find: " << mymap.find('c')->first << std::endl;
-	// 	anothermap.insert(mymap.begin(),mymap.find('c'));
-	// 	// showing contents:
-	// 	std::cout << "mymap contains:\n";
-	// 	for (it = mymap.begin(); it != mymap.end(); ++it)
-	// 		std::cout << it->first << " => " << it->second << '\n';
+		// third insert function version (range insertion):
+		NAME::map<char,int> anothermap;
+		std::cout << "find: " << mymap.find('c')->first << std::endl;
+		anothermap.insert(mymap.begin(),mymap.find('c'));
+		// showing contents:
+		std::cout << "mymap contains:\n";
+		for (it = mymap.begin(); it != mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 	
-	// 	std::cout << "anothermap contains:\n";
-	// 	for (it = anothermap.begin(); it != anothermap.end(); ++it)
-	// 		std::cout << it->first << " => " << it->second << '\n';
-	// }
+		std::cout << "anothermap contains:\n";
+		for (it = anothermap.begin(); it != anothermap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
 
-	// std::cout << std::endl << "****erase()*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
-	// 	NAME::map<char,int>::iterator it;
+	std::cout << std::endl << "****erase()*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		NAME::map<char,int>::iterator it;
 
-	// 	// insert some values:
-	// 	mymap['a']=10;
-	// 	mymap['b']=20;
-	// 	mymap['c']=30;
-	// 	mymap['d']=40;
-	// 	mymap['e']=50;
-	// 	mymap['f']=60;
+		// insert some values:
+		mymap['a']=10;
+		mymap['b']=20;
+		mymap['c']=30;
+		mymap['d']=40;
+		mymap['e']=50;
+		mymap['f']=60;
 
-	// 	it=mymap.find('b');
-	// 	mymap.erase (it);                   // erasing by iterator
+		it=mymap.find('b');
+		mymap.erase (it);                   // erasing by iterator
 
-	// 	mymap.erase ('c');                  // erasing by key
+		mymap.erase ('c');                  // erasing by key
 
-	// 	it=mymap.find ('e');
-	// 	mymap.erase ( it, mymap.end() );    // erasing by range
+		it=mymap.find ('e');
+		mymap.erase ( it, mymap.end() );    // erasing by range
 
-	// 	// show content:
-	// 	for (it=mymap.begin(); it!=mymap.end(); ++it)
-	// 		std::cout << it->first << " => " << it->second << '\n';
-	// }
+		// show content:
+		for (it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
 
-	// std::cout << std::endl << "****empty()*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
+	std::cout << std::endl << "****empty()*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-	// 	mymap['a']=10;
-	// 	mymap['b']=20;
-	// 	mymap['c']=30;
+		mymap['a']=10;
+		mymap['b']=20;
+		mymap['c']=30;
 
-	// 	while (!mymap.empty())
-	// 	{
-	// 		std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
-	// 		mymap.erase(mymap.begin());
-	// 	}
-	// }
+		while (!mymap.empty())
+		{
+			std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+			mymap.erase(mymap.begin());
+		}
+	}
 
-// 	std::cout << std::endl << "****max_size()*****" << std::endl;{
-// 		NAME::map<char, char> q;
-// 		// std::cout.imbue(std::locale("en_US.UTF-8"));    
-// 		std::cout << "Maximum size of a map is " << q.max_size() << '\n';
-// 	}
+	std::cout << std::endl << "****max_size()*****" << std::endl;{
+		NAME::map<char, char> q;
+		// std::cout.imbue(std::locale("en_US.UTF-8"));    
+		std::cout << "Maximum size of a map is " << q.max_size() << '\n';
+	}
 	
-// 	std::cout << std::endl << "****operator[]*****" << std::endl;{
-// 		NAME::map<char, std::string> mymap;
+	std::cout << std::endl << "****operator[]*****" << std::endl;{
+		NAME::map<char, std::string> mymap;
 		
-// 		mymap['a'] = "an element";
-// 		mymap['b'] = "another element";
-// 		mymap['c']=mymap['b'];
+		mymap['a'] = "an element";
+		mymap['b'] = "another element";
+		mymap['c']=mymap['b'];
 
-// 		std::cout << "mymap['a'] is " << mymap['a'] << '\n';
-// 		std::cout << "mymap['b'] is " << mymap['b'] << '\n';
-// 		std::cout << "mymap['c'] is " << mymap['c'] << '\n';
-// 		std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+		std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+		std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+		std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+		std::cout << "mymap['d'] is " << mymap['d'] << '\n';
 
-// 		std::cout << "mymap now contains " << mymap.size() << " elements.\n";
-// 	}
+		std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+	}
 
-// 	std::cout << std::endl << "****swap*****" << std::endl;{
-// 		NAME::map<char,int> foo,bar;
+	std::cout << std::endl << "****swap*****" << std::endl;{
+		NAME::map<char,int> foo,bar;
 
-// 		foo['x']=100;
-// 		foo['y']=200;
+		foo['x']=100;
+		foo['y']=200;
 
-// 		bar['a']=11;
-// 		bar['b']=22;
-// 		bar['c']=33;
+		bar['a']=11;
+		bar['b']=22;
+		bar['c']=33;
 
-// 		foo.swap(bar);
+		foo.swap(bar);
 
-// 		std::cout << "foo contains:\n";
-// 		for (NAME::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
-// 			std::cout << it->first << " => " << it->second << '\n';
+		std::cout << "foo contains:\n";
+		for (NAME::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 
-// 		std::cout << "bar contains:\n";
-// 		for (NAME::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
-// 			std::cout << it->first << " => " << it->second << '\n';
-// 	}
+		std::cout << "bar contains:\n";
+		for (NAME::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
 
-// 	std::cout << std::endl << "****key_comp*****" << std::endl;{
-// 		NAME::map<char,int> mymap;
+	std::cout << std::endl << "****key_comp*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-// 		NAME::map<char,int>::key_compare mycomp = mymap.key_comp();
+		NAME::map<char,int>::key_compare mycomp = mymap.key_comp();
 
-// 		mymap['a']=100;
-// 		mymap['b']=200;
-// 		mymap['c']=300;
+		mymap['a']=100;
+		mymap['b']=200;
+		mymap['c']=300;
 
-// 		std::cout << "mymap contains:\n";
+		std::cout << "mymap contains:\n";
 
-// 		char highest = mymap.rbegin()->first;     // key value of last element
+		char highest = mymap.rbegin()->first;     // key value of last element
 
-// 		NAME::map<char,int>::iterator it = mymap.begin();
-// 		do {
-// 			std::cout << it->first << " => " << it->second << '\n';
-// 		} while ( mycomp((*it++).first, highest) );
+		NAME::map<char,int>::iterator it = mymap.begin();
+		do {
+			std::cout << it->first << " => " << it->second << '\n';
+		} while ( mycomp((*it++).first, highest) );
 
-// 		std::cout << '\n';
-// 	}
+		std::cout << '\n';
+	}
 
-// 	std::cout << std::endl << "****value_comp*****" << std::endl;{
-// 		NAME::map<char,int> mymap;
+	std::cout << std::endl << "****value_comp*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-// 		mymap['x']=1001;
-// 		mymap['y']=2002;
-// 		mymap['z']=3003;
+		mymap['x']=1001;
+		mymap['y']=2002;
+		mymap['z']=3003;
 
-// 		std::cout << "mymap contains:\n";
+		std::cout << "mymap contains:\n";
 
-// 		NAME::pair<char,int> highest = *mymap.rbegin();          // last element
+		NAME::pair<char,int> highest = *mymap.rbegin();          // last element
 
-// 		NAME::map<char,int>::iterator it = mymap.begin();
-// 		do {
-// 			std::cout << it->first << " => " << it->second << '\n';
-// 		} while ( mymap.value_comp()(*it++, highest) );
-// 	}
+		NAME::map<char,int>::iterator it = mymap.begin();
+		do {
+			std::cout << it->first << " => " << it->second << '\n';
+		} while ( mymap.value_comp()(*it++, highest) );
+	}
 
-// 	std::cout << std::endl << "****count*****" << std::endl;{
-// 		NAME::map<char,int> mymap;
-// 		char c;
+	std::cout << std::endl << "****count*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		char c;
 
-// 		mymap ['a']=101;
-// 		mymap ['c']=202;
-// 		mymap ['f']=303;
+		mymap ['a']=101;
+		mymap ['c']=202;
+		mymap ['f']=303;
 
-// 		for (c = 'a'; c < 'h'; c++)
-// 		{
-// 			std::cout << c;
-// 			if (mymap.count(c)>0)
-// 				std::cout << " is an element of mymap.\n";
-// 			else 
-// 				std::cout << " is not an element of mymap.\n";
-// 		}
-// 	}
+		for (c = 'a'; c < 'h'; c++)
+		{
+			std::cout << c;
+			if (mymap.count(c)>0)
+				std::cout << " is an element of mymap.\n";
+			else 
+				std::cout << " is not an element of mymap.\n";
+		}
+	}
 
-// 	std::cout << std::endl << "****lower_bound/upper_bound*****" << std::endl;{
-// 		NAME::map<char,int> mymap;
-// 		NAME::map<char,int>::iterator itlow,itup;
+	std::cout << std::endl << "****lower_bound/upper_bound*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		NAME::map<char,int>::iterator itlow,itup;
 
-// 		mymap['a']=20;
-// 		mymap['b']=40;
-// 		mymap['c']=60;
-// 		mymap['d']=80;
-// 		mymap['e']=100;
+		mymap['a']=20;
+		mymap['b']=40;
+		mymap['c']=60;
+		mymap['d']=80;
+		mymap['e']=100;
 
-// 		itlow=mymap.lower_bound ('b');  // itlow points to b
-// 		itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+		itlow=mymap.lower_bound ('b');  // itlow points to b
+		itup=mymap.upper_bound ('d');   // itup points to e (not d!)
 
-// 		mymap.erase(itlow,itup);        // erases [itlow,itup)
+		mymap.erase(itlow,itup);        // erases [itlow,itup)
 
-// 		// print content:
-// 		for (NAME::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-// 			std::cout << it->first << " => " << it->second << '\n';
-// 	}
+		// print content:
+		for (NAME::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
 
-// 	std::cout << std::endl << "****equal range*****" << std::endl;{
-// 		NAME::map<char,int> mymap;
+	std::cout << std::endl << "****equal range*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-// 		mymap['a']=10;
-// 		mymap['c']=20;
-// 		mymap['d']=30;
+		mymap['a']=10;
+		mymap['c']=20;
+		mymap['d']=30;
 
-// 		NAME::pair<NAME::map<char,int>::iterator,NAME::map<char,int>::iterator> ret;
-// 		ret = mymap.equal_range('b');
+		NAME::pair<NAME::map<char,int>::iterator,NAME::map<char,int>::iterator> ret;
+		ret = mymap.equal_range('b');
 
-// 		std::cout << "lower bound points to: ";
-// 		std::cout << ret.first->first << " => " << ret.first->second << '\n';
+		std::cout << "lower bound points to: ";
+		std::cout << ret.first->first << " => " << ret.first->second << '\n';
 
-// 		std::cout << "upper bound points to: ";
-// 		std::cout << ret.second->first << " => " << ret.second->second << '\n';
+		std::cout << "upper bound points to: ";
+		std::cout << ret.second->first << " => " << ret.second->second << '\n';
 
-// 	}
+	}
 
-// 	std::cout << std::endl << "****get_allocator*****" << std::endl;{
-// 		int psize;
-// 		NAME::map<char,int> mymap;
-// 		NAME::pair<const char,int> *p;
+	std::cout << std::endl << "****get_allocator*****" << std::endl;{
+		int psize;
+		NAME::map<char,int> mymap;
+		NAME::pair<const char,int> *p;
 
-// 		// allocate an array of 5 elements using mymap's allocator:
-// 		p = mymap.get_allocator().allocate(5);
+		// allocate an array of 5 elements using mymap's allocator:
+		p = mymap.get_allocator().allocate(5);
 
-// 		// assign some values to array
-// 		psize = sizeof(NAME::map<char,int>::value_type)*5;
+		// assign some values to array
+		psize = sizeof(NAME::map<char,int>::value_type)*5;
 
-// 		std::cout << "The allocated array has a size of " << psize << " bytes.\n";
+		std::cout << "The allocated array has a size of " << psize << " bytes.\n";
 
-// 		mymap.get_allocator().deallocate(p,5);
-// 	}
+		mymap.get_allocator().deallocate(p,5);
+	}
 
-// 	std::cout << std::endl << "****relational operators*****" << std::endl;{
-// 		NAME::map<char,int> a,b,c;
+	std::cout << std::endl << "****relational operators*****" << std::endl;{
+		NAME::map<char,int> a,b,c;
 
-// 		a['x']=100;
-// 		a['y']=200;
-// 		a['z']=300;
+		a['x']=100;
+		a['y']=200;
+		a['z']=300;
 		
-// 		b['a']=11;
-// 		b['b']=22;
-// 		b['c']=33;
+		b['a']=11;
+		b['b']=22;
+		b['c']=33;
 
-// 		std::cout << std::boolalpha;
-// 		std::cout << "a == b: " << (a == b) << std::endl;
-// 		std::cout << "a == a: " << (a == a) << std::endl;
-// 		std::cout << std::endl;
-// 		std::cout << "a != b: " << (a != b) << std::endl;
-// 		std::cout << "a != a: " << (a != a) << std::endl;
-// 		std::cout << std::endl;
-// 		std::cout << "a < b: " << (a < b) << std::endl;
-// 		std::cout << "a < a: " << (a < a) << std::endl;
-// 		std::cout << "b < a: " << (b < a) << std::endl;
-// 		std::cout << std::endl;
-// 		std::cout << "a <= b: " << (a <= b) << std::endl;
-// 		std::cout << "a <= a: " << (a <= a) << std::endl;
-// 		std::cout << "b <= a: " << (b <= a) << std::endl;
-// 		std::cout << std::endl;
-// 		std::cout << "a > b: " << (a > b) << std::endl;
-// 		std::cout << "a > a: " << (a > a) << std::endl;
-// 		std::cout << "b > a: " << (b > a) << std::endl;
-// 		std::cout << std::endl;
-// 		std::cout << "a >= b: " << (a >= b) << std::endl;
-// 		std::cout << "a >= a: " << (a >= a) << std::endl;
-// 		std::cout << "b >= a: " << (b >= a) << std::endl;
-// 		std::cout << std::endl;
-// 	}
+		std::cout << std::boolalpha;
+		std::cout << "a == b: " << (a == b) << std::endl;
+		std::cout << "a == a: " << (a == a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a != b: " << (a != b) << std::endl;
+		std::cout << "a != a: " << (a != a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a < b: " << (a < b) << std::endl;
+		std::cout << "a < a: " << (a < a) << std::endl;
+		std::cout << "b < a: " << (b < a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a <= b: " << (a <= b) << std::endl;
+		std::cout << "a <= a: " << (a <= a) << std::endl;
+		std::cout << "b <= a: " << (b <= a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a > b: " << (a > b) << std::endl;
+		std::cout << "a > a: " << (a > a) << std::endl;
+		std::cout << "b > a: " << (b > a) << std::endl;
+		std::cout << std::endl;
+		std::cout << "a >= b: " << (a >= b) << std::endl;
+		std::cout << "a >= a: " << (a >= a) << std::endl;
+		std::cout << "b >= a: " << (b >= a) << std::endl;
+		std::cout << std::endl;
+	}
 
-// 	std::cout << std::endl << "****etc*****" << std::endl;{
-// 		std::list<T3> lst;
-// 		unsigned int lst_size = 10;
-// 		for (unsigned int i = 0; i < lst_size; ++i)
-// 			lst.push_back(T3(i + 1, (i + 1) * 3));
-// 		NAME::map<T1, T2> mp(lst.begin(), lst.end());
-// 		printSize(mp);
+	std::cout << std::endl << "****etc*****" << std::endl;{
+		std::list<T3> lst;
+		unsigned int lst_size = 10;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst.push_back(T3(i + 1, (i + 1) * 3));
+		NAME::map<T1, T2> mp(lst.begin(), lst.end());
+		printSize(mp);
 
-// 		ft_const_bound(mp, -10);
-// 		ft_const_bound(mp, 1);
-// 		ft_const_bound(mp, 5);
-// 		ft_const_bound(mp, 10);
-// 		ft_const_bound(mp, 50);
+		ft_const_bound(mp, -10);
+		ft_const_bound(mp, 1);
+		ft_const_bound(mp, 5);
+		ft_const_bound(mp, 10);
+		ft_const_bound(mp, 50);
 
-// 		printSize(mp);
+		printSize(mp);
 
-// 		mp.lower_bound(3)->second = 404;
-// 		mp.upper_bound(7)->second = 842;
-// 		ft_bound(mp, 5);
-// 		ft_bound(mp, 7);
+		mp.lower_bound(3)->second = 404;
+		mp.upper_bound(7)->second = 842;
+		ft_bound(mp, 5);
+		ft_bound(mp, 7);
 
-// 		printSize(mp);
-// 	}
+		printSize(mp);
+	}
 
-// 	std::cout << std::endl << "****etc*****" << std::endl;{
-// 		std::list<NAME::pair<const int, std::string> > lst;
-// 		unsigned int lst_size = 6;
-// 		for (unsigned int i = 0; i < lst_size; ++i)
-// 			lst.push_back(NAME::pair<const int, std::string>(i, std::string((lst_size - i), i + 65)));
-// 		NAME::map<int, std::string> mp(lst.begin(), lst.end());
-// 		printSize(mp);
+	std::cout << std::endl << "****etc*****" << std::endl;{
+		std::list<NAME::pair<const int, std::string> > lst;
+		unsigned int lst_size = 6;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst.push_back(NAME::pair<const int, std::string>(i, std::string((lst_size - i), i + 65)));
+		NAME::map<int, std::string> mp(lst.begin(), lst.end());
+		printSize(mp);
 
-// 		for (int i = 2; i < 4; ++i){
-// 			mp.erase(i);
-// 			printSize(mp);
-// 		}
+		for (int i = 2; i < 4; ++i){
+			mp.erase(i);
+			printSize(mp);
+		}
 
-// 		mp.erase(mp.begin()->first);
-// 		printSize(mp);
-// 		mp.erase((--mp.end())->first);
-// 		printSize(mp);
+		mp.erase(mp.begin()->first);
+		printSize(mp);
+		mp.erase((--mp.end())->first);
+		printSize(mp);
 
-// 		mp[-1] = "Hello";
-// 		mp[10] = "Hi there";
-// 		mp[10] = "Hi there";
-// 		printSize(mp);
+		mp[-1] = "Hello";
+		mp[10] = "Hi there";
+		mp[10] = "Hi there";
+		printSize(mp);
 
-// 		mp.erase(0);
-// 		printSize(mp);
-// 		mp.erase(1);
-// 		printSize(mp);
+		mp.erase(0);
+		printSize(mp);
+		mp.erase(1);
+		printSize(mp);
 
-// 		std::list<NAME::pair<int, char> > lst2;
-// 		lst_size = 7;
-// 		for (unsigned int i = 0; i < lst_size; ++i)
-// 			lst2.push_back(T3('a' + i, lst_size - i));
-// 		NAME::map<int, char> foo(lst2.begin(), lst2.end());
+		std::list<NAME::pair<int, char> > lst2;
+		lst_size = 7;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst2.push_back(T3('a' + i, lst_size - i));
+		NAME::map<int, char> foo(lst2.begin(), lst2.end());
 
-// 		lst2.clear(); lst_size = 4;
-// 		for (unsigned int i = 0; i < lst_size; ++i)
-// 			lst2.push_back(T3('z' - i, i * 5));
-// 		NAME::map<int, char> bar = foo;
-// 		NAME::map<int, char>::iterator it_foo = foo.begin();
-// 		NAME::map<int, char>::iterator it_bar = bar.begin();
+		lst2.clear(); lst_size = 4;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst2.push_back(T3('z' - i, i * 5));
+		NAME::map<int, char> bar = foo;
+		NAME::map<int, char>::iterator it_foo = foo.begin();
+		NAME::map<int, char>::iterator it_bar = bar.begin();
 
-// 		std::cout << "Iterator validity:" << std::endl;
-// 		std::cout << (it_foo == bar.begin()) << std::endl;
-// 		std::cout << (it_bar == foo.begin()) << std::endl;
-// 	}
+		std::cout << "Iterator validity:" << std::endl;
+		std::cout << (it_foo == bar.begin()) << std::endl;
+		std::cout << (it_bar == foo.begin()) << std::endl;
+	}
 }

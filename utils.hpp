@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 16:53:16 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:16:19 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,8 @@ namespace ft
 			root->right = BstDelete(old->right, &tmp->data, keyComp, _alloc, last);
 			if (root->right)
 				root->right->parent = root;
+			_alloc.destroy(tmp);
+			_alloc.deallocate(tmp, 1);
 		}
 		return (root);
 	}
