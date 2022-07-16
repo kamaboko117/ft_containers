@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 16:13:24 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:53:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,32 +266,6 @@ namespace ft
 	}
 
 	//https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
-	// template<typename T, class Compare, class Alloc>
-	// BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
-	// 	root = BstFind(root, value->first, keyComp, last);
-	// 	if (!root)
-	// 		return (root);
-	// 	if (!root->left){
-	// 		// BstNode<T> *ret = root->right;
-	// 		if (root->parent)
-	// 			BstReplace(root->parent, root->right, root->data, keyComp);
-	// 		else{
-	// 			root = root->right;
-	// 			root->parent = NULL;
-	// 		}
-	// 		//_alloc.deallocate(root, 1);
-	// 		// root = ret;
-	// 		return (root);
-	// 	}
-	// 	else if (!root->right){
-	// 		BstNode<T> *ret = root->left;
-	// 		if (root->parent)
-	// 			BstReplace(root->parent, root->left, root->data, keyComp);
-	// 		else
-	// 			root = root->left;
-	// 		// _alloc.deallocate(root, 1);
-	// 		return (ret);
-	// 	}
 	template<typename T, class Compare, class Alloc>
 	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
 		if (!root || root->red == 2)

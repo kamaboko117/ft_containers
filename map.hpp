@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 13:50:22 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:39:03 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ namespace ft
 		_last(_Node_Allocator().allocate(1)),
 		_first(NULL)
 	{
+		_alloc.construct(&_last->data, value_type());
 		_last->right = NULL;
 		_last->left = NULL;
 		_last->parent = NULL;
@@ -178,6 +179,7 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	map<Key, T, Compare, Alloc>
 		::~map(){
+			clear();
 			_Node_Allocator().deallocate(_last, 1);
 		}
 	
@@ -188,6 +190,13 @@ namespace ft
 	{
 		_keyComp = rhs._keyComp;
 		clear();
+		_last = _Node_Allocator().allocate(1);
+		_alloc.construct(&_last->data, value_type());
+		_last->right = NULL;
+		_last->left = NULL;
+		_last->parent = NULL;
+		_last->red = 2;
+		_first = _last;
 		insert(rhs.begin(), rhs.end());
 		return (*this);
 	}
@@ -266,15 +275,23 @@ namespace ft
 		::erase(const key_type &k)
 	{
 		BstNode<value_type>	*tmp;
-		iterator it = find(k);
-		if (it == end())
+		BstNode<value_type> *node = BstFind(root, k, _keyComp, _last);
+		_Node_Allocator		nodeAlloc;
+		
+		if (!node)
 			return (0);
 		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
 			_first = BstNextNode( _first, _keyComp);
 		if (!_keyComp(k, _last->parent->data.first) && !_keyComp(_last->parent->data.first, k))
 			_last->parent = BstPreviousNode(_last->parent, _keyComp);
 		value_type toDel = ft::make_pair(k, mapped_type());
-		tmp = BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
+		tmp = BstDelete(root, &toDel, _keyComp, nodeAlloc, _last);
+		if (!tmp){
+			_first = _last;
+			nodeAlloc.destroy(node);
+			nodeAlloc.deallocate(node, 1);
+			return (1);
+		}
 		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
 			_first = tmp;
 		if (!_keyComp(k, root->data.first) && !_keyComp(root->data.first, k)){
@@ -285,6 +302,8 @@ namespace ft
 			root = NULL;
 			_first = _last;
 		}
+		nodeAlloc.destroy(node);
+		nodeAlloc.deallocate(node, 1);
 		return (1);
 	}
 		
@@ -292,8 +311,8 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::erase(iterator first, iterator last)
 	{
-		for (iterator it = first; it != last; it++)
-			erase(it->first);
+		while (first != last)
+			this->erase((*(first++)).first);
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
