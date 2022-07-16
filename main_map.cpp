@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 17:48:45 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 08:46:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define NAME ft
 #endif 
 
-static int iter = 0;
+// static int iter = 0;
 
 template <typename T>
 class foo {
@@ -92,35 +92,35 @@ void	printSize(T_MAP const &mp, bool print_content = 1)
 	std::cout << "###############################################" << std::endl;
 }
 
-template <typename MAP>
-void	ft_const_bound(const MAP &mp, const T1 &param)
-{
-	ft_const_iterator ite = mp.end(), it[2];
-	PAIR<ft_const_iterator, ft_const_iterator> ft_range;
+// template <typename MAP>
+// void	ft_const_bound(const MAP &mp, const T1 &param)
+// {
+// 	ft_const_iterator ite = mp.end(), it[2];
+// 	PAIR<ft_const_iterator, ft_const_iterator> ft_range;
 
-	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-	ft_range = mp.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
+// 	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
+// 	std::cout << "with key [" << param << "]:" << std::endl;
+// 	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+// 	ft_range = mp.equal_range(param);
+// 	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+// 	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+// 	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+// }
 
-template <typename MAP>
-void	ft_bound(MAP &mp, const T1 &param)
-{
-	ft_iterator ite = mp.end(), it[2];
-	PAIR<ft_iterator, ft_iterator> ft_range;
+// template <typename MAP>
+// void	ft_bound(MAP &mp, const T1 &param)
+// {
+// 	ft_iterator ite = mp.end(), it[2];
+// 	PAIR<ft_iterator, ft_iterator> ft_range;
 
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-	ft_range = mp.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
+// 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+// 	std::cout << "with key [" << param << "]:" << std::endl;
+// 	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+// 	ft_range = mp.equal_range(param);
+// 	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+// 	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+// 	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+// }
 
 bool fncomp (char lhs, char rhs){
 	return lhs<rhs;
@@ -365,12 +365,6 @@ int	main(){
 	}
 	
 	std::cout << std::endl << "****operator[]*****" << std::endl;{
-		// NAME::map<char, int> mymap;
-		
-		// std::cout << "?" << std::endl;
-		// mymap['a'] = 1;
-		// mymap['b'] = 2;
-		// mymap['c']=mymap['b'];
 		NAME::map<char, std::string> mymap;
 		
 		mymap['a'] = "an element";
@@ -591,4 +585,34 @@ int	main(){
 
 	// 	printSize(mp);
 	// }
+
+	{
+		std::list<NAME::pair<const int, std::string> > lst;
+		unsigned int lst_size = 6;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst.push_back(NAME::pair<const int, std::string>(i, std::string((lst_size - i), i + 65)));
+		NAME::map<int, std::string> mp(lst.begin(), lst.end());
+		printSize(mp);
+
+		for (int i = 2; i < 4; ++i){
+			mp.erase(i);
+			printSize(mp);
+		}
+
+		mp.erase(mp.begin()->first);
+		printSize(mp);
+		mp.erase((--mp.end())->first);
+		printSize(mp);
+
+		mp[-1] = "Hello";
+		mp[10] = "Hi there";
+		mp[10] = "Hi there";
+		printSize(mp);
+
+		mp.erase(0);
+		printSize(mp);
+		mp.erase(1);
+		printSize(mp);
+
+	}
 }

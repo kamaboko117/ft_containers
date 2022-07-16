@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/06/29 21:14:22 by asaboure         ###   ########.fr        #
+#    Updated: 2022/07/16 08:46:42 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ BONUSOBJS	= ${BONUSSRCS:.c=.o}
 
 CC		= c++
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++98# -g -O0
 
 DEFINES = -DVECTOR=std::vector -DPAIR=std::pair -DNAME=std
 

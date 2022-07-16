@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 18:01:38 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 08:47:33 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,10 +269,14 @@ namespace ft
 
 		value_type toDel = ft::make_pair(k, mapped_type());
 		tmp = BstDelete(root, &toDel, _keyComp, _Node_Allocator(), _last);
+		if (!tmp)
+			return (0);
 		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
 			_first = tmp;
-		if (!_keyComp(k, root->data.first) && !_keyComp(root->data.first, k))
+		if (!_keyComp(k, root->data.first) && !_keyComp(root->data.first, k)){
 			root = tmp;
+			root->parent = NULL;
+		}
 		if (!_last->parent){
 			root = NULL;
 			_first = _last;

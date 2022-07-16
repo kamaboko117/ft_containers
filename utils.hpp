@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/24 14:25:20 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/16 08:47:51 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,13 +292,16 @@ namespace ft
 			// _alloc.deallocate(root, 1);
 			return (ret);
 		}
+		
 		BstNode<T> *tmp = BstMinValueNode(root->right);
 		BstNode<T> *old = root;
 		root = getNewNode(old->parent, tmp->data, _alloc);
-		root->right = old->right;
+		root->right = tmp->right;
 		root->left = old->left;
+		root->left->parent = root;
 		root->red = old->red;
-		root->right = BstDelete(root->right, value, keyComp, _alloc, last);
+		if (root->right)
+			root->right->parent = root;
 		return (root);
 	}
 
