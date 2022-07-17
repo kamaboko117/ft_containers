@@ -6,28 +6,13 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 19:16:19 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:07:48 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
 # define UTILS_HPP
 # include "utility.hpp"
-
-#include <iostream>
-// static class nullptr_t
-// {
-// public:
-//     template<class T>
-//     operator T*() const { return (0); }
-
-//     template<class C, class T>
-//     operator T C::*() const { return (0); }
-		
-// private:
-//     void operator&() const;
-
-// } u_nullptr = {};
 
 namespace ft
 {
