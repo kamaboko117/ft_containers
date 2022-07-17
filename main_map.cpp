@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/16 19:17:54 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:00:52 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
 	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
 }
 
-//check bst allocation
 int	main(){
 	std::cout << std::endl << "****pair*****" << std::endl;{
 		std::pair <std::string,double> product1;                     // default constructor
@@ -360,7 +359,7 @@ int	main(){
 
 	std::cout << std::endl << "****max_size()*****" << std::endl;{
 		NAME::map<char, char> q;
-		// std::cout.imbue(std::locale("en_US.UTF-8"));    
+		std::cout.imbue(std::locale("en_US.UTF-8"));    
 		std::cout << "Maximum size of a map is " << q.max_size() << '\n';
 	}
 	

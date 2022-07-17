@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:38:43 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 20:33:42 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:11:10 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <deque>
 #include <stack>
 #include <vector>
+#include <iostream>
 
 #ifndef NAME
 # define NAME ft

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/16 20:25:10 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:10:34 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 #ifndef VECTOR
 # define VECTOR ft::vector
 #endif
-//vector	empty(0);
-//check iterator invalidation
-//remove iostream from hpp
+
 template <typename T>
 void	printSize(VECTOR<T> const &vct, bool print_content = true)
 {
@@ -162,13 +160,6 @@ int	main(){
 			std::cout << " " << *it;
 		std::cout << std::endl;
 	}
-
-	// std::cout << std::endl <<  "****vector.data()*****" << std::endl;{
-	// 	VECTOR<int> container(4);
-	// 	for (size_t i = 0; i < 4; i++)
-	// 		container[i] = i + 1;
-	// 	pointer_func(container.data(), container.size());
-	// }
 
 	std::cout << std::endl <<  "****vector.max_size()*****" << std::endl;{
 		VECTOR<char> q;
