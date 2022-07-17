@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/30 18:26:34 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/17 12:58:16 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,6 @@ namespace ft
 		value_type	&operator*() const{
 			return (node->data);
 		}
-		// T			&operator[](difference_type i){
-		// 	return (node[i]);
-		// }
 		value_type	*operator->() const{
 			return (&node->data);
 		}
@@ -118,9 +115,6 @@ namespace ft
 		bool		operator!=(const BSTiterator &rhs) const{
 			return (node != rhs.node);	
 		}
-		// BSTiterator	operator+(std::size_t i) const{
-		// 	return (BSTiterator(node + i));
-		// }
 		BSTiterator	operator-(std::size_t i) const{
 			BSTiterator<T, Compare>	ret(*this);
 			
@@ -128,101 +122,7 @@ namespace ft
 				ret--;
 			return (ret);
 		}
-		// BSTiterator	&operator+=(difference_type n){
-		// 	node += n;
-		// 	return (*this);
-		// }
-		// BSTiterator	&operator-=(difference_type n){
-		// 	node -= n;
-		// 	return (*this);
-		// }
-		// T	*base() const{
-		// 	return (node);
-		// }
 	};
-
-// // iteraror non member operators
-// 	template<typename T>
-// 	bool	operator==(const BSTiterator<T> lhs, const BSTiterator<T> rhs){
-//         return (lhs.base() == rhs.base());
-//     }
-// 	template<typename T_L, typename T_R>
-//     bool	operator==(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs)
-//     {
-//         return (lhs.base() == rhs.base());
-//     }
-// 	template<typename T>
-// 	bool	operator!=(const BSTiterator<T> lhs, const BSTiterator<T> rhs)
-//     {
-//         return (lhs.base() != rhs.base());
-//     }
-// 	template<typename T_L, typename T_R>
-//     bool	operator!=(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs)
-//     {
-//         return (lhs.base() != rhs.base());
-//     }
-//     template<typename T>
-//     bool	operator<(const BSTiterator<T> lhs, const BSTiterator<T> rhs)
-//     {
-//         return (lhs.base() < rhs.base());
-//     }
-// 	template<typename T_L, typename T_R>
-//     bool	operator<(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs)
-//     {
-//         return (lhs.base() < rhs.base());
-//     }
-// 	template<typename T>
-//     bool	operator>(const BSTiterator<T> lhs, const BSTiterator<T> rhs)
-//     {
-//         return (lhs.base() > rhs.base());
-//     }
-//     template<typename T_L, typename T_R>
-//     bool	operator>(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs)
-//     {
-//         return (lhs.base() > rhs.base());
-//     }
-// 	template<typename T>
-//     bool	operator<=(const BSTiterator<T> lhs, const BSTiterator<T> rhs)
-//     {
-//         return (lhs.base() <= rhs.base());
-//     }
-// 	template<typename T_L, typename T_R>
-//     bool	operator<=(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs)
-//     {
-//         return (lhs.base() <= rhs.base());
-//     }
-// 	template<typename T>
-//     bool	operator>=(const BSTiterator<T> lhs, const BSTiterator<T> rhs)
-//     {
-//         return (lhs.base() >= rhs.base());
-//     }
-//     template<typename T_L, typename T_R>
-//     bool	operator>=(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs)
-//     {
-//         return (lhs.base() >= rhs.base());
-//     }
-
-// 	// template<typename T>	
-// 	// typename BSTiterator<T>::difference_type	operator+(const BSTiterator<T> lhs, const BSTiterator<T> rhs){
-//     //     return (lhs.base() + rhs.base());
-//     // }
-// 	// template<typename T_L, typename T_R>
-//     // typename BSTiterator<T_L>::difference_type	operator+(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs){
-//     //     return (lhs.base() + rhs.base());
-//     // }
-// 	template<typename T>
-//     ft::BSTiterator<T>	operator+(typename ft::BSTiterator<T>::difference_type n, typename ft::BSTiterator<T>& rai)
-//     {
-// 		return (&(*rai) + n);
-// 	}
-// 	template<typename T>
-//     typename BSTiterator<T>::difference_type	operator-(const BSTiterator<T> lhs, const BSTiterator<T> rhs){
-//         return (lhs.base() - rhs.base());
-//     }
-// 	template<typename T_L, typename T_R>
-//     typename BSTiterator<T_L>::difference_type	operator-(const BSTiterator<T_L> lhs, const BSTiterator<T_R> rhs){
-//         return (lhs.base() - rhs.base());
-//     }
 
 	// BSTconstIterator
 	template<typename T, class Compare>
@@ -259,13 +159,6 @@ namespace ft
 			comp = rhs.comp;
 			return (*this);
 		}
-		// BSTconstIterator	&operator=(const BSTiterator<T, Compare> &rhs){
-		// 	if (this == &rhs)
-		// 		return (*this);
-		// 	node = rhs.node;
-		// 	comp = rhs.comp;
-		// 	return (*this);
-		// }
 		BSTconstIterator	&operator++(){
 			if (!node)
 				return (*this);
@@ -323,9 +216,6 @@ namespace ft
 		value_type const	&operator*() const{
 			return (node->data);
 		}
-		// T			&operator[](difference_type i){
-		// 	return (node[i]);
-		// }
 		value_type const	*operator->() const{
 			return (&node->data);
 		}
@@ -335,9 +225,6 @@ namespace ft
 		bool		operator!=(const BSTconstIterator &rhs) const{
 			return (node != rhs.node);	
 		}
-		// BSTconstIterator	operator+(std::size_t i) const{
-		// 	return (BSTconstIterator(node + i));
-		// }
 		BSTconstIterator	operator-(std::size_t i) const{
 			BSTconstIterator<T, Compare>	ret(*this);
 			
@@ -345,17 +232,6 @@ namespace ft
 				ret--;
 			return (ret);
 		}
-		// BSTconstIterator	&operator+=(difference_type n){
-		// 	node += n;
-		// 	return (*this);
-		// }
-		// BSTconstIterator	&operator-=(difference_type n){
-		// 	node -= n;
-		// 	return (*this);
-		// }
-		// T	*base() const{
-		// 	return (node);
-		// }
 	};
 	
 }
