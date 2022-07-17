@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/17 13:07:48 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:17:32 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,14 +164,6 @@ namespace ft
         return (lhs.base() >= rhs.base());
     }
 
-	// template<typename T>	
-	// typename v_iterator<T>::difference_type	operator+(const v_iterator<T> lhs, const v_iterator<T> rhs){
-    //     return (lhs.base() + rhs.base());
-    // }
-	// template<typename T_L, typename T_R>
-    // typename v_iterator<T_L>::difference_type	operator+(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs){
-    //     return (lhs.base() + rhs.base());
-    // }
 	template<typename T>
     ft::v_iterator<T>	operator+(typename ft::v_iterator<T>::difference_type n, typename ft::v_iterator<T>& rai)
     {
@@ -255,7 +247,6 @@ namespace ft
 	BstNode<T>	*BstDelete(BstNode<T> *root, T *value, Compare keyComp, Alloc _alloc, BstNode<T> *last){
 		if (!root || root->red == 2)
 			return (root);
-		// std::cout << "root: " << root->data.first << " value: " << value->first << std::endl;
 		if (keyComp(value->first, root->data.first))
 			root->left = BstDelete(root->left, value, keyComp, _alloc, last);
 		else if (keyComp(root->data.first, value->first))
