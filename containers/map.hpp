@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/17 12:59:14 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:07:55 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MAP_HPP
 # include <memory>
 # include <functional>
-# include "iterator.hpp"
-# include "utility.hpp"
-# include "utils.hpp"
-# include "BSTiterator.hpp"
-# include "algorithm.hpp"
+# include "../inc/iterator.hpp"
+# include "../inc/utility.hpp"
+# include "../inc/utils.hpp"
+# include "../inc/BSTiterator.hpp"
+# include "../inc/algorithm.hpp"
 
 namespace ft
 {

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/06/29 22:22:01 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:11:40 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 # include <stdexcept>
 # include <limits>
 # include <memory>
-# include "iterator.hpp"
-# include "type_traits.hpp"
-# include "algorithm.hpp"
-# include "utils.hpp"
+# include "../inc/iterator.hpp"
+# include "../inc/type_traits.hpp"
+# include "../inc/algorithm.hpp"
+# include "../inc/utils.hpp"
 
 namespace ft
 {
@@ -28,18 +28,18 @@ namespace ft
 	class vector
 	{	
 	public:
-		typedef	T									value_type;
-		typedef	Alloc								allocator_type;
-		typedef	value_type&							reference;
-		typedef	const value_type&					const_reference;
-		typedef	typename allocator_type::pointer	pointer;
-		typedef	pointer const						const_pointer;
-		typedef ft::v_iterator<value_type>			iterator;
+		typedef	T										value_type;
+		typedef	Alloc									allocator_type;
+		typedef	value_type&								reference;
+		typedef	const value_type&						const_reference;
+		typedef	typename allocator_type::pointer		pointer;
+		typedef	pointer const							const_pointer;
+		typedef ft::v_iterator<value_type>				iterator;
 		typedef ft::v_iterator<const value_type>		const_iterator;
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
-		typedef	std::size_t							size_type;
-		typedef	std::ptrdiff_t						difference_type;
+		typedef	std::size_t								size_type;
+		typedef	std::ptrdiff_t							difference_type;
 		
 	private:
 		allocator_type	_alloc;
