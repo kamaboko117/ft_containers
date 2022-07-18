@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:43:58 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/17 13:10:34 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:53:54 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include <cstdlib>
 #include <algorithm>
 #include <iterator>
-#ifndef VECTOR
-# define VECTOR ft::vector
+#ifndef NAME
+# define NAME ft
 #endif
 
 template <typename T>
-void	printSize(VECTOR<T> const &vct, bool print_content = true)
+void	printSize(NAME::vector<T> const &vct, bool print_content = true)
 {
 	std::size_t size = vct.size();
 	std::size_t capacity = vct.capacity();
@@ -34,8 +34,8 @@ void	printSize(VECTOR<T> const &vct, bool print_content = true)
 	std::cout << "max_size: " << vct.max_size() << std::endl;
 	if (print_content)
 	{
-		typename VECTOR<T>::const_iterator it = vct.begin();
-		typename VECTOR<T>::const_iterator ite = vct.end();
+		typename NAME::vector<T>::const_iterator it = vct.begin();
+		typename NAME::vector<T>::const_iterator ite = vct.end();
 		std::cout << std::endl << "Content is:" << std::endl;
 		for (; it != ite; it++)
 			std::cout << "- " << *it << std::endl;
@@ -51,9 +51,9 @@ void pointer_func(const int* p, std::size_t size)
     std::cout << std::endl;
 }
 
-void print(int id, VECTOR<int>& container){
+void print(int id, NAME::vector<int>& container){
 	std::cout << id << ". ";
-	for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++) {
+	for (NAME::vector<int>::iterator it = container.begin(); it != container.end(); it++) {
 		std::cout << *it << ' ';
 	}
 	std::cout << '\n';
@@ -69,10 +69,10 @@ void printpb(T &xs)
     std::cout << "]\n";
 }
 
-void	prepost_incdec(VECTOR<int> &vct)
+void	prepost_incdec(NAME::vector<int> &vct)
 {
-	VECTOR<int>::iterator it = vct.begin();
-	VECTOR<int>::iterator it_tmp;
+	NAME::vector<int>::iterator it = vct.begin();
+	NAME::vector<int>::iterator it_tmp;
 
 	std::cout << "Pre inc" << std::endl;
 	it_tmp = ++it;
@@ -93,7 +93,7 @@ void	prepost_incdec(VECTOR<int> &vct)
 }
 
 template <class T, class Alloc>
-void	cmp(const VECTOR<T, Alloc> &lhs, const VECTOR<T, Alloc> &rhs)
+void	cmp(const NAME::vector<T, Alloc> &lhs, const NAME::vector<T, Alloc> &rhs)
 {
 	static int i = 0;
 
@@ -108,22 +108,22 @@ int	main(){
 	std::cout << std::endl << "****random tests*****" << std::endl;{
 		int	i = 0;
 		
-		VECTOR<int>		vec;
-		VECTOR<int>		src(4);
-		VECTOR<int>		vec2(src);
+		NAME::vector<int>		vec;
+		NAME::vector<int>		src(4);
+		NAME::vector<int>		vec2(src);
 
-		for (VECTOR<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
+		for (NAME::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
 			vec2[i++] = std::rand();
 			std::cout << *it << std::endl;
 		}
 		i = 0;
 		std::cout << std::endl;
-		for (VECTOR<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
+		for (NAME::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++){
 			vec2[i++] = std::rand();
 			std::cout << *it << std::endl;
 		}
 		std::cout << std::endl;
-		VECTOR<char> letters(4);
+		NAME::vector<char> letters(4);
 		std::cout << "The first character is '" << letters.front() << "'." << std::endl;
 		letters[0] = 'o';
 		letters[1] = 'm';
@@ -135,7 +135,7 @@ int	main(){
 	}
 	
 	std::cout << std::endl << "****vector.at()*****" << std::endl;{
-		VECTOR<int> data(6);
+		NAME::vector<int> data(6);
 		for (size_t i = 1; i < 7; i++)
 			data[i - 1] = i;
 	
@@ -156,13 +156,13 @@ int	main(){
 	
 		// Print final values
 		std::cout << "data:";
-		for (VECTOR<int>::iterator it = data.begin(); it != data.end(); it++)
+		for (NAME::vector<int>::iterator it = data.begin(); it != data.end(); it++)
 			std::cout << " " << *it;
 		std::cout << std::endl;
 	}
 
 	std::cout << std::endl <<  "****vector.max_size()*****" << std::endl;{
-		VECTOR<char> q;
+		NAME::vector<char> q;
 		std::cout.imbue(std::locale("en_US.UTF-8"));    
 		std::cout << "Maximum size of a vector is " << q.max_size() << std::endl;
 	}
@@ -172,7 +172,7 @@ int	main(){
  
 		std::cout << "using reserve: \n";
 		{
-			VECTOR<int> v1;
+			NAME::vector<int> v1;
 			v1.reserve( max_elements ); // reserves at least max_elements * sizeof(int) bytes
 			for(int n = 0; n < max_elements + 1; ++n){
 				if(v1.size() == v1.capacity()) {
@@ -184,7 +184,7 @@ int	main(){
 	
 		std::cout << "not using reserve: \n";
 		{
-			VECTOR<int> v1;
+			NAME::vector<int> v1;
 			for(int n = 0; n < max_elements; ++n) {
 				if(v1.size() == v1.capacity()) {
 					std::cout << "size() == capacity() == " << v1.size() << '\n';
@@ -195,13 +195,13 @@ int	main(){
 	}
 
 	std::cout << std::endl << "****vector.clear()*****" << std::endl;{
-	VECTOR<int> container(3);
+	NAME::vector<int> container(3);
 	container[0] = 1;
 	container[1] = 2;
 	container[2] = 3;
  
     std::cout << "Before clear:";
-	for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++)
+	for (NAME::vector<int>::iterator it = container.begin(); it != container.end(); it++)
 		std::cout << " " << *it;
 	
     std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
@@ -210,16 +210,16 @@ int	main(){
     container.clear();
  
     std::cout << "After clear:";
-    for (VECTOR<int>::iterator it = container.begin(); it != container.end(); it++)
+    for (NAME::vector<int>::iterator it = container.begin(); it != container.end(); it++)
 		std::cout << " " << *it;
     std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
 	}
 
 	std::cout << std::endl << "****vector.insert()*****" << std::endl;{
-		VECTOR<int> c1(3, 100);
+		NAME::vector<int> c1(3, 100);
 		print(1, c1);
 	
-		VECTOR<int>::iterator it = c1.begin();
+		NAME::vector<int>::iterator it = c1.begin();
 		it = c1.insert(it, 200);
 		print(2, c1);
 
@@ -229,7 +229,7 @@ int	main(){
 		// `it` no longer valid, get a new one:
 		it = c1.begin();
 	
-		VECTOR<int> c2(2, 400);
+		NAME::vector<int> c2(2, 400);
 		c1.insert(it + 2, c2.begin(), c2.end());
 		print(4, c1);
 	
@@ -243,13 +243,13 @@ int	main(){
 	}
 	
 	std::cout << std::endl << "****vector.assign()*****" << std::endl;{
-		VECTOR<int> first;
-		VECTOR<int> second;
-		VECTOR<int> third;
+		NAME::vector<int> first;
+		NAME::vector<int> second;
+		NAME::vector<int> third;
 
 		first.assign (7,100);             // 7 ints with a value of 100
 
-		VECTOR<int>::iterator it;
+		NAME::vector<int>::iterator it;
 		it=first.begin()+1;
 
 		second.assign (it,first.end()-1); // the 5 central values of first
@@ -263,7 +263,7 @@ int	main(){
 	}
 	
 	std::cout << std::endl << "****vector.pop_back()*****" << std::endl;{
-		VECTOR<int> numbers;
+		NAME::vector<int> numbers;
  
 		printpb(numbers); 
 	
@@ -279,7 +279,7 @@ int	main(){
 	}
 
 	std::cout << std::endl << "****vector.erase()*****" << std::endl;{
-		VECTOR<int> myvector;
+		NAME::vector<int> myvector;
 
 		// set some values (from 1 to 10)
 		for (int i=1; i<=10; i++) myvector.push_back(i);
@@ -297,15 +297,15 @@ int	main(){
 	}
 	
 	std::cout << std::endl << "****reverse iterator*****" << std::endl;{
-		VECTOR<int> myvector (5);  // 5 default-constructed ints
+		NAME::vector<int> myvector (5);  // 5 default-constructed ints
 		int i = 0;
-		VECTOR<int>::reverse_iterator rit = myvector.rbegin();
+		NAME::vector<int>::reverse_iterator rit = myvector.rbegin();
 		
 		for (; rit!= myvector.rend(); ++rit)
 			*rit = ++i;
 
 		std::cout << "myvector contains:";
-		for (VECTOR<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		for (NAME::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
 			std::cout << ' ' << *it;
 		std::cout << '\n';
 	}

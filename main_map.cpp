@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/17 13:00:52 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:54:58 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 #include "map.hpp"
 #include <list>
 
-#ifndef PAIR
-# define PAIR ft::pair
-#endif 
 #ifndef NAME
 # define NAME ft
 #endif 
@@ -96,7 +93,7 @@ template <typename MAP>
 void	ft_const_bound(const MAP &mp, const T1 &param)
 {
 	ft_const_iterator ite = mp.end(), it[2];
-	PAIR<ft_const_iterator, ft_const_iterator> ft_range;
+	NAME::pair<ft_const_iterator, ft_const_iterator> ft_range;
 
 	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
 	std::cout << "with key [" << param << "]:" << std::endl;
@@ -111,7 +108,7 @@ template <typename MAP>
 void	ft_bound(MAP &mp, const T1 &param)
 {
 	ft_iterator ite = mp.end(), it[2];
-	PAIR<ft_iterator, ft_iterator> ft_range;
+	NAME::pair<ft_iterator, ft_iterator> ft_range;
 
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
 	std::cout << "with key [" << param << "]:" << std::endl;
@@ -150,11 +147,11 @@ void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
 
 int	main(){
 	std::cout << std::endl << "****pair*****" << std::endl;{
-		std::pair <std::string,double> product1;                     // default constructor
-		std::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
-		std::pair <std::string,double> product3 (product2);          // copy constructor
+		NAME::pair <std::string,double> product1;                     // default constructor
+		NAME::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+		NAME::pair <std::string,double> product3 (product2);          // copy constructor
 
-		product1 = std::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
+		product1 = NAME::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
 
 		product2.first = "shoes";                  // the type of first is string
 		product2.second = 39.90;                   // the type of second is double
