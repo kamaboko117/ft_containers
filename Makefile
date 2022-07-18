@@ -6,7 +6,7 @@
 #    By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/21 14:20:20 by asaboure          #+#    #+#              #
-#    Updated: 2022/07/18 17:09:58 by asaboure         ###   ########.fr        #
+#    Updated: 2022/07/18 18:28:03 by asaboure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,21 +22,21 @@ VECSRCS	=	main_vector.cpp
 MAPSRCS =	main_map.cpp
 STACKSRCS =	main_stack.cpp
 
-HPP		=	containers/vector.hpp\
+HPP		=	vector.hpp\
 			inc/iterator.hpp\
 			inc/type_traits.hpp\
 			inc/utils.hpp\
 			inc/algorithm.hpp\
-			containers/map.hpp\
+			map.hpp\
 			inc/utility.hpp\
 			inc/BSTiterator.hpp\
-			containers/stack.hpp
+			stack.hpp
 
 BONUSOBJS	= ${BONUSSRCS:.c=.o}
 
 CC		= c++
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinc/ -Icontainers/# -g -O0
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinc/# -g -O0
 
 DEFINES = -DNAME=std
 

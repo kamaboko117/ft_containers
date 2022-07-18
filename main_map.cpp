@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/18 17:06:10 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:30:36 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <map>
 #include <functional>
 #include <string>
-#include "containers/map.hpp"
+#include "map.hpp"
 #include <list>
 
 #ifndef NAME

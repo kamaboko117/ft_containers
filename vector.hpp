@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/18 18:23:25 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:33:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 # include <stdexcept>
 # include <limits>
 # include <memory>
-# include "../inc/iterator.hpp"
-# include "../inc/type_traits.hpp"
-# include "../inc/algorithm.hpp"
-# include "../inc/utils.hpp"
+# include "./inc/iterator.hpp"
+# include "./inc/type_traits.hpp"
+# include "./inc/algorithm.hpp"
+# include "./inc/utils.hpp"
 
 namespace ft
 {
