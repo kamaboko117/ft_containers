@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/18 17:11:40 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:23:25 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,8 +247,10 @@ namespace ft
 
 	template<typename T, class Alloc>
 	T	&vector<T, Alloc>::at(std::size_t pos){
-		if (pos >= _size)
-			throw std::out_of_range("out of range");
+		if (pos >= _size){
+			std::string error("vector::_M_range_check: __n (which is " + NumberToString(_size) + ") >= this->size() (which is " + NumberToString(_size) + ")");
+			throw std::out_of_range(error);
+		}
 		else
 			return (array[pos]);
 	}

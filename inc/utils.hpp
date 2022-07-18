@@ -6,13 +6,14 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/17 13:17:32 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:22:02 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
 # define UTILS_HPP
 # include "utility.hpp"
+# include <sstream>
 
 namespace ft
 {
@@ -444,6 +445,14 @@ namespace ft
 		else
 			node = current;
 		return (node);
+	}
+
+	template <typename T>
+	std::string NumberToString(T Number )
+	{
+		std::ostringstream ss;
+		ss << Number;
+		return ss.str();
 	}
 }
 
