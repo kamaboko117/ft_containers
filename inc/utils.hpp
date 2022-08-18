@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/18 21:21:17 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/18 21:24:32 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,168 @@
 //forced to use a RBT. using https://www.programiz.com/dsa/deletion-from-a-red-black-tree#:~:text=Red%2DBlack%20tree%20is%20a,of%20a%20red%2Dblack%20tree as reference
 namespace ft
 {
+		template<typename T>
+	struct type_identity
+	{
+		typedef T type;
+	};
+
+
+// v_iterator
+	template<typename T>
+	class v_iterator
+	{
+	public:
+		typedef T 				value_type;
+		typedef std::ptrdiff_t	difference_type;
+		typedef	value_type*		pointer;
+		typedef value_type&		reference;
+		typedef v_iterator		iterator_category;
+	private:
+		T	*ptr;
+	public:
+		v_iterator(){}
+		v_iterator(T *ptr)
+			: ptr(ptr){}
+		template<typename U>
+		v_iterator(const v_iterator<U> &src)
+		: ptr(src.base()){}
+		~v_iterator(){}
+		
+		v_iterator	&operator=(const v_iterator &rhs){
+			if (this == &rhs)
+				return (*this);
+			ptr = rhs.ptr;
+			return (*this);
+		}
+		v_iterator	&operator++(){
+			this->ptr++;
+			return (*this);
+		}
+		v_iterator	operator++(int){
+			v_iterator it = *this;
+			++(*this);
+			return (it);
+		}
+		v_iterator	&operator--(){
+			ptr--;
+			return (*this);
+		}
+		v_iterator	operator--(int){
+			v_iterator it = *this;
+			--(*this);
+			return (it);
+		}
+		T			&operator*() const{
+			return (*ptr);
+		}
+		T			&operator[](difference_type i){
+			return (ptr[i]);
+		}
+		T			*operator->(){
+			return (ptr);
+		}
+		bool		operator==(const v_iterator &rhs) const{
+			return (ptr == rhs.ptr);
+		}
+		bool		operator!=(const v_iterator &rhs) const{
+			return (ptr != rhs.ptr);
+		}
+		v_iterator	operator+(std::size_t i) const{
+			return (v_iterator(ptr + i));
+		}
+		v_iterator	operator-(std::size_t i) const{
+			return (v_iterator(ptr - i));
+		}
+		v_iterator	&operator+=(difference_type n){
+			ptr += n;
+			return (*this);
+		}
+		v_iterator	&operator-=(difference_type n){
+			ptr -= n;
+			return (*this);
+		}
+		T	*base() const{
+			return (ptr);
+		}
+	};
+
+// iteraror non member operators
+	template<typename T>
+	bool	operator==(const v_iterator<T> lhs, const v_iterator<T> rhs){
+        return (lhs.base() == rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    bool	operator==(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
+    {
+        return (lhs.base() == rhs.base());
+    }
+	template<typename T>
+	bool	operator!=(const v_iterator<T> lhs, const v_iterator<T> rhs)
+    {
+        return (lhs.base() != rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    bool	operator!=(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
+    {
+        return (lhs.base() != rhs.base());
+    }
+    template<typename T>
+    bool	operator<(const v_iterator<T> lhs, const v_iterator<T> rhs)
+    {
+        return (lhs.base() < rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    bool	operator<(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
+    {
+        return (lhs.base() < rhs.base());
+    }
+	template<typename T>
+    bool	operator>(const v_iterator<T> lhs, const v_iterator<T> rhs)
+    {
+        return (lhs.base() > rhs.base());
+    }
+    template<typename T_L, typename T_R>
+    bool	operator>(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
+    {
+        return (lhs.base() > rhs.base());
+    }
+	template<typename T>
+    bool	operator<=(const v_iterator<T> lhs, const v_iterator<T> rhs)
+    {
+        return (lhs.base() <= rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    bool	operator<=(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
+    {
+        return (lhs.base() <= rhs.base());
+    }
+	template<typename T>
+    bool	operator>=(const v_iterator<T> lhs, const v_iterator<T> rhs)
+    {
+        return (lhs.base() >= rhs.base());
+    }
+    template<typename T_L, typename T_R>
+    bool	operator>=(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs)
+    {
+        return (lhs.base() >= rhs.base());
+    }
+
+	template<typename T>
+    ft::v_iterator<T>	operator+(typename ft::v_iterator<T>::difference_type n, typename ft::v_iterator<T>& rai)
+    {
+		return (&(*rai) + n);
+	}
+	template<typename T>
+    typename v_iterator<T>::difference_type	operator-(const v_iterator<T> lhs, const v_iterator<T> rhs){
+        return (lhs.base() - rhs.base());
+    }
+	template<typename T_L, typename T_R>
+    typename v_iterator<T_L>::difference_type	operator-(const v_iterator<T_L> lhs, const v_iterator<T_R> rhs){
+        return (lhs.base() - rhs.base());
+    }
+	
+
 	template<class Key, class T>
 	struct BstNode {
 		ft::pair<const Key, T> data;
