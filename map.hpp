@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/18 20:50:44 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/18 21:17:22 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,32 +244,10 @@ namespace ft
 		BstNode<value_type> *node = searchTree(root, k, _keyComp, _last);
 		_Node_Allocator		nodeAlloc;
 		
-		if (!node)
+		if (node == RBT.TNULL)
 			return (0);
-		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
-			_first = BstNextNode( _first, _keyComp);
-		if (!_keyComp(k, _last->parent->data.first) && !_keyComp(_last->parent->data.first, k))
-			_last->parent = BstPreviousNode(_last->parent, _keyComp);
 		value_type toDel = ft::make_pair(k, mapped_type());
-		tmp = BstDelete(root, &toDel, _keyComp, nodeAlloc, _last);
-		if (!tmp){
-			_first = _last;
-			nodeAlloc.destroy(node);
-			nodeAlloc.deallocate(node, 1);
-			return (1);
-		}
-		if (!_keyComp(k, _first->data.first) && !_keyComp(_first->data.first, k))
-			_first = tmp;
-		if (!_keyComp(k, root->data.first) && !_keyComp(root->data.first, k)){
-			root = tmp;
-			root->parent = NULL;
-		}
-		if (!_last->parent){
-			root = NULL;
-			_first = _last;
-		}
-		nodeAlloc.destroy(node);
-		nodeAlloc.deallocate(node, 1);
+		RBT.delete();
 		return (1);
 	}
 		

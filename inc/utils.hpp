@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/18 20:37:57 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/18 21:21:17 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ namespace ft
 		void initializeNULLBSTNode(BstNode<Key, T> *node, BstNode<Key, T> *parent) {
 			node->data = ft::pair<const Key, T>();
 			node->parent = parent;
-			node->left = nullptr;
-			node->right = nullptr;
+			node->left = NULL;
+			node->right = NULL;
 			node->color = 0;
 		}
 
@@ -141,7 +141,7 @@ namespace ft
 		}
 
 		void rbTransplant(BstNode<Key, T> *u, BstNode<Key, T> *v) {
-			if (u->parent == nullptr)
+			if (!u->parent)
 				root = v;
 			else if (u == u->parent->left)
 				u->parent->left = v;
@@ -264,8 +264,8 @@ namespace ft
 			alloc.construct(last, BstNode<Key, T>());
 			last->color = 2;
 			TNULL->color = 0;
-			TNULL->left = nullptr;
-			TNULL->right = nullptr;
+			TNULL->left = NULL;
+			TNULL->right = NULL;
 			root = TNULL;
 			root->parent = last;
 		}
@@ -326,7 +326,7 @@ namespace ft
 			if (y->left != TNULL)
 				y->left->parent = x;
 			y->parent = x->parent;
-			if (x->parent == nullptr)
+			if (!x->parent)
 				this->root = y;
 			else if (x == x->parent->left)
 				x->parent->left = y;
@@ -342,7 +342,7 @@ namespace ft
 			if (y->right != TNULL)
 				y->right->parent = x;
 			y->parent = x->parent;
-			if (x->parent == nullptr)
+			if (!x->parent)
 				this->root = y;
 			else if (x == x->parent->right)
 				x->parent->right = y;
@@ -356,12 +356,12 @@ namespace ft
 		void insert(pair<const Key, T> value) {
 			BstNode<Key, T> *node = alloc.allocate(1);
 			alloc.construct(node, BstNode<Key, T>(value));
-			node->parent = nullptr;
+			node->parent = NULL;
 			node->left = TNULL;
 			node->right = TNULL;
 			node->color = 1;
 
-			BstNode<Key, T> *y = nullptr;
+			BstNode<Key, T> *y = NULL;
 			BstNode<Key, T> *x = this->root;
 
 			while (x != TNULL) {
@@ -372,17 +372,17 @@ namespace ft
 					x = x->right;
 			}
 			node->parent = y;
-			if (y == nullptr)
+			if (!y)
 				root = node;
 			else if (compare(node->data.first, y->data.first))
 				y->left = node;
 			else
 				y->right = node;
-			if (node->parent == nullptr) {
+			if (!node->parent) {
 				node->color = 0;
 				return ;
 			}
-			if (node->parent->parent == nullptr)
+			if (!node->parent->parent)
 				return ;
 			insertFix(node);
 		}
