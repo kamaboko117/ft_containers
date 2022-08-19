@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/18 21:24:32 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:37:36 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,13 @@ namespace ft
 
 	template<class Key, class T>
 	struct BstNode {
-		ft::pair<const Key, T> data;
-		BstNode *parent;
-		BstNode *left;
-		BstNode *right;
-		int color;
+		typedef	ft::pair<const Key, T>	value_type;
+
+		value_type	data;
+		BstNode 	*parent;
+		BstNode		*left;
+		BstNode 	*right;
+		int			color;
 
 		BstNode(){}
 		BstNode(ft::pair<const Key, T> data) : data(data){}
@@ -196,13 +198,13 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	class RedBlackTree {
 	private:
-		BstNode<Key, T> *root;
-		BstNode<Key, T> *TNULL;
-		BstNode<Key, T>	*last;
+		BstNode<const Key, T> *root;
+		BstNode<const Key, T> *TNULL;
+		BstNode<const Key, T>	*last;
 		Compare				compare;
 		Alloc				alloc;
 
-		void initializeNULLBSTNode(BstNode<Key, T> *node, BstNode<Key, T> *parent) {
+		void initializeNULLBSTNode(BstNode< const Key, T> *node, BstNode< const Key, T> *parent) {
 			node->data = ft::pair<const Key, T>();
 			node->parent = parent;
 			node->left = NULL;
@@ -211,7 +213,7 @@ namespace ft
 		}
 
 		// Preorder
-		void preOrderHelper(BstNode<Key, T> *node) {
+		void preOrderHelper(BstNode< const Key, T> *node) {
 			if (node != TNULL) {
 				std::cout << node->data.first << " ";
 				preOrderHelper(node->left);
@@ -220,7 +222,7 @@ namespace ft
 		}
 
 		// Inorder
-		void inOrderHelper(BstNode<Key, T> *node) {
+		void inOrderHelper(BstNode< const Key, T> *node) {
 			if (node != TNULL) {
 				inOrderHelper(node->left);
 				std::cout << node->data.first << " ";
@@ -229,7 +231,7 @@ namespace ft
 		}
 
 		// Post order
-		void postOrderHelper(BstNode<Key, T> *node) {
+		void postOrderHelper(BstNode< const Key, T> *node) {
 			if (node != TNULL) {
 				postOrderHelper(node->left);
 				postOrderHelper(node->right);
@@ -237,7 +239,7 @@ namespace ft
 			}
 		}
 
-		BstNode<Key, T> *searchTreeHelper(BstNode<Key, T> *node, Key key) {
+		BstNode< const Key, T> *searchTreeHelper(BstNode< const Key, T> *node, Key key) {
 			if (node == TNULL || (!compare(key, node->data.first) && !compare(node->data.first, key)))
 				return node;
 			if (compare(key, node->data.first))
@@ -246,8 +248,8 @@ namespace ft
 		}
 
 		// For balancing the tree after deletion
-		void deleteFix(BstNode<Key, T> *x) {
-			BstNode<Key, T> *s;
+		void deleteFix(BstNode< const Key, T> *x) {
+			BstNode< const Key, T> *s;
 			while (x != root && x->color == 0) {
 				if (x == x->parent->left) {
 					s = x->parent->right;
@@ -302,7 +304,7 @@ namespace ft
 			x->color = 0;
 		}
 
-		void rbTransplant(BstNode<Key, T> *u, BstNode<Key, T> *v) {
+		void rbTransplant(BstNode<const Key, T> *u, BstNode<const Key, T> *v) {
 			if (!u->parent)
 				root = v;
 			else if (u == u->parent->left)
@@ -312,9 +314,9 @@ namespace ft
 			v->parent = u->parent;
 		}
 
-		void deleteBSTNodeHelper(BstNode<Key, T> *node, Key key) {
-			BstNode<Key, T> *z = TNULL;
-			BstNode<Key, T> *x, y;
+		void deleteBSTNodeHelper(BstNode<const Key, T> *node, Key key) {
+			BstNode<const Key, T> *z = TNULL;
+			BstNode<const Key, T> *x, *y;
 
 			while (node != TNULL) {
 				if (!compare(node->data.first, key) && !compare(key, node->data.first))
@@ -358,8 +360,8 @@ namespace ft
 		}
 
 		// For balancing the tree after insertion
-		void insertFix(BstNode<Key, T> *k) {
-			BstNode<Key, T> *u;
+		void insertFix(BstNode<const Key, T> *k) {
+			BstNode<const Key, T> *u;
 			while (k->parent->color == 1) {
 				if (k->parent == k->parent->parent->right) {
 					u = k->parent->parent->left;
@@ -400,7 +402,7 @@ namespace ft
 			root->color = 0;
 		}
 
-		void printHelper(BstNode<Key, T> *root, std::string indent, bool last) {
+		void printHelper(BstNode<const Key, T> *root, std::string indent, bool last) {
 			if (root != TNULL) {
 				std::cout << indent;
 				if (last) {
@@ -421,9 +423,9 @@ namespace ft
 		public:
 		RedBlackTree(Compare compare, Alloc alloc) : compare(compare), alloc(alloc) {
 			TNULL = alloc.allocate(1);
-			alloc.construct(TNULL, BstNode<Key, T>());
+			alloc.construct(TNULL, BstNode<const Key, T>());
 			last = alloc.allocate(1);
-			alloc.construct(last, BstNode<Key, T>());
+			alloc.construct(last, BstNode<const Key, T>());
 			last->color = 2;
 			TNULL->color = 0;
 			TNULL->left = NULL;
@@ -444,26 +446,33 @@ namespace ft
 			postOrderHelper(this->root);
 		}
 
-		BstNode<Key, T> *searchTree(Key k) {
+		BstNode<const Key, T> *searchTree(Key k) {
 			return searchTreeHelper(this->root, k);
 		}
 
-		BstNode<Key, T> *minimum(BstNode<Key, T> *node) {
+		BstNode<const Key, T> *minimum(BstNode<const Key, T> *node) {
 			while (node->left != TNULL)
 				node = node->left;
 			return node;
 		}
 
-		BstNode<Key, T> *maximum(BstNode<Key, T> *node) {
+		const BstNode<const Key, T> *minimum(BstNode<const Key, T> const *node) const{
+			BstNode<const Key, T> *ret = node;
+			while (ret->left != TNULL)
+				ret = ret->left;
+			return ret;
+		}
+
+		BstNode<const Key, T> *maximum(BstNode<const Key, T> *node) {
 			while (node->right != TNULL)
 				node = node->right;
 			return node;
 		}
 
-		BstNode<Key, T> *successor(BstNode<Key, T> *x) {
+		BstNode<const Key, T> *successor(BstNode<const Key, T> *x) {
 			if (x->right != TNULL)
 				return minimum(x->right);
-			BstNode<Key, T> *y = x->parent;
+			BstNode<const Key, T> *y = x->parent;
 			while (y != TNULL && x == y->right) {
 				x = y;
 				y = y->parent;
@@ -471,10 +480,10 @@ namespace ft
 			return y;
 		}
 
-		BstNode<Key, T> *predecessor(BstNode<Key, T> *x) {
+		BstNode<const Key, T> *predecessor(BstNode<const Key, T> *x) {
 			if (x->left != TNULL)
 				return maximum(x->left);
-			BstNode<Key, T> *y = x->parent;
+			BstNode<const Key, T> *y = x->parent;
 			while (y != TNULL && x == y->left) {
 				x = y;
 				y = y->parent;
@@ -482,8 +491,8 @@ namespace ft
 			return y;
 		}
 
-		void leftRotate(BstNode<Key, T> *x) {
-			BstNode<Key, T> *y = x->right;
+		void leftRotate(BstNode<const Key, T> *x) {
+			BstNode<const Key, T> *y = x->right;
 			x->right = y->left;
 			if (y->left != TNULL)
 				y->left->parent = x;
@@ -498,8 +507,8 @@ namespace ft
 			x->parent = y;
 		}
 
-		void rightRotate(BstNode<Key, T> *x) {
-			BstNode<Key, T> *y = x->left;
+		void rightRotate(BstNode<const Key, T> *x) {
+			BstNode< const Key, T> *y = x->left;
 			x->left = y->right;
 			if (y->right != TNULL)
 				y->right->parent = x;
@@ -516,15 +525,15 @@ namespace ft
 
 		// Inserting a node
 		void insert(pair<const Key, T> value) {
-			BstNode<Key, T> *node = alloc.allocate(1);
-			alloc.construct(node, BstNode<Key, T>(value));
+			BstNode< const Key, T> *node = alloc.allocate(1);
+			alloc.construct(node, BstNode< const Key, T>(value));
 			node->parent = NULL;
 			node->left = TNULL;
 			node->right = TNULL;
 			node->color = 1;
 
-			BstNode<Key, T> *y = NULL;
-			BstNode<Key, T> *x = this->root;
+			BstNode< const Key, T> *y = NULL;
+			BstNode< const Key, T> *x = this->root;
 
 			while (x != TNULL) {
 				y = x;
@@ -549,8 +558,16 @@ namespace ft
 			insertFix(node);
 		}
 
-		BstNode<Key, T> *getRoot() {
+		BstNode<const Key, T> *getRoot() {
 			return this->root;
+		}
+
+		const BstNode<const Key, T> *getRoot() const{
+			return this->root;
+		}
+
+		BstNode<const Key, T> *getTNULL() {
+			return this->TNULL;
 		}
 
 		void deleteBSTNode(Key data) {
@@ -562,6 +579,14 @@ namespace ft
 				printHelper(this->root, "", true);
 		}
 	};
+
+	template <typename T>
+	std::string NumberToString(T Number )
+	{
+		std::ostringstream ss;
+		ss << Number;
+		return ss.str();
+	}
 }
 
 #endif

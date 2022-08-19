@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/18 21:17:22 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:42:45 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ namespace ft
 		typedef typename allocator_type::const_reference				const_reference;
 		typedef typename allocator_type::pointer						pointer;
 		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef BSTiterator<BstNode<value_type>, key_compare>			iterator;
-		typedef BSTconstIterator<BstNode<value_type>, key_compare>		const_iterator;
+		typedef BSTiterator<BstNode<const key_type, mapped_type>, key_compare>			iterator;
+		typedef BSTconstIterator<BstNode<const key_type, mapped_type>, key_compare>		const_iterator;
 		typedef ft::reverse_iterator<iterator>							reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -66,9 +66,9 @@ namespace ft
 		allocator_type		_alloc;
 		key_compare			_keyComp;
 		
-		typedef typename allocator_type::template rebind<BstNode<value_type> >::other _Node_Allocator;
+		typedef typename allocator_type::template rebind<BstNode<const key_type, mapped_type> >::other _Node_Allocator;
 
-		RedBlackTree<Key, Compare, _Node_Allocator>		RBT;
+		RedBlackTree<key_type, mapped_type, Compare, _Node_Allocator>		RBT;
 
 	public:
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type());
@@ -126,7 +126,7 @@ namespace ft
 		::map(const key_compare &comp, const allocator_type &alloc)
 		: _alloc(alloc),
 		_keyComp(comp),
-		RBT(key_comp, _Node_Allocator())
+		RBT(_keyComp, _Node_Allocator())
 	{}
 	
 	template<class Key, class T, class Compare, class Alloc>
@@ -135,7 +135,7 @@ namespace ft
 		::map(InputIt first, InputIt last, const key_compare &comp, const allocator_type &alloc)
 		: _alloc(alloc),
 		_keyComp(comp),
-		RBT(key_comp, _Node_Allocator())
+		RBT(_keyComp, _Node_Allocator())
 	{
 		insert(first, last);			
 	}
@@ -145,7 +145,7 @@ namespace ft
 		::map(const map &src)
 		: _alloc(src._alloc),
 		_keyComp(src._keyComp),
-		RBT(key_comp, _Node_Allocator())
+		RBT(_keyComp, _Node_Allocator())
 	{
 		insert(src.begin(), src.end());
 	}
@@ -183,26 +183,26 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
 		::begin(){
-		return(iterator(RBT.minimum()));
+		return (iterator(RBT.minimum(RBT.getRoot()), _keyComp));
 	}
 	
-	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
-		::begin() const{
-		return(const_iterator(RBT.minimum()));
-	}
+	// template<class Key, class T, class Compare, class Alloc>
+	// typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+	// 	::begin() const{
+	// 	return(const_iterator(RBT.minimum(RBT.getRoot())), _keyComp);
+	// }
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
 		::end(){
-			return (iterator(RBT.minimum()));
+			return (iterator(RBT.minimum(RBT.getRoot())), _keyComp);
 	}
 
-	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
-		::end() const{
-			return (const_iterator(RBT.last));
-	}
+	// template<class Key, class T, class Compare, class Alloc>
+	// typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+	// 	::end() const{
+	// 		return (const_iterator(RBT.last), _keyComp);
+	// }
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::reverse_iterator	map<Key, T, Compare, Alloc>
@@ -240,14 +240,12 @@ namespace ft
 	typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>
 		::erase(const key_type &k)
 	{
-		BstNode<value_type>	*tmp;
-		BstNode<value_type> *node = searchTree(root, k, _keyComp, _last);
+		BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
 		_Node_Allocator		nodeAlloc;
 		
-		if (node == RBT.TNULL)
+		if (node == RBT.getTNULL())
 			return (0);
-		value_type toDel = ft::make_pair(k, mapped_type());
-		RBT.delete();
+		RBT.deleteBSTNode(k);
 		return (1);
 	}
 		
@@ -262,8 +260,8 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
 		::find(const key_type &k){
-		BstNode<value_type> *node = BstFind(root, k, _keyComp, _last);
-		if (!node)
+		BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
+		if (node == RBT.getTNULL())
 			return (end());
 		else
 			return (iterator(node));
@@ -273,8 +271,8 @@ namespace ft
 	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
 		::find(const key_type &k) const
 	{
-		BstNode<value_type> *node = BstFind(root, k, _keyComp, _last);
-		if (!node)
+		BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
+		if (node == RBT.TNULL)
 			return (end());
 		else
 			return (const_iterator(node));
@@ -288,21 +286,8 @@ namespace ft
 		if (it != end())
 			return (ft::make_pair(it, false));
 		value_type toinsert = ft::make_pair(value.first, value.second);
-		BstNode<value_type> *node = BstInsert(root, root, toinsert, _keyComp, _Node_Allocator(), _last);
-		if (!root){
-			root = _first = node;
-			root->right = _last;
-			_last->parent = root;
-		}
-		else{
-			node = BstFind(root, value.first, _keyComp, _last);
-			if (_keyComp(_last->parent->data.first, node->data.first)){
-				_last->parent = node;
-				node->right = _last;
-			}
-			if (_keyComp(node->data.first, _first->data.first))
-				_first = node;
-		}
+		RBT.insert(toinsert);
+		BstNode<const key_type, mapped_type> *node = RBT.searchTree(value.first);
 		iterator it2(node, _keyComp);
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
@@ -361,15 +346,9 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::swap(map &x)
 	{
-		BstNode<value_type>	*tmp = root;
-		root = x.root;
-		x.root = tmp;
-		tmp = _first;
-		_first = x._first;
-		x._first = tmp;
-		tmp = _last;
-		_last = x._last;
-		x._last = tmp;
+		RedBlackTree<key_type, mapped_type, key_compare, _Node_Allocator>	tmp = RBT;
+		RBT = x.RBT;
+		x.RBT = tmp;
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>

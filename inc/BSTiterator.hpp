@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/17 12:58:16 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:31:17 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ namespace ft
 	class BSTiterator
 	{
 	public:
-		typedef typename T::value_type 	value_type;
-		typedef std::ptrdiff_t			difference_type;
-		typedef value_type*				pointer;
-		typedef value_type&				reference;
-		typedef BSTiterator				iterator_category;
+		typedef typename T::value_type 				value_type;
+		typedef typename value_type::first_type		key;
+		typedef typename value_type::second_type	mapped_type;
+		typedef std::ptrdiff_t						difference_type;
+		typedef value_type*							pointer;
+		typedef value_type&							reference;
+		typedef BSTiterator							iterator_category;
 
 		T			*node;
 		Compare		comp;
@@ -33,7 +35,7 @@ namespace ft
 		BSTiterator(const Compare &comp = Compare())
 			: node(NULL),
 			comp(comp){}
-		BSTiterator(BstNode<value_type> *node, const Compare &comp = Compare())
+		BSTiterator(BstNode<const key, mapped_type> *node, const Compare &comp = Compare())
 			: node(node),
 			comp(comp){}
 		template<typename U, class Comp>
@@ -52,7 +54,7 @@ namespace ft
 		BSTiterator	&operator++(){
 			if (!node)
 				return (*this);
-			BstNode<value_type> *current = node;
+			BstNode<const key, mapped_type> *current = node;
 			if (node->right && comp(node->data.first, node->right->data.first)){
 				current = node->right;
 				while (current->left && comp(node->data.first, current->left->data.first))
@@ -81,11 +83,7 @@ namespace ft
 			return (it);
 		}
 		BSTiterator	&operator--(){
-			BstNode<value_type>	*current = node;
-			if (node->red == 2){
-				node = node->parent;
-				return (*this);
-			}
+			BstNode<const key, mapped_type>	*current = node;
 			if (node->left && comp(node->left->data.first, node->data.first))
 				current = node->left;
 			else{
@@ -129,11 +127,13 @@ namespace ft
 	class BSTconstIterator
 	{
 	public:
-		typedef typename T::value_type  		value_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef	const value_type*						pointer;
-		typedef const value_type&						reference;
-		typedef BSTconstIterator				iterator_category;
+		typedef typename T::value_type  			value_type;
+		typedef typename value_type::first_type		key;
+		typedef typename value_type::second_type	mapped_type;
+		typedef std::ptrdiff_t						difference_type;
+		typedef	const value_type*					pointer;
+		typedef const value_type&					reference;
+		typedef BSTconstIterator					iterator_category;
 
 		T		*node;
 		Compare	comp;
@@ -162,7 +162,7 @@ namespace ft
 		BSTconstIterator	&operator++(){
 			if (!node)
 				return (*this);
-			BstNode<value_type> *current = node;
+			BstNode<const key, mapped_type> *current = node;
 			if (node->right && comp(node->data.first, node->right->data.first)){
 				current = node->right;
 				while (current->left && comp(node->data.first, current->left->data.first))
@@ -191,7 +191,7 @@ namespace ft
 			return (it);
 		}
 		BSTconstIterator	&operator--(){
-			BstNode<value_type>	*current = node;
+			BstNode<const key, mapped_type>	*current = node;
 			if (node->red == 2){
 				node = node->parent;
 				return (*this);
