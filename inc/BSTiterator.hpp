@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/19 17:31:17 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 15:21:59 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,21 @@ namespace ft
 		typedef BSTiterator							iterator_category;
 
 		T			*node;
+		T			*TNULL;
 		Compare		comp;
 
 		BSTiterator(const Compare &comp = Compare())
 			: node(NULL),
+			TNULL(NULL),
 			comp(comp){}
-		BSTiterator(BstNode<const key, mapped_type> *node, const Compare &comp = Compare())
+		BSTiterator(BstNode<const key, mapped_type> *node, BstNode<const key, mapped_type> *TNULL, const Compare &comp = Compare())
 			: node(node),
+			TNULL(TNULL),
 			comp(comp){}
 		template<typename U, class Comp>
 		BSTiterator(const BSTiterator<U, Comp> &src)
 			: node(src.node),
+			TNULL(src.TNULL),
 			comp(src.comp){}
 		~BSTiterator(){}
 		
@@ -48,6 +52,7 @@ namespace ft
 			if (this == &rhs)
 				return (*this);
 			node = rhs.node;
+			TNULL = rhs.TNULL;
 			comp = rhs.comp;
 			return (*this);
 		}
@@ -55,16 +60,12 @@ namespace ft
 			if (!node)
 				return (*this);
 			BstNode<const key, mapped_type> *current = node;
-			if (node->right && comp(node->data.first, node->right->data.first)){
+			if (node->right != TNULL && comp(node->data.first, node->right->data.first)){
 				current = node->right;
-				while (current->left && comp(node->data.first, current->left->data.first))
+				while (current->left != TNULL && comp(node->data.first, current->left->data.first))
 					current = current->left;
 			}
 			else{
-				if (!(node->parent)){
-					node = node->right;
-					return (*this);
-				}
 				while (current->parent){
 					current = current->parent;
 					if (comp(node->data.first, current->data.first))
@@ -74,7 +75,7 @@ namespace ft
 			if (comp(node->data.first, current->data.first))
 				node = current;
 			else
-				node = node->right;
+				node = current->parent;
 			return (*this);
 		}
 		BSTiterator	operator++(int){
@@ -135,20 +136,25 @@ namespace ft
 		typedef const value_type&					reference;
 		typedef BSTconstIterator					iterator_category;
 
-		T		*node;
+		const T		*node;
+		const T		*TNULL;
 		Compare	comp;
 
 		BSTconstIterator(const Compare &comp = Compare())
 			: node(NULL),
+			TNULL(NULL),
 			comp(comp){}
-		BSTconstIterator(T *node, const Compare &comp = Compare())
+		BSTconstIterator(const T *node, const T *TNULL, const Compare &comp = Compare())
 			: node(node),
+			TNULL(TNULL),
 			comp(comp){}
 		BSTconstIterator(const BSTconstIterator<T, Compare> &src)
 			: node(src.node),
+			TNULL(src.TNULL),
 			comp(src.comp){}
 		BSTconstIterator(const BSTiterator<T, Compare> &src)
 			: node(src.node),
+			TNULL(src.TNULL),
 			comp(src.comp){}
 		~BSTconstIterator(){}
 		
@@ -156,23 +162,20 @@ namespace ft
 			if (this == &rhs)
 				return (*this);
 			node = rhs.node;
+			TNULL = rhs.TNULL;
 			comp = rhs.comp;
 			return (*this);
 		}
 		BSTconstIterator	&operator++(){
 			if (!node)
 				return (*this);
-			BstNode<const key, mapped_type> *current = node;
-			if (node->right && comp(node->data.first, node->right->data.first)){
+			const BstNode<const key, mapped_type> *current = node;
+			if (node->right != TNULL && comp(node->data.first, node->right->data.first)){
 				current = node->right;
-				while (current->left && comp(node->data.first, current->left->data.first))
+				while (current->left != TNULL && comp(node->data.first, current->left->data.first))
 					current = current->left;
 			}
 			else{
-				if (!(node->parent)){
-					node = node->right;
-					return (*this);
-				}
 				while (current->parent){
 					current = current->parent;
 					if (comp(node->data.first, current->data.first))
@@ -182,7 +185,7 @@ namespace ft
 			if (comp(node->data.first, current->data.first))
 				node = current;
 			else
-				node = node->right;
+				node = current->parent;
 			return (*this);
 		}
 		BSTconstIterator	operator++(int){

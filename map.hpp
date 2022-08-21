@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/19 17:42:45 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 15:25:00 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ namespace ft
 		::operator[](const key_type &k)
 	{
 		iterator	it = find(k);
-		
 		if (it == end())
 			insert(ft::make_pair(k, mapped_type()));
 		it = find(k);
@@ -183,26 +182,26 @@ namespace ft
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
 		::begin(){
-		return (iterator(RBT.minimum(RBT.getRoot()), _keyComp));
+		return (iterator(RBT.minimum(RBT.getRoot()), RBT.getTNULL()));
 	}
 	
-	// template<class Key, class T, class Compare, class Alloc>
-	// typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
-	// 	::begin() const{
-	// 	return(const_iterator(RBT.minimum(RBT.getRoot())), _keyComp);
-	// }
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::begin() const{
+		return(const_iterator(RBT.minimum(RBT.getRoot()), RBT.getTNULL()));
+	}
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::iterator	map<Key, T, Compare, Alloc>
 		::end(){
-			return (iterator(RBT.minimum(RBT.getRoot())), _keyComp);
+			return (iterator(NULL, RBT.getTNULL()));
 	}
 
-	// template<class Key, class T, class Compare, class Alloc>
-	// typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
-	// 	::end() const{
-	// 		return (const_iterator(RBT.last), _keyComp);
-	// }
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
+		::end() const{
+			return (const_iterator(NULL, RBT.getTNULL()));
+	}
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::reverse_iterator	map<Key, T, Compare, Alloc>
@@ -264,7 +263,7 @@ namespace ft
 		if (node == RBT.getTNULL())
 			return (end());
 		else
-			return (iterator(node));
+			return (iterator(node, RBT.getTNULL()));
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
@@ -288,7 +287,7 @@ namespace ft
 		value_type toinsert = ft::make_pair(value.first, value.second);
 		RBT.insert(toinsert);
 		BstNode<const key_type, mapped_type> *node = RBT.searchTree(value.first);
-		iterator it2(node, _keyComp);
+		iterator it2(node, RBT.getTNULL());
 		pair<iterator, bool> ret = ft::make_pair(it2, true);
 		return (ret);
 	}
@@ -325,7 +324,7 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::clear()
 	{
-		erase(begin(), end());
+		//erase(begin(), end());
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>

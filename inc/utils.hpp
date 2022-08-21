@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/19 17:37:36 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 15:25:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,17 +200,8 @@ namespace ft
 	private:
 		BstNode<const Key, T> *root;
 		BstNode<const Key, T> *TNULL;
-		BstNode<const Key, T>	*last;
 		Compare				compare;
 		Alloc				alloc;
-
-		void initializeNULLBSTNode(BstNode< const Key, T> *node, BstNode< const Key, T> *parent) {
-			node->data = ft::pair<const Key, T>();
-			node->parent = parent;
-			node->left = NULL;
-			node->right = NULL;
-			node->color = 0;
-		}
 
 		// Preorder
 		void preOrderHelper(BstNode< const Key, T> *node) {
@@ -424,14 +415,11 @@ namespace ft
 		RedBlackTree(Compare compare, Alloc alloc) : compare(compare), alloc(alloc) {
 			TNULL = alloc.allocate(1);
 			alloc.construct(TNULL, BstNode<const Key, T>());
-			last = alloc.allocate(1);
-			alloc.construct(last, BstNode<const Key, T>());
-			last->color = 2;
 			TNULL->color = 0;
 			TNULL->left = NULL;
 			TNULL->right = NULL;
 			root = TNULL;
-			root->parent = last;
+			root->parent = NULL;
 		}
 
 		void preorder() {
@@ -451,20 +439,19 @@ namespace ft
 		}
 
 		BstNode<const Key, T> *minimum(BstNode<const Key, T> *node) {
-			while (node->left != TNULL)
+			while (node != TNULL && node->left != TNULL)
 				node = node->left;
 			return node;
 		}
 
 		const BstNode<const Key, T> *minimum(BstNode<const Key, T> const *node) const{
-			BstNode<const Key, T> *ret = node;
-			while (ret->left != TNULL)
-				ret = ret->left;
-			return ret;
+			while (node != TNULL && node->left != TNULL)
+				node = node->left;
+			return node;
 		}
 
 		BstNode<const Key, T> *maximum(BstNode<const Key, T> *node) {
-			while (node->right != TNULL)
+			while (node != TNULL && node->right != TNULL)
 				node = node->right;
 			return node;
 		}
@@ -569,6 +556,11 @@ namespace ft
 		BstNode<const Key, T> *getTNULL() {
 			return this->TNULL;
 		}
+
+		const BstNode<const Key, T> *getTNULL() const{
+			return this->TNULL;
+		}
+
 
 		void deleteBSTNode(Key data) {
 			deleteBSTNodeHelper(this->root, data);
