@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 19:53:18 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:45:37 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ namespace ft
 				return (*this);
 			}
 			if (node->left != TNULL && comp(node->left->data.first, node->data.first)){
-				node = node->left;
+				current = node->left;
+				while (current->right != TNULL && comp(current->right->data.first, node->data.first))
+					current = current->right;
+				node = current;
 				return (*this);
 			}
 			else{
@@ -221,7 +224,10 @@ namespace ft
 				return (*this);
 			}
 			if (node->left != TNULL && comp(node->left->data.first, node->data.first)){
-				node = node->left;
+				current = node->left;
+				while (current->right != TNULL && comp(current->right->data.first, node->data.first))
+					current = current->right;
+				node = current;
 				return (*this);
 			}
 			else{
