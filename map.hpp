@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 15:25:00 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:59:45 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,9 +240,8 @@ namespace ft
 		::erase(const key_type &k)
 	{
 		BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
-		_Node_Allocator		nodeAlloc;
 		
-		if (node == RBT.getTNULL())
+		if (node == RBT.getTNULL() || !node)
 			return (0);
 		RBT.deleteBSTNode(k);
 		return (1);
@@ -252,8 +251,10 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::erase(iterator first, iterator last)
 	{
-		while (first != last)
+		
+		while (first != last){
 			this->erase((*(first++)).first);
+		}
 	}
 	
 	template<class Key, class T, class Compare, class Alloc>
@@ -324,7 +325,7 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::clear()
 	{
-		//erase(begin(), end());
+		erase(begin(), end());
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>

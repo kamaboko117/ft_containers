@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 15:16:42 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 17:01:13 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,11 @@ int	main(){
 			std::cout << it->first << " => " << it->second << '\n';
 		}
 		
-		// NAME::map<char,int> third (second);
-		// std::cout << "copy constructor with second" << std::endl;
-		// for (NAME::map<char,int>::iterator it = third.begin(); it != third.end(); ++it){
-		// 	std::cout << it->first << " => " << it->second << '\n';
-		// }
+		NAME::map<char,int> third (second);
+		std::cout << "copy constructor with second" << std::endl;
+		for (NAME::map<char,int>::iterator it = third.begin(); it != third.end(); ++it){
+			std::cout << it->first << " => " << it->second << '\n';
+		}
 		NAME::map<char,int,classcomp> fourth;                 // class as Compare
 
 		bool(*fn_pt)(char,char) = fncomp;
@@ -202,65 +202,65 @@ int	main(){
 
 	}
 
-	// std::cout << std::endl << "****clear()*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
+	std::cout << std::endl << "****clear()*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-	// 	mymap['x'] = 100;
-	// 	mymap['y'] = 200;
-	// 	mymap['z'] = 300;
+		mymap['x'] = 100;
+		mymap['y'] = 200;
+		mymap['z'] = 300;
 
-	// 	std::cout << "mymap contains:\n";
-	// 	for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
-	// 		std::cout << it->first << " => " << it->second << '\n';
+		std::cout << "mymap contains:\n";
+		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 
-	// 	mymap.clear();
-	// 	mymap['a'] = 1101;
-	// 	mymap['b'] = 2202;
+		mymap.clear();
+		mymap['a'] = 1101;
+		mymap['b'] = 2202;
 
-	// 	std::cout << "mymap contains:\n";
-	// 	for (NAME::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-	// 		std::cout << it->first << " => " << it->second << '\n';
-	// }
+		std::cout << "mymap contains:\n";
+		for (NAME::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
 
-	// std::cout << std::endl << "****operator=*****" << std::endl;{
-	// 	NAME::map<char,int> first;
-	// 	NAME::map<char,int> second;
+	std::cout << std::endl << "****operator=*****" << std::endl;{
+		NAME::map<char,int> first;
+		NAME::map<char,int> second;
 
-	// 	first['x'] = 8;
-	// 	first['y'] = 16;
-	// 	first['z'] = 32;
+		first['x'] = 8;
+		first['y'] = 16;
+		first['z'] = 32;
 
-	// 	second = first;                // second now contains 3 ints
-	// 	first = NAME::map<char,int>();  // and first is now empty
+		second = first;                // second now contains 3 ints
+		first = NAME::map<char,int>();  // and first is now empty
 
-	// 	std::cout << "Size of first: " << first.size() << '\n';
-	// 	std::cout << "Size of second: " << second.size() << '\n';
-	// }
+		std::cout << "Size of first: " << first.size() << '\n';
+		std::cout << "Size of second: " << second.size() << '\n';
+	}
 
-	// std::cout << std::endl << "****map iterators*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
-	// 	mymap['b'] = 100;
-	// 	mymap['a'] = 200;
-	// 	mymap['c'] = 300;
-	// 	// show content:
-	// 	for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
-	// 		std::cout << it->first << " => " << it->second << '\n';
-	// 	}
-	// }
+	std::cout << std::endl << "****map iterators*****" << std::endl;{
+		NAME::map<char,int> mymap;
+		mymap['b'] = 100;
+		mymap['a'] = 200;
+		mymap['c'] = 300;
+		// show content:
+		for (NAME::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it){
+			std::cout << it->first << " => " << it->second << '\n';
+		}
+	}
 
-	// std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
-	// 	NAME::map<char,int> mymap;
+	std::cout << std::endl << "****map reverse_iterators*****" << std::endl;{
+		NAME::map<char,int> mymap;
 
-	// 	mymap['x'] = 100;
-	// 	mymap['y'] = 200;
-	// 	mymap['z'] = 300;
+		mymap['x'] = 100;
+		mymap['y'] = 200;
+		mymap['z'] = 300;
 
-	// 	// show content:
-	// 	NAME::map<char,int>::reverse_iterator rit;
-	// 	for (rit = mymap.rbegin(); rit != mymap.rend(); ++rit){
-	// 		std::cout << rit->first << " => " << rit->second << '\n';
-	// 	}
-	// }
+		// show content:
+		NAME::map<char,int>::reverse_iterator rit;
+		for (rit = mymap.rbegin(); rit != mymap.rend(); ++rit){
+			std::cout << rit->first << " => " << rit->second << '\n';
+		}
+	}
 
 	// std::cout << std::endl << "****find()*****" << std::endl;{
 	// 	NAME::map<char,int> mymap;

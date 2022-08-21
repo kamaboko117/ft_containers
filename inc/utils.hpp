@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 15:25:37 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:57:26 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ namespace ft
 		BstNode 	*right;
 		int			color;
 
-		BstNode(){}
+		BstNode() : data(value_type()){}
 		BstNode(ft::pair<const Key, T> data) : data(data){}
 	};
 
@@ -439,12 +439,16 @@ namespace ft
 		}
 
 		BstNode<const Key, T> *minimum(BstNode<const Key, T> *node) {
+			if (node == TNULL)
+				return (NULL);
 			while (node != TNULL && node->left != TNULL)
 				node = node->left;
 			return node;
 		}
 
 		const BstNode<const Key, T> *minimum(BstNode<const Key, T> const *node) const{
+			if (node == TNULL)
+				return (NULL);
 			while (node != TNULL && node->left != TNULL)
 				node = node->left;
 			return node;
