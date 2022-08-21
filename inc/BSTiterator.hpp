@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 15:21:59 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 17:50:36 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,24 @@ namespace ft
 
 		T			*node;
 		T			*TNULL;
+		T			*min;
 		Compare		comp;
 
 		BSTiterator(const Compare &comp = Compare())
 			: node(NULL),
 			TNULL(NULL),
+			min(NULL),
 			comp(comp){}
-		BSTiterator(BstNode<const key, mapped_type> *node, BstNode<const key, mapped_type> *TNULL, const Compare &comp = Compare())
+		BSTiterator(BstNode<const key, mapped_type> *node, BstNode<const key, mapped_type> *TNULL, BstNode<const key, mapped_type> *min, const Compare &comp = Compare())
 			: node(node),
 			TNULL(TNULL),
+			min(min),
 			comp(comp){}
 		template<typename U, class Comp>
 		BSTiterator(const BSTiterator<U, Comp> &src)
 			: node(src.node),
 			TNULL(src.TNULL),
+			min(src.min),
 			comp(src.comp){}
 		~BSTiterator(){}
 		
@@ -53,6 +57,7 @@ namespace ft
 				return (*this);
 			node = rhs.node;
 			TNULL = rhs.TNULL;
+			min = rhs.min;
 			comp = rhs.comp;
 			return (*this);
 		}
@@ -85,7 +90,11 @@ namespace ft
 		}
 		BSTiterator	&operator--(){
 			BstNode<const key, mapped_type>	*current = node;
-			if (node->left && comp(node->left->data.first, node->data.first))
+			if (!node){
+				node = min;
+				return (*this);
+			}
+			if (node->left != TNULL && comp(node->left->data.first, node->data.first))
 				current = node->left;
 			else{
 				while(current->parent && comp(node->data.first, current->parent->data.first))
@@ -138,15 +147,18 @@ namespace ft
 
 		const T		*node;
 		const T		*TNULL;
+		const T			*min;
 		Compare	comp;
 
 		BSTconstIterator(const Compare &comp = Compare())
 			: node(NULL),
 			TNULL(NULL),
+			min(NULL),
 			comp(comp){}
-		BSTconstIterator(const T *node, const T *TNULL, const Compare &comp = Compare())
+		BSTconstIterator(const T *node, const T *TNULL, const T *min, const Compare &comp = Compare())
 			: node(node),
 			TNULL(TNULL),
+			min(min),
 			comp(comp){}
 		BSTconstIterator(const BSTconstIterator<T, Compare> &src)
 			: node(src.node),
@@ -155,6 +167,7 @@ namespace ft
 		BSTconstIterator(const BSTiterator<T, Compare> &src)
 			: node(src.node),
 			TNULL(src.TNULL),
+			min(src.min),
 			comp(src.comp){}
 		~BSTconstIterator(){}
 		
@@ -163,6 +176,7 @@ namespace ft
 				return (*this);
 			node = rhs.node;
 			TNULL = rhs.TNULL;
+			min = rhs.min;
 			comp = rhs.comp;
 			return (*this);
 		}
@@ -195,11 +209,11 @@ namespace ft
 		}
 		BSTconstIterator	&operator--(){
 			BstNode<const key, mapped_type>	*current = node;
-			if (node->red == 2){
-				node = node->parent;
+			if (!node){
+				node = min;
 				return (*this);
 			}
-			if (node->left && comp(node->left->data.first, node->data.first))
+			if (node->left != TNULL && comp(node->left->data.first, node->data.first))
 				current = node->left;
 			else{
 				while(current->parent && comp(node->data.first, current->parent->data.first))

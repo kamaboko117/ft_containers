@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 16:57:26 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 17:47:55 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,6 +455,12 @@ namespace ft
 		}
 
 		BstNode<const Key, T> *maximum(BstNode<const Key, T> *node) {
+			while (node != TNULL && node->right != TNULL)
+				node = node->right;
+			return node;
+		}
+
+		const BstNode<const Key, T> *maximum(BstNode<const Key, T> const *node) const{
 			while (node != TNULL && node->right != TNULL)
 				node = node->right;
 			return node;
