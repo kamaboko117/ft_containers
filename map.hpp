@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 17:46:31 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 18:30:49 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,11 +269,11 @@ namespace ft
 	typename map<Key, T, Compare, Alloc>::const_iterator	map<Key, T, Compare, Alloc>
 		::find(const key_type &k) const
 	{
-		BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
-		if (node == RBT.TNULL)
+		const BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
+		if (node == RBT.getTNULL())
 			return (end());
 		else
-			return (const_iterator(node));
+			return (const_iterator(node, RBT.getTNULL(), RBT.maximum(RBT.getRoot())));
 	}
 	
 	template<class Key, typename T, class Compare, class Alloc>

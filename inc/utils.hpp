@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 17:47:55 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/21 18:28:17 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,14 @@ namespace ft
 			return searchTreeHelper(node->right, key);
 		}
 
+		const BstNode< const Key, T> *searchTreeHelper(const BstNode< const Key, T> *node, Key key) const{
+			if (node == TNULL || (!compare(key, node->data.first) && !compare(node->data.first, key)))
+				return node;
+			if (compare(key, node->data.first))
+				return searchTreeHelper(node->left, key);
+			return searchTreeHelper(node->right, key);
+		}
+
 		// For balancing the tree after deletion
 		void deleteFix(BstNode< const Key, T> *x) {
 			BstNode< const Key, T> *s;
@@ -435,6 +443,10 @@ namespace ft
 		}
 
 		BstNode<const Key, T> *searchTree(Key k) {
+			return searchTreeHelper(this->root, k);
+		}
+
+		const BstNode<const Key, T> *searchTree(Key k) const{
 			return searchTreeHelper(this->root, k);
 		}
 
