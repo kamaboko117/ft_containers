@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:36:48 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 20:45:37 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/22 14:21:10 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ namespace ft
 		BSTconstIterator(const BSTconstIterator<T, Compare> &src)
 			: node(src.node),
 			TNULL(src.TNULL),
+			max(src.max),
 			comp(src.comp){}
 		BSTconstIterator(const BSTiterator<T, Compare> &src)
 			: node(src.node),
