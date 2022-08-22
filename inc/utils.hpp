@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 18:28:17 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/22 16:34:47 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,7 @@ namespace ft
 			BstNode<const Key, T> *z = TNULL;
 			BstNode<const Key, T> *x, *y;
 
-			while (node != TNULL) {
+			while (node && node != TNULL) {
 				if (!compare(node->data.first, key) && !compare(key, node->data.first))
 					z = node;
 				if (!compare(key, node->data.first)) 
@@ -428,6 +428,10 @@ namespace ft
 			TNULL->right = NULL;
 			root = TNULL;
 			root->parent = NULL;
+		}
+
+		~RedBlackTree(){
+				alloc.deallocate(TNULL, 1);
 		}
 
 		void preorder() {

@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 18:30:49 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/22 16:35:09 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ namespace ft
 
 	template<class Key, class T, class Compare, class Alloc>
 	map<Key, T, Compare, Alloc>
-		::~map(){
+		::~map(){			
 			clear();
 		}
 	
@@ -240,7 +240,6 @@ namespace ft
 		::erase(const key_type &k)
 	{
 		BstNode<const key_type, mapped_type> *node = RBT.searchTree(k);
-		
 		if (node == RBT.getTNULL() || !node)
 			return (0);
 		RBT.deleteBSTNode(k);
@@ -344,9 +343,12 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::swap(map &x)
 	{
-		RedBlackTree<key_type, mapped_type, key_compare, _Node_Allocator>	tmp = RBT;
-		RBT = x.RBT;
-		x.RBT = tmp;
+		map<Key, T, Compare, Alloc>	tmp;
+		tmp.insert(x.begin(), x.end());
+		x.clear();
+		x.insert(begin(), end());
+		clear();
+		insert(tmp.begin(), tmp.end());
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>
