@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/07/18 18:33:37 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:00:11 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,15 +141,17 @@ namespace ft
 	vector<T, Alloc>::vector(const vector<T, Alloc> &src)
 		: _alloc(src._alloc),
 		_capacity(src._capacity),
-		_size(0),
-		array(_alloc.allocate(_capacity))
+		_size(src._size)
 	{
-		insert(begin(), src.begin(), src.end());			
+		array = _alloc.allocate(_capacity);
+		for (ft::pair<int, const_iterator> i(0, src.begin()); i.second != src.end(); ++i.first, ++i.second)
+       		_alloc.construct(&array[i.first], *i.second);	
 	}
 
 	template<typename T, class Alloc>
 	vector<T, Alloc>::~vector(){
-		clear();
+		for (iterator it = begin(); it != end(); ++it)
+            _alloc.destroy(&(*it));
 		_alloc.deallocate(array, _capacity);
 	}
 
@@ -295,13 +297,12 @@ namespace ft
 			throw std::length_error("");
 		else if (new_cap > _capacity){
 			T 			*tmp;
-			std::size_t	old_cap = _capacity;
 			
 			tmp = _alloc.allocate(new_cap);
-			_capacity = new_cap;
 			for (size_t i = 0; i < _size; i++)
 				_alloc.construct(&tmp[i], array[i]);
-			_alloc.deallocate(array, old_cap);
+			this->~vector();
+			_capacity = new_cap;
 			array = tmp;
 		}
 	}
@@ -318,9 +319,8 @@ namespace ft
 
 	template<typename T, class Alloc>
 	void	vector<T, Alloc>::clear(){
-		_alloc.deallocate(array, _capacity);
-		array = _alloc.allocate(_capacity);
-		_size = 0;
+		while (_size)
+            pop_back();
 	}
 
 	template<typename T, class Alloc>
@@ -418,7 +418,8 @@ namespace ft
 
 	template<typename T, class Alloc>
 	void	vector<T, Alloc>::pop_back(){
-		_size--;
+		if (_size)
+            _alloc.destroy(&array[_size-- - 1]);
 	}
 
 	template<typename T, class Alloc>
