@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:35:49 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/25 19:00:11 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:39:38 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ namespace ft
 		void					push_back(const T &value);
 		void					pop_back();
 		iterator				insert(iterator pos, const T &value);
-		iterator				insert(iterator pos, std::size_t count, const T &value);
+		void					insert(iterator pos, std::size_t count, const T &value);
 		template<class InputIt>
 		iterator				insert(iterator pos, InputIt first, InputIt last,
 			typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type = typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type());
@@ -341,7 +341,7 @@ namespace ft
 	}
 
 	template<typename T, class Alloc>
-	typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator pos, std::size_t count,
+	void	vector<T, Alloc>::insert(iterator pos, std::size_t count,
 			const T &value){
 		std::size_t	index = 0;
 		
@@ -356,7 +356,6 @@ namespace ft
 			_alloc.construct(&array[i], array[i - count]);
 		for (size_t i = 0; i < count; i++)
 			_alloc.construct(&array[index + i], value);
-		return (iterator(array + index));
 	}
 
 	template<typename T, class Alloc>
