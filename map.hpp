@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:11:12 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/22 16:35:09 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:04:49 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,12 +343,19 @@ namespace ft
 	void	map<Key, T, Compare, Alloc>
 		::swap(map &x)
 	{
-		map<Key, T, Compare, Alloc>	tmp;
-		tmp.insert(x.begin(), x.end());
-		x.clear();
-		x.insert(begin(), end());
-		clear();
-		insert(tmp.begin(), tmp.end());
+		BstNode<const Key, T> *tmpTNULL;
+		BstNode<const Key, T> *tmpRoot;
+
+		tmpTNULL = x.RBT.getTNULL();
+		tmpRoot = x.RBT.getRoot();
+		x.RBT = RBT;
+		RBT.setTNULL(tmpTNULL);
+		RBT.setRoot(tmpRoot);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+  	void swap(map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y){
+		x.swap(y);
 	}
 
 	template<class Key, typename T, class Compare, class Alloc>

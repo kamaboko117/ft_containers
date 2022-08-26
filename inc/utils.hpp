@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 17:11:32 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/22 16:34:47 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:04:08 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,6 +430,13 @@ namespace ft
 			root->parent = NULL;
 		}
 
+		RedBlackTree	&operator=(const RedBlackTree *src){
+			TNULL = src->TNULL;
+			root = src->root;
+			alloc = src->alloc;
+			compare = src->compare;
+		}
+
 		~RedBlackTree(){
 				alloc.deallocate(TNULL, 1);
 		}
@@ -587,6 +594,13 @@ namespace ft
 			return this->TNULL;
 		}
 
+		void	setTNULL(BstNode<const Key, T> *node){
+			TNULL = node;
+		}
+
+		void	setRoot(BstNode<const Key, T> *node){
+			root = node;
+		}
 
 		void deleteBSTNode(Key data) {
 			deleteBSTNodeHelper(this->root, data);

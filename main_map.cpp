@@ -6,7 +6,7 @@
 /*   By: asaboure <asaboure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:54:06 by asaboure          #+#    #+#             */
-/*   Updated: 2022/08/21 17:59:12 by asaboure         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:05:12 by asaboure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,7 +376,7 @@ int	main(){
 		std::cout << "mymap now contains " << mymap.size() << " elements.\n";
 	}
 
-	std::cout << std::endl << "****swap*****" << std::endl;{
+	std::cout << std::endl << "****swap (member)*****" << std::endl;{
 		NAME::map<char,int> foo,bar;
 
 		foo['x']=100;
@@ -397,6 +397,27 @@ int	main(){
 			std::cout << it->first << " => " << it->second << '\n';
 	}
 
+	std::cout << std::endl << "****swap (non member)*****" << std::endl;{
+		NAME::map<char,int> foo,bar;
+
+		foo['x']=100;
+		foo['y']=200;
+
+		bar['a']=11;
+		bar['b']=22;
+		bar['c']=33;
+
+		swap(foo,bar);
+
+		std::cout << "foo contains:\n";
+		for (NAME::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+
+		std::cout << "bar contains:\n";
+		for (NAME::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+	}
+			
 	std::cout << std::endl << "****key_comp*****" << std::endl;{
 		NAME::map<char,int> mymap;
 
